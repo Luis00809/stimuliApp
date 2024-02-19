@@ -1,7 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using StimuliApp.data;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = builder.Configuration;
+string connectionString = configuration?.GetConnectionString("DefaultConnection") ?? string.Empty;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<StimuliAppContext>(options => 
+{
+    options.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 
