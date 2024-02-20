@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StimuliApp.data;
+using StimuliApp.Data;
 
 #nullable disable
 
@@ -21,6 +21,51 @@ namespace StimuliApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ClientStimSet", b =>
+                {
+                    b.Property<int>("ClientsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StimSetsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientsId", "StimSetsId");
+
+                    b.HasIndex("StimSetsId");
+
+                    b.ToTable("ClientStimSet");
+                });
+
+            modelBuilder.Entity("ClientUser", b =>
+                {
+                    b.Property<int>("ClientsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ClientUser");
+                });
+
+            modelBuilder.Entity("StimSetStimuli", b =>
+                {
+                    b.Property<int>("StimSetsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StimuliId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StimSetsId", "StimuliId");
+
+                    b.HasIndex("StimuliId");
+
+                    b.ToTable("StimSetStimuli");
+                });
+
             modelBuilder.Entity("StimuliApp.Models.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -34,12 +79,7 @@ namespace StimuliApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Clients");
                 });
@@ -52,17 +92,12 @@ namespace StimuliApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("StimSets");
                 });
@@ -79,12 +114,7 @@ namespace StimuliApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SetId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SetId");
 
                     b.ToTable("Stimuli");
                 });
@@ -120,52 +150,49 @@ namespace StimuliApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("StimuliApp.Models.Client", b =>
+            modelBuilder.Entity("ClientStimSet", b =>
                 {
-                    b.HasOne("StimuliApp.Models.User", "User")
-                        .WithMany("Clients")
-                        .HasForeignKey("UserId")
+                    b.HasOne("StimuliApp.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("StimuliApp.Models.StimSet", null)
+                        .WithMany()
+                        .HasForeignKey("StimSetsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("StimuliApp.Models.StimSet", b =>
+            modelBuilder.Entity("ClientUser", b =>
                 {
-                    b.HasOne("StimuliApp.Models.Client", "Client")
-                        .WithMany("ClientSet")
-                        .HasForeignKey("ClientId")
+                    b.HasOne("StimuliApp.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.HasOne("StimuliApp.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("StimuliApp.Models.Stimuli", b =>
+            modelBuilder.Entity("StimSetStimuli", b =>
                 {
-                    b.HasOne("StimuliApp.Models.StimSet", "Set")
-                        .WithMany("Stimuli")
-                        .HasForeignKey("SetId")
+                    b.HasOne("StimuliApp.Models.StimSet", null)
+                        .WithMany()
+                        .HasForeignKey("StimSetsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Set");
-                });
-
-            modelBuilder.Entity("StimuliApp.Models.Client", b =>
-                {
-                    b.Navigation("ClientSet");
-                });
-
-            modelBuilder.Entity("StimuliApp.Models.StimSet", b =>
-                {
-                    b.Navigation("Stimuli");
-                });
-
-            modelBuilder.Entity("StimuliApp.Models.User", b =>
-                {
-                    b.Navigation("Clients");
+                    b.HasOne("StimuliApp.Models.Stimuli", null)
+                        .WithMany()
+                        .HasForeignKey("StimuliId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using StimuliApp.data;
+using StimuliApp.Data;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -10,6 +10,7 @@ string connectionString = configuration?.GetConnectionString("DefaultConnection"
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StimuliAppContext>(options => 
 {
     options.UseSqlServer(connectionString);
@@ -23,14 +24,20 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.CreateDbIfNotExists();
 
 app.MapControllerRoute(
     name: "default",

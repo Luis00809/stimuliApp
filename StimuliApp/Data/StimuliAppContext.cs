@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StimuliApp.Models;
 
-namespace StimuliApp.data;
+namespace StimuliApp.Data;
 
 public class StimuliAppContext : DbContext
 {

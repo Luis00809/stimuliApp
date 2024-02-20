@@ -9,7 +9,7 @@ public class Client
     [Required]
     [MaxLength(100)]
     public string? Name { get; set; }
-    public int UserId { get; set; }
-    public User? User { get; set; }
-    public ICollection<StimSet>? ClientSet { get; set; }
+
+    public ICollection<StimSet>? StimSets { get; set; }
+    public ICollection<User>? Users { get; set; }
 }

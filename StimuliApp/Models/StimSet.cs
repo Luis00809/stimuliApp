@@ -10,6 +10,5 @@ public class StimSet
     [MaxLength(100)]
     public string? Title { get; set; }
     public ICollection<Stimuli>? Stimuli { get; set; }
-    public int ClientId { get; set; }
-    public Client? Client { get; set; }
+    public ICollection<Client>? Clients { get; set; }
 }

@@ -8,8 +8,6 @@ public class Stimuli
 
     [Required]
     public string? Name { get; set; }
-    public int SetId { get; set; }
-
-    public StimSet? Set { get; set; }
+    public ICollection<StimSet>? StimSets { get; set; }
 
 }
