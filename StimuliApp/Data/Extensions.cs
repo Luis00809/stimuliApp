@@ -1,10 +1,8 @@
-
-namespace StimuliApp.Data;
-
-public static class Extensions 
+namespace StimuliApp.Data
 {
-    public static void CreateDbIfNotExists(this IHost host)
+    public static class Extensions  
     {
+        public static void CreateDbIfNotExists(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
