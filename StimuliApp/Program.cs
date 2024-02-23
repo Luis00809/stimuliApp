@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using StimuliApp.Data;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using StimuliApp.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,14 +11,32 @@ var configuration = builder.Configuration;
 string connectionString = configuration?.GetConnectionString("DefaultConnection") ?? string.Empty;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<StimuliAppContext>(options => 
 {
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddScoped<ClientService >();
+builder.Services.AddScoped<UserService >();
+builder.Services.AddScoped<StimSetService >();
+builder.Services.AddScoped<StimuliService >();
+
+
+
 var app = builder.Build();
+app.CreateDbIfNotExists();
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -27,17 +47,13 @@ if (!app.Environment.IsDevelopment())
     
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.CreateDbIfNotExists();
 
 app.MapControllerRoute(
     name: "default",
