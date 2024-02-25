@@ -18,8 +18,8 @@ export default function NavBar() {
                         <Nav.Link as={Link} to='/'>
                             <House color='white' size={30} />   
                         </Nav.Link>
-                        <Nav.Link as={Link} to='/'>Features</Nav.Link>
-                        <Nav.Link as={Link} to='/'>Pricing</Nav.Link>
+                        <Nav.Link as={Link} to='/'>Stimuli</Nav.Link>
+                        <Nav.Link as={Link} to='/'>Sets</Nav.Link>
                         
                         
                     </Nav>
