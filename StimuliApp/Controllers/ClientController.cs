@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StimuliApp.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/swagger/[controller]")]
 
 public class ClientController : ControllerBase
 {

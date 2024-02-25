@@ -32,7 +32,7 @@ builder.Services.AddScoped<StimuliService >();
 
 builder.Services.AddSpaStaticFiles(configuration =>
 {
-    configuration.RootPath = "StimuliApp/clientui/build";
+    configuration.RootPath = "stimuliApp/clientui/build";
 });
 
 var app = builder.Build();
