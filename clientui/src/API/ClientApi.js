@@ -1,5 +1,5 @@
 export const getClients = () => {
-    return fetch('/Client', {
+    return fetch('/api/Client', {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

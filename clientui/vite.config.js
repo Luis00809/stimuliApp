@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     open: true,
     proxy: {
-      '/swagger/': {
+      '/api': {
         target: 'http://localhost:5111',
         secure: false,
         changeOrigin: true,
