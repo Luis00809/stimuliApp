@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using StimuliApp.Services;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.SpaServices.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ string connectionString = configuration?.GetConnectionString("DefaultConnection"
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -26,7 +30,10 @@ builder.Services.AddScoped<UserService >();
 builder.Services.AddScoped<StimSetService >();
 builder.Services.AddScoped<StimuliService >();
 
-
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "StimuliApp/clientui/build";
+});
 
 var app = builder.Build();
 app.CreateDbIfNotExists();
@@ -34,6 +41,7 @@ app.CreateDbIfNotExists();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -41,22 +49,21 @@ if (app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
     
 }
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRouting();
-
+app.UseSpaStaticFiles(); // Serve static files from the React app
 app.UseAuthorization();
-
+app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapFallbackToFile("index.html", "ClientApp/build"); // Serve the React app
 app.Run();
