@@ -1,5 +1,5 @@
-export const getClients = () => {
-    return fetch('/api/Client', {
+export const getUsers = () => {
+    return fetch('/api/user/', {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -14,11 +14,10 @@ export const getClients = () => {
     .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
     });
-}
+};
 
-
-export const getClient = (clientId) => {
-    return fetch(`/api/Client/${clientId}`, {
+export const getOneUser = (setId) => {
+    return fetch(`/api/user/${setId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
