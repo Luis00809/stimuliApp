@@ -9,11 +9,50 @@ namespace StimuliApp.Controllers;
 
 public class UserController : ControllerBase
 {
-    UserService _service;
-    public UserController(UserService service)
+    private UserService _service;
+    private JwtService _jwtService; // Add a field for JwtService
+
+    public UserController(UserService service, JwtService jwtService) // Inject JwtService
     {
         _service = service;
+        _jwtService = jwtService; // Initialize the JwtService field
     }
+
+
+
+[HttpPost("authenticate")]
+public IActionResult Authenticate([FromBody] AuthenticationRequest request)
+{
+    string email = request.Email;
+    string password = request.Password;
+    // Use the UserService to find the user by email
+    var user = _service.GetByEmail(email);
+    if (user == null)
+    {
+        return Unauthorized();
+    }
+
+    // Assuming you have a method in UserService to verify the password
+    bool isPasswordCorrect = _service.VerifyPassword(user, password);
+
+    if (isPasswordCorrect)
+    {
+        // Password is correct, proceed with authentication
+        string token = _jwtService.GenerateToken(user);
+        
+        var response = new AuthenticationResponse
+        {
+            Token = token,
+            Id = user.Id,
+            Email = user.Email
+        };
+        return Ok(response);    }
+    else
+    {
+        return Unauthorized();
+    }
+}
+
 
     [HttpGet]
     public IEnumerable<User> GetAll()
@@ -39,7 +78,14 @@ public class UserController : ControllerBase
     public IActionResult Create(User newUser)
     {
         var user = _service.Create(newUser);
-        return CreatedAtAction(nameof(GetById), new { id = user!.Id}, user);
+        if (user == null)
+        {
+            return BadRequest(); // Adjust this based on your service's behavior
+        }
+
+        // Generate JWT token for the newly created user
+        string token = _jwtService.GenerateToken(user);
+        return CreatedAtAction(nameof(GetById), new { id = user.Id }, new { user, token });
     }
 
     [HttpPut]

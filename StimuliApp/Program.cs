@@ -29,6 +29,7 @@ builder.Services.AddScoped<ClientService >();
 builder.Services.AddScoped<UserService >();
 builder.Services.AddScoped<StimSetService >();
 builder.Services.AddScoped<StimuliService >();
+builder.Services.AddScoped<JwtService >();
 
 builder.Services.AddSpaStaticFiles(configuration =>
 {

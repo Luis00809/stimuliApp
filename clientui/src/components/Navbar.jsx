@@ -4,9 +4,23 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import { Link } from 'react-router-dom';
 import { House } from 'react-bootstrap-icons';
+import AuthService from '../API/auth';
+import { useState, useEffect } from 'react';
+
 
 
 export default function NavBar() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check if the user is logged in on component mount
+        const checkLoginStatus = () => {
+            const token = AuthService.getToken();
+            setIsLoggedIn(token ? true : false);
+        };
+        checkLoginStatus();
+    }, []);
+
     return (
         <>
             <Navbar bg="primary" data-bs-theme="dark">
@@ -20,7 +34,11 @@ export default function NavBar() {
                         </Nav.Link>
                         <Nav.Link as={Link} to='/'>Stimuli</Nav.Link>
                         <Nav.Link as={Link} to='/'>Sets</Nav.Link>
-                        
+                        {isLoggedIn ? (
+                            <Nav.Link onClick={AuthService.logout}>Sign Out</Nav.Link>
+                        ) : (
+                            <Nav.Link as={Link} to='/login'>Sign In</Nav.Link>
+                        )}
                         
                     </Nav>
                 </Container>
