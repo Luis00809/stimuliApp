@@ -106,6 +106,23 @@ public class ClientController : ControllerBase
         }
     }
 
+    [HttpGet("{id}/sets")]
+    public ActionResult<IEnumerable<StimSet>> GetClientSets(int id)
+    {
+        try
+        {
+            var client = _service.GetById(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            return new ActionResult<IEnumerable<StimSet>>(client.StimSets);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while fetching Client's stim sets: {e.Message}");
+        }
+    }
 
 
 }

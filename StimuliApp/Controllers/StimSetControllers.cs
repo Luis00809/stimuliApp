@@ -103,4 +103,22 @@ public class StimSetController : ControllerBase
         }
     }
 
+    [HttpGet("{id}/stimuli")]
+    public ActionResult<IEnumerable<Stimuli>> GetStimSetsStimuli(int id)
+    {
+        try
+        {
+            var set = _service.GetById(id);
+            if (set == null)
+            {
+                return NotFound();
+            }
+            return new ActionResult<IEnumerable<Stimuli>>(set.Stimuli);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while fetching StimSets stimuli: {e.Message}");
+        }
+    }
+
 }
