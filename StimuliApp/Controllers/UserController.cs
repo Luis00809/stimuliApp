@@ -135,5 +135,23 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         }
     }
 
+    [HttpGet("{id}/clients")]
+    public ActionResult<IEnumerable<Client>> GetUserClients(int id)
+    {
+        try
+        {
+            var user = _service.GetById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return new ActionResult<IEnumerable<Client>>(user.Clients);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while fetching user clients: {e.Message}");
+        }
+    }
+
 
 }

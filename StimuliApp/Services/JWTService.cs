@@ -29,7 +29,10 @@ public class JwtService
         var key = Encoding.ASCII.GetBytes(secretKey);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Email) }),
+            Subject = new ClaimsIdentity(new[] {
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim("id", user.Id.ToString()) // Include the user ID in the claims
+            }),
             Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(tokenExpiry)),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
