@@ -8,6 +8,7 @@ import './index.css'
 import Homepage from './pages/HomePage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import { LoginPage } from './pages/Login.jsx'
+import ClientPage from './pages/ClientPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       },{
         path: '/login',
         element: <LoginPage />
+      },
+      {
+        path: '/:id/client',
+        element: <ClientPage />
       }
     ]
   }

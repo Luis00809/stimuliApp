@@ -29,7 +29,7 @@ const Homepage = () => {
             <h2> Welcome to stimuli App!</h2>
             <h2>My clients:</h2>
             {clients.map(client => (
-                <ClientCard key={client.id} name={client.name} />
+                <ClientCard key={client.id} name={client.name} clientId={client.id} />
             ))}
         </div>
     );
