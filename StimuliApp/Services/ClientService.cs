@@ -25,6 +25,7 @@ public class ClientService
         return _context.Clients
         .Include(p => p.Users)
         .Include(p => p.StimSets)
+        .ThenInclude(ss => ss.Stimuli)
         .AsNoTracking()
         .SingleOrDefault(p => p.Id == id);
     }

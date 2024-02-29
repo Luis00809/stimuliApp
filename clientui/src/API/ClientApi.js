@@ -37,6 +37,7 @@ export const getClient = (clientId) => {
 
 export const getClientsStimSets = async (clientId) => {
     try {
+        console.log("fetch it:", clientId)
         const response = await fetch(`/api/client/${clientId}/sets`, {
             method: "GET",
             headers: {
