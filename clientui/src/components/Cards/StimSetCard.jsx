@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 export default function StimSetCard({
     title,
-    stimuli
+    stimuli,
+    id
 }) {
     return (
         <div>
@@ -20,7 +21,7 @@ export default function StimSetCard({
                                 <Card.Title>{title}</Card.Title>
                             </Col>
                             <Col xs={3} className='bg-primary '>
-                                <Link to={`/`}>
+                                <Link to={`/${id}/trial`}>
                                     <Button variant="primary">
                                         <ArrowRight size={30} />
                                     </Button>{' '}

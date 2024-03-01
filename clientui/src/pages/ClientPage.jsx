@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { getClientsStimSets } from "../API/ClientApi";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import StimSetCard from "../components/Cards/StimSetCard";
 
 const ClientPage = () => {
@@ -22,11 +22,10 @@ const ClientPage = () => {
 
         fetchStimSets();
     }, [clientId]);
-    console.log(sets);
     return (
         <div>
            {sets.map(set => (
-            <StimSetCard title={set.title} key={set.id} stimuli={set.stimuli} />
+            <StimSetCard id={set.id} title={set.title} key={set.id} stimuli={set.stimuli} />
            ))}
         </div>
     )

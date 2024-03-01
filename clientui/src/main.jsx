@@ -8,7 +8,8 @@ import './index.css'
 import Homepage from './pages/HomePage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import { LoginPage } from './pages/Login.jsx'
-import ClientPage from './pages/ClientPage.jsx'
+import ClientPage from './pages/ClientPage.jsx';
+import TrialPage from './pages/TrialPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/:id/client',
         element: <ClientPage />
+      }, 
+      {
+        path: '/:id/trial',
+        element: <TrialPage />
       }
     ]
   }
