@@ -1,18 +1,22 @@
 import StimuliCard from "../components/Cards/StimuliCard";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getStimSetsStimuli } from "../API/StimSetApi";
 import { useState, useEffect } from 'react';
 
 const TrialPage = () => {
+    
     const setId = useParams();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const maxTrialsFromURL = queryParams.get("maxTrials");
+    const numberOfCardsFromURL = queryParams.get("numberOfCards");
+
+
     const [stimuli, setStimuli] = useState([]);
     const [currentStimuli, setCurrentStimuli] = useState([]);
     const [targetStimuli, setTargetStimuli] = useState(null);
     const [trialCount, setTrialCount] = useState(0);
-    const [trialComplete, setTrialComplete] = useState(false);
-    
-    const maxTrials = 10; // Hardcoded max trials
-    const numberOfCards = 4;
+    const [trialComplete, setTrialComplete] = useState(false);    
 
     useEffect(() => {
         const fetchStimuli = async () => {
@@ -20,7 +24,7 @@ const TrialPage = () => {
                 if (setId) {
                     const stimSetStim = await getStimSetsStimuli(setId.id);
                     setStimuli(stimSetStim); 
-                    startTrial(stimSetStim, numberOfCards);
+                    startTrial(stimSetStim, numberOfCardsFromURL);
                 } else {
                     console.log("error getting stim sets stimuli");
                 }
@@ -30,7 +34,7 @@ const TrialPage = () => {
         };
 
         fetchStimuli();
-    }, [setId]);
+    }, [setId, numberOfCardsFromURL]);
 
     function getRandomStimuli(stimuli, numberOfStimuli) {
         const shuffled = stimuli.sort(() => 0.5 - Math.random());
@@ -41,16 +45,16 @@ const TrialPage = () => {
         const selectedStimuli = getRandomStimuli(allStimuli, numberOfStimuli);
         setCurrentStimuli(selectedStimuli);
         setTargetStimuli(selectedStimuli[Math.floor(Math.random() * selectedStimuli.length)]);
-        setTrialCount(trialCount + 1); // Increment trial count
+        setTrialCount(trialCount + 1); 
     };
 
     const handleStimuliSelection = (selectedStimuli) => {
         if (selectedStimuli.id === targetStimuli.id) {
             console.log("correct");
-            if (trialCount >= maxTrials - 1) {
+            if (trialCount >= maxTrialsFromURL) {
                 setTrialComplete(true); // Set trialComplete to true when maxTrials is reached
             } else {
-                startTrial(stimuli, numberOfCards); // Start next trial if not complete
+                startTrial(stimuli, numberOfCardsFromURL); // Start next trial if not complete
             }
         } else {
             console.log("Wrong!");

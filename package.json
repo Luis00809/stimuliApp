@@ -4,15 +4,14 @@
     "description": "",
     "main": "server/server.js",
     "scripts": {
-      "start": "node server/server.js",
-      "dev": "concurrently \"cd StimuliApp && dotnet run\" \"cd clientui && npm run dev\"",
-      "build": "concurrently \"cd StimuliApp && dotnet build\" \"cd clientui && npm run build\""
+        "start": "node server/server.js",
+        "dev": "concurrently \"cd StimuliApp && dotnet run\" \"cd clientui && npm run dev\"",
+        "build": "concurrently \"cd StimuliApp && dotnet build\" \"cd clientui && npm run build\""
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-      "concurrently": "^8.2.0"
+        "concurrently": "^8.2.0"
     }
-  }
-  
+}
