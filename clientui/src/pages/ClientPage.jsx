@@ -28,7 +28,6 @@ const ClientPage = () => {
         setModal(true); 
     }
     
-    // need to put modal on the card itself as it will need the separate stimset id 
 
     return (
         <div>

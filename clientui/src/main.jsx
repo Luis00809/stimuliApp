@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard.jsx';
 import { LoginPage } from './pages/Login.jsx';
 import ClientPage from './pages/ClientPage.jsx';
 import TrialPage from './pages/TrialPage.jsx';
+import StimuliPage from './pages/StimuliPage.jsx';
+import OneStimPage from './pages/SingleStimuliPage.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
  <BrowserRouter>
@@ -20,6 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/:id/client" element={<ClientPage />} />
       <Route path="/:id/trial" element={<TrialPage />} />
+      <Route path="/stimuli" element={<StimuliPage />} />
+      <Route path="/stimuli/:id" element={<OneStimPage />} />
+
     </Routes>
  </BrowserRouter>
 );

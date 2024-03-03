@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ClientCard from '../components/Cards/ClientCard';
 import { getUsersClients } from '../API/UserApi';
 import auth from "../API/auth"
-import { useLocation } from 'react-router-dom';
 
 
 const Homepage = () => {
     const [clients, setClients] = useState([]);
-    
-    const location = useLocation();
-    console.log(location)
 
     useEffect(() => {
         const fetchClients = async () => {
