@@ -33,7 +33,7 @@ export default function NavBar() {
                             <House color='white' size={30} />   
                         </Nav.Link>
                         <Nav.Link as={Link} to='/stimuli'>Stimuli</Nav.Link>
-                        <Nav.Link as={Link} to='/'>Sets</Nav.Link>
+                        <Nav.Link as={Link} to='/stimsets'>Sets</Nav.Link>
                         {isLoggedIn ? (
                             <Nav.Link onClick={AuthService.logout}>Sign Out</Nav.Link>
                         ) : (

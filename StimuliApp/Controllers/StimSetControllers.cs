@@ -42,7 +42,7 @@ public class StimSetController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = set!.Id}, set);
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public IActionResult Update(int id, StimSet updatedSet)
     {
         var updatingSet = _service.GetById(id);
@@ -118,6 +118,20 @@ public class StimSetController : ControllerBase
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while fetching StimSets stimuli: {e.Message}");
+        }
+    }
+
+    [HttpDelete("{id}/removeStimuli/{stimId}")]
+    public IActionResult RemoveStimuli(int id, int stimId)
+    {
+        try
+        {
+            _service.RemoveStimuli(stimId, id);
+            return NoContent();
+        }
+        catch (InvalidOperationException e)
+        {
+            return BadRequest(e.Message);
         }
     }
 

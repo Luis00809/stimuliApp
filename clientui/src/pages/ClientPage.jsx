@@ -24,10 +24,6 @@ const ClientPage = () => {
         fetchStimSets();
     }, [clientId]);
 
-    const handleModal = () => {
-        setModal(true); 
-    }
-    
 
     return (
         <div>
