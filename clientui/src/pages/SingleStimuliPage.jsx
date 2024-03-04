@@ -6,7 +6,8 @@ import StimuliCard from "../components/Cards/StimuliCard";
 const OneStimPage = () => {
     const [stim, setStim] = useState();
     const stimId = useParams();
-
+    console.log(stim);
+    
     useEffect(() => {
         const getOneStim = async () => {
             try {

@@ -1,15 +1,13 @@
-// pass in cards to display
-// pass in maxtrials
-// start button to go to trial page
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
 import InputGroup from 'react-bootstrap/InputGroup';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export default function TrialModal({setId}){
+export default function TrialModal({setId, closeModal}){
     const [maxTrials, setMaxTrials] = useState(0);
     const [numberOfCards, setNumberOfCards] = useState(0);
 
@@ -50,6 +48,9 @@ export default function TrialModal({setId}){
                             Begin
                         </Button>{' '}
                     </Link>
+                    <Button onClick={closeModal}>
+                        Exit
+                    </Button>
                 </Card.Body>
             </Card>
         </div>

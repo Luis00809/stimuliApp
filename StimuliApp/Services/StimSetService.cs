@@ -16,6 +16,7 @@ public class StimSetService
     public IEnumerable<StimSet> GetAll()
     {
         return _context.StimSets
+        .Include(p => p.Stimuli)
         .AsNoTracking()
         .ToList();
     }
@@ -98,4 +99,23 @@ public class StimSetService
             _context.SaveChanges();
         }
     }
+
+    public void RemoveStimuli(int stimId, int setId)
+{
+    var stimSetUpdating = _context.StimSets.Include(s => s.Stimuli).SingleOrDefault(s => s.Id == setId);
+    if (stimSetUpdating is null)
+    {
+        throw new InvalidOperationException("StimSet doesn't exist");
+    }
+
+    var stimuliUpdating = stimSetUpdating?.Stimuli?.SingleOrDefault(s => s.Id == stimId);
+    if (stimuliUpdating is null)
+    {
+        throw new InvalidOperationException("Stimuli doesn't exist in this StimSet");
+    }
+
+    stimSetUpdating?.Stimuli?.Remove(stimuliUpdating);
+    _context.SaveChanges();
+}
+
 }

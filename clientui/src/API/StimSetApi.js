@@ -52,3 +52,52 @@ export const getStimSetsStimuli = async (setId) => {
         console.log("error getting users clients", error);
     }
 }
+
+export const removeStimuliFromSet = async(stimuliId, setId) => {
+    try {
+        const response = await fetch(`/api/stimset/${setId}/removeStimuli/${stimuliId}`,{
+            method: "DELETE"
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.log("error removing stimuli from stim set: ", error);
+    }
+}
+
+export const deleteStimSet = async (id) => {
+    try {
+        const response = await fetch(`/api/stimset/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        };
+        
+    } catch (error) {
+        console.log("error deleting stimset: ", error);
+    }
+}
+
+
+export const updateStimSet = async (id, updatedSet) => {
+   try {
+    const response = await fetch(`/api/stimset/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedSet),
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+   } catch (error) {
+    console.log("error updating stimset: ", error)
+   }
+}

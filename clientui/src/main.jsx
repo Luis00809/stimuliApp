@@ -12,6 +12,8 @@ import ClientPage from './pages/ClientPage.jsx';
 import TrialPage from './pages/TrialPage.jsx';
 import StimuliPage from './pages/StimuliPage.jsx';
 import OneStimPage from './pages/SingleStimuliPage.jsx';
+import StimSetsPage from './pages/StimSetsPage.jsx';
+import SingleSetPage from './pages/SingleSetPage.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
  <BrowserRouter>
@@ -24,6 +26,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/:id/trial" element={<TrialPage />} />
       <Route path="/stimuli" element={<StimuliPage />} />
       <Route path="/stimuli/:id" element={<OneStimPage />} />
+      <Route path="/stimsets" element={<StimSetsPage />} />
+      <Route path="/stimset/:id" element={<SingleSetPage />} />
 
     </Routes>
  </BrowserRouter>
