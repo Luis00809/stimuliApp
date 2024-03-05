@@ -89,3 +89,21 @@ export const createStimuli = async (newStim) => {
         console.log("error creating stimuli: ", error);
     }
 }
+
+
+export const addStimuliToSet = async (stimId, stimSetId) => {
+    try {
+        
+        const request = await fetch(`/api/Stimuli/${stimId}/addstimset/${stimSetId}`,{
+        method: 'PUT',
+        });
+
+        if (!request.ok) {
+            throw new Error('Network response was not ok');
+        }
+    
+        return request.ok;
+    } catch (error) {
+        console.log("error adding stimuli to set: ", error);
+    }
+}

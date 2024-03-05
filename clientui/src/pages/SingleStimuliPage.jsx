@@ -14,7 +14,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { updateStimuli, deleteStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom'; 
-
+import DisplayStimSetList from "../components/Accordion/StimSet";
 
 // import editStimuliModal from "../components/Modals/StimuliEditModal";
 
@@ -56,6 +56,8 @@ const OneStimPage = () => {
         }
     }
 
+    
+
     useEffect(() => {
         const getOneStim = async () => {
             try {
@@ -84,6 +86,7 @@ const OneStimPage = () => {
                     <Button onClick={() => handleDelete(stimId.id)}>
                         <Trash />
                     </Button>
+                    <DisplayStimSetList  stimId={stimId.id} />
                 </Card.Body>
             </Card>
 

@@ -2,6 +2,7 @@ using StimuliApp.Models;
 using StimuliApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace StimuliApp.Services;
 
