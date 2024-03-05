@@ -25,8 +25,9 @@ export default function EditStimSet(
             try {
                 const set = await getOneStimSet(id);
                 setSet(set);
-                setTitle(set.title); 
-                setSetStimuli(set.stimuli)
+                console.log(set)
+                // setTitle(set.title); 
+                // setSetStimuli(set.stimuli)
             } catch (error) {
                 console.log("error getting stimuil set: ", error);
             }

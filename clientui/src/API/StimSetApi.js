@@ -101,3 +101,22 @@ export const updateStimSet = async (id, updatedSet) => {
     console.log("error updating stimset: ", error)
    }
 }
+
+export const createStimSet = async (newSet) => {
+    try {
+        const request = await fetch (`/api/stimset/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newSet),
+        })
+        if (!request.ok) {
+            throw new Error(`HTTP error! status: ${request.status}`);
+        };
+
+        return request.json();
+    } catch (error) {
+        console.log("error creating stimset: ", error);
+    }
+}
