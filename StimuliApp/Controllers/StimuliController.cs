@@ -43,7 +43,7 @@ public class StimuliController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = stim?.Id}, stim);
     }
 
-    [HttpPut]
+    [HttpPut("{id}/update")]
     public IActionResult Update(int id, Stimuli updatedStim)
     {
         var stim = _service.GetById(id);

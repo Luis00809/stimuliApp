@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import { ArrowRight, PencilFill, Trash } from 'react-bootstrap-icons';
 import { useState} from 'react';
 import TrialModal from '../Modals/TrialModal';
-import { Link } from 'react-router-dom';
 import EditStimSet from '../Modals/StimSetEditModal';
 import { deleteStimSet } from '../../API/StimSetApi';
 
