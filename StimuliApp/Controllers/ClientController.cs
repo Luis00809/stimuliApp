@@ -76,7 +76,7 @@ public class ClientController : ControllerBase
         }
     }
 
-    [HttpPut("{id}/addset")]
+    [HttpPut("{id}/addset/{StimSetId}")]
     public IActionResult AddSet(int id, int StimSetId)
     {
         var clientUpdate = _service.GetById(id);
@@ -124,5 +124,18 @@ public class ClientController : ControllerBase
         }
     }
 
+    [HttpDelete("{clientId}/removeset/{setId}")]
+    public IActionResult RemoveStimuli(int clientId, int setId)
+    {
+        try
+        {
+            _service.RemoveSetFromClient(clientId, setId);
+            return NoContent();
+        }
+        catch (InvalidOperationException e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
 }

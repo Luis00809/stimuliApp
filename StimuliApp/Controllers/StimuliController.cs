@@ -43,7 +43,7 @@ public class StimuliController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = stim?.Id}, stim);
     }
 
-    [HttpPut]
+    [HttpPut("{id}/update")]
     public IActionResult Update(int id, Stimuli updatedStim)
     {
         var stim = _service.GetById(id);
@@ -59,9 +59,10 @@ public class StimuliController : ControllerBase
         }
     }
 
-    [HttpPut("{id}/addstimset")]
+    [HttpPut("{id}/addstimset/{StimSetId}")]
     public IActionResult AddStimSet(int id, int StimSetId)
     {
+        
         var stimUpdate = _service.GetById(id);
         if(stimUpdate is not null)
         {
@@ -70,6 +71,8 @@ public class StimuliController : ControllerBase
         } 
         else 
         {
+            Console.WriteLine(id);
+            Console.WriteLine(StimSetId);
             return NotFound();
         }
     }
