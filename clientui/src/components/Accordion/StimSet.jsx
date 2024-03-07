@@ -11,26 +11,38 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { addStimuliToSet } from '../../API/StimuliApit';
 import { Plus } from 'react-bootstrap-icons';
+import { addSetToClient } from '../../API/ClientApi';
 
 export default function DisplayStimSetList({
-    stimId
+    id,
+    actionType,
+    onRefresh
 }){
     const [stimSetList, setStimSetList] = useState([]);
     
-    const handleAddingStimuli = async (stimId, setId) => {
+    const handleAddingStimuli = async (id, setId) => {
         try {
-            const intStimId = parseInt(stimId, 10);
+            const intStimId = parseInt(id, 10);
             const intStimSetId = parseInt(setId, 10);
 
-            console.log("stimuli id: ", intStimId)
-            console.log("stim set id: ",intStimSetId)
             const request = await addStimuliToSet(intStimId, intStimSetId);
             if(request){
                 alert('Added Stimuli to Set.');
-                // setRefreshKey(prevKey => prevKey + 1);
             }
         } catch (error) {
             console.log("error addign stimuli to stim set: ", error);
+        }
+    }
+
+    const handleAddingSetToClient = async (clientId, setId) => {
+        try {
+            const addSet = await addSetToClient(clientId, setId);
+            if (addSet) {
+                alert("Added stimuli set to client.");
+                onRefresh();
+            }
+        } catch (error) {
+            console.log("error adding set to client: ", error);
         }
     }
 
@@ -63,7 +75,13 @@ export default function DisplayStimSetList({
                                         <Card.Title>{stimSet.title}</Card.Title>
                                     </Col>
                                     <Col>
-                                        <Button  onClick={() => handleAddingStimuli(stimId, stimSet.id)}>
+                                        <Button  onClick={() => {
+                                            if(actionType === 'addStimuli'){
+                                                handleAddingStimuli(id, stimSet.id);
+                                            } else if (actionType === 'AddSetToClient') {
+                                                handleAddingSetToClient(id, stimSet.id)
+                                            }
+                                        }}>
                                             <Plus/>
                                         </Button>
                                     </Col>

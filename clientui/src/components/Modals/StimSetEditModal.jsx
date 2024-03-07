@@ -14,7 +14,8 @@ import { getOneStimSet, removeStimuliFromSet, updateStimSet} from '../../API/Sti
 export default function EditStimSet(
     {
     id,
-    closeModal
+    closeModal,
+    onRefresh
 }) {
     const [oneSet, setSet] = useState();
     const [stimSetTitle, setTitle] = useState('');
@@ -26,8 +27,8 @@ export default function EditStimSet(
                 const set = await getOneStimSet(id);
                 setSet(set);
                 console.log(set)
-                // setTitle(set.title); 
-                // setSetStimuli(set.stimuli)
+                setTitle(set.title); 
+                setSetStimuli(set.stimuli)
             } catch (error) {
                 console.log("error getting stimuil set: ", error);
             }
@@ -42,6 +43,7 @@ export default function EditStimSet(
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
+        onRefresh();
     }
 
     const removeStim = async (stimuliId, setId) => {
@@ -49,6 +51,7 @@ export default function EditStimSet(
             await removeStimuliFromSet(stimuliId, setId)
             const updatedSet = await getOneStimSet(setId);
             setSetStimuli(updatedSet.stimuli);
+            onRefresh();
         } catch (error) {
             console.log("error in removing stimuli from stim set: ", error);
         }
@@ -61,6 +64,8 @@ export default function EditStimSet(
             await updateStimSet(id, { title: stimSetTitle });
             // const updatedSet = await getOneStimSet(id);
             // setTitle(updatedSet.title)
+            onRefresh();
+            closeModal();
             // Optionally, you can refresh the stimuli list or update the state here
         } catch (error) {
             console.log("error updating stim set title: ", error);

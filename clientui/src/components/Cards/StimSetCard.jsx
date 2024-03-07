@@ -8,21 +8,21 @@ import { useState} from 'react';
 import TrialModal from '../Modals/TrialModal';
 import EditStimSet from '../Modals/StimSetEditModal';
 import { deleteStimSet } from '../../API/StimSetApi';
-
-
-// will add an edit button 
-// add a delete button
-
+import { removeSetFromClient } from '../../API/ClientApi';
+import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'; 
 
 export default function StimSetCard({
     title,
     stimuli,
     id,
+    onRefresh
     
 }) {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
-
+    const clientId = useParams();
+    const navigate = useNavigate();
     const handleModal = () => {
         setModal(true);
     }
@@ -41,24 +41,45 @@ export default function StimSetCard({
 
 
     const handleSetDelete = async(id) => {
-        console.log(id)
 
         const confirmDelete = window.confirm("Are you sure you want to delete this StimSet?");
         if (confirmDelete) {
             try {
                const deleted = await deleteStimSet(id);
-                // Optionally, refresh the list or update the UI to reflect the deletion
-                if (deleted) {
-                    alert("StimSet deleted successfully!");
-                }
+               alert("Set removed from Client.")
+                navigate(`/${clientId.id}/client`)
+               if (deleted) {
+                alert("Set removed from Client.")
+                navigate(`/${clientId.id}/client`)
+            }
+
             } catch (error) {
                 console.log("error deleting stimset: ", error);
             }
         } else {
-            // If the user cancels, simply close the confirmation dialog
-            console.log("Deletion cancelled by the user.");
+            console.log("Deletion canceled by the user.");
         }
     }
+
+    const handleRemoveSetFromClient = async (clientId, setId) => {
+        const confirmDelete = window.confirm("Are you sure you want to remove this stimuli set from the client?");
+        if (confirmDelete) {
+            try {
+                const request  = await removeSetFromClient(clientId, setId);
+
+                if (request) {
+                    alert("Set removed from Client.")
+                    navigate(`/${clientId}/client`)
+                }
+            } catch (error) {
+                console.log("error removing stim set from client: ", error);
+            }
+        } else {
+            console.log("delete cancled");
+        }
+    }
+
+
 
 
     return (
@@ -66,8 +87,13 @@ export default function StimSetCard({
             <Card style={{ width: '25rem' }}>
                     <Container fluid>
                        <Row>
-                            <Col xs={8}>
+                            <Col xs={4}>
                                 <Card.Title>{title}</Card.Title>
+                            </Col>
+                            <Col>
+                                <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                    Remove
+                                </Button>
                             </Col>
                             <Col>
                                 <Button onClick={() => handleSetDelete(id)}>
@@ -99,7 +125,7 @@ export default function StimSetCard({
                         {modal && <TrialModal setId={id} closeModal={closeModal}/>}
                        </Row>
                        <Row>
-                        {editModal && <EditStimSet id={id} closeModal={handleEditCloeModal}/>}
+                        {editModal && <EditStimSet onRefresh={onRefresh} id={id} closeModal={handleEditCloeModal}/>}
                        </Row>
                     </Container>
             </Card>

@@ -86,7 +86,7 @@ const OneStimPage = () => {
                     <Button onClick={() => handleDelete(stimId.id)}>
                         <Trash />
                     </Button>
-                    <DisplayStimSetList  stimId={stimId.id} />
+                    <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
                 </Card.Body>
             </Card>
 

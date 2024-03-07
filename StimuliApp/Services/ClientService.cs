@@ -99,4 +99,25 @@ public class ClientService
     }
 
 
+
+    public void RemoveSetFromClient(int clientId, int setId)
+    {
+        var clientUpdating = _context.Clients.Include(s => s.StimSets).SingleOrDefault(s => s.Id == clientId);
+        if(clientUpdating is null)
+
+        {
+            throw new InvalidOperationException("Client doesn't exist");
+        };
+
+        var setUpdating = clientUpdating?.StimSets?.SingleOrDefault(s => s.Id == setId);
+        if(setUpdating is null)
+
+        {
+            throw new InvalidOperationException("Stim set doesn't exist");
+        }
+
+        clientUpdating?.StimSets?.Remove(setUpdating);
+        _context.SaveChanges();
+    }
+
 }

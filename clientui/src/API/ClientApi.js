@@ -37,7 +37,6 @@ export const getClient = (clientId) => {
 
 export const getClientsStimSets = async (clientId) => {
     try {
-        console.log("fetch it:", clientId)
         const response = await fetch(`/api/client/${clientId}/sets`, {
             method: "GET",
             headers: {
@@ -52,5 +51,37 @@ export const getClientsStimSets = async (clientId) => {
         return await response.json();
     } catch (error) {
         console.log("error getting users clients", error);
+    }
+}
+
+export const addSetToClient = async (clientId, setId) => {
+    try {
+        const request = await fetch(`/api/client/${clientId}/addset/${setId}`, {
+            method: "PUT"
+        });
+        if (!request.ok) {
+            throw new Error(`HTTP error! status: ${request.status}`);
+        }
+
+        return request.ok;
+    } catch (error) {
+        console.log("error adding set to client: ", error);
+    }
+}
+
+export const removeSetFromClient = async (clientId, setId) => {
+    try {
+        const request = await fetch(`/api/client/${clientId}/removeset/${setId}`, {
+            method: "DELETE",
+        });
+
+        if (!request.ok) {
+            throw new Error(`HTTP error! status: ${request.status}`);
+        }
+
+        return request.ok;
+        
+    } catch (error) {
+        console.log("error removing set from client: ", error);
     }
 }

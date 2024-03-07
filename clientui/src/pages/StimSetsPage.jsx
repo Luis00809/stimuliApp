@@ -41,6 +41,11 @@ const StimSetsPage = () => {
         }
     }
 
+    const refreshData = () => {
+        setRefreshKey(prevKey => prevKey + 1);
+    };
+
+
 
     useEffect(() => {
         const getSets = async () => {
@@ -64,7 +69,7 @@ const StimSetsPage = () => {
             </div>
             <div>
                 {stimSets.map(set => (
-                    <StimSetCard key={set.id} id={set.id} title={set.title} stimuli={set.stimuli} />
+                    <StimSetCard onRefresh={refreshData} key={set.id} id={set.id} title={set.title} stimuli={set.stimuli} />
                 ))}
             </div>
             <div>
