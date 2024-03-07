@@ -41,19 +41,23 @@ const ClientPage = () => {
     }, [clientId, refreshKey]);
 
 
+    const openAddToSetModal = () => {
+        
+    }
+
     return (
         <div>
             <div>
                 <p>Client: {clientName}</p>
             </div>
             <div>
-                <Button>
+                <Button onClick={openAddToSetModal}>
                     <PlusCircle/>
                 </Button>
             </div>
             <div>
                 {sets.map(set => (
-                    <StimSetCard id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
+                    <StimSetCard onRefresh={refreshData} id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
                 ))}
             </div>
             <div>

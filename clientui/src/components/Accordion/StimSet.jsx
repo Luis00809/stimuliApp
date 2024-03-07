@@ -46,7 +46,6 @@ export default function DisplayStimSetList({
         }
     }
 
-    // might need to use useEffect so would adjust from below
     useEffect(() => {
         const getStimSets = async () => {
             try {
@@ -60,7 +59,6 @@ export default function DisplayStimSetList({
         getStimSets();
     }, []);
 
-    // getting a warning that each child in a list should have unique key prop
     return (
         <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
