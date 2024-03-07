@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button';
 import { ArrowRight, PencilFill, Trash } from 'react-bootstrap-icons';
 import { useState} from 'react';
 import TrialModal from '../Modals/TrialModal';
-import EditStimSet from '../Modals/StimSetEditModal';
 import { deleteStimSet } from '../../API/StimSetApi';
 import { removeSetFromClient } from '../../API/ClientApi';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'; 
+import EditStimSet from '../Modals/EditStimSet';
 
 export default function StimSetCard({
     title,
@@ -122,10 +122,10 @@ export default function StimSetCard({
                             </Col>
                        </Row>
                        <Row>
-                        {modal && <TrialModal setId={id} closeModal={closeModal}/>}
+                        {modal && <TrialModal show={modal} setId={id} closeModal={closeModal}/>}
                        </Row>
                        <Row>
-                        {editModal && <EditStimSet onRefresh={onRefresh} id={id} closeModal={handleEditCloeModal}/>}
+                       {editModal && <EditStimSet id={id} show={editModal} closeModal={() => setEditModal(false)} onRefresh={onRefresh} />}
                        </Row>
                     </Container>
             </Card>
