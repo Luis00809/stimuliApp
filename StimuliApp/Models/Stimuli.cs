@@ -10,4 +10,6 @@ public class Stimuli
     public string? Name { get; set; }
     public ICollection<StimSet>? StimSets { get; set; }
 
+    public string? Image {get; set;}
+
 }

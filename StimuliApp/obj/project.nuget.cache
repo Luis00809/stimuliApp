@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "d2vEMvRIZ6ZJY9h1QnfXZnJrIOwV+r/PlM7NwEpzPcjo0pt+4piWjbnsN6jvUSha3t96Krp7M2lvbVyYvtmaBQ==",
+  "dgSpecHash": "PDH4lg0LHFC90RxKeD2WwBuT089i8ajCr4GWFMq1wvdHI8mcNHaEv9w/F5NZ2XAIqKEISbQNvFIkHFutaQX2WQ==",
   "success": true,
   "projectFilePath": "/Users/davinch/csharp/stimuliApp/StimuliApp/StimuliApp.csproj",
   "expectedPackageFiles": [
+    "/Users/davinch/.nuget/packages/awssdk.core/3.7.302.15/awssdk.core.3.7.302.15.nupkg.sha512",
+    "/Users/davinch/.nuget/packages/awssdk.s3/3.7.305.30/awssdk.s3.3.7.305.30.nupkg.sha512",
     "/Users/davinch/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/davinch/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
     "/Users/davinch/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

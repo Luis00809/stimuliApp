@@ -21,6 +21,8 @@ const StimuliPage = () => {
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [createStimTitle, setStimTitle] = useState('');
+    const [file, setFile] = useState(null);
+
     const [refreshKey, setRefreshKey] = useState(0);
 
     const handleClose = () => setShow(false);
@@ -30,12 +32,12 @@ const StimuliPage = () => {
         setStimTitle(event.target.value)
     };
 
-    const handleCreatingStimuli = async (event, createStimTitle) => {
+    const handleCreatingStimuli = async (event) => {
         event.preventDefault();
-
+    
         try {
-            const creatingStimuli = await createStimuli({name: createStimTitle})
-            if(createStimuli) {
+            const creatingStimuli = await createStimuli({name: createStimTitle}, file)
+            if(creatingStimuli) {
                 handleClose();
                 setRefreshKey(prevKey => prevKey + 1);
             }
@@ -43,7 +45,7 @@ const StimuliPage = () => {
             console.log("error creating stimuli: ", error);
         }
     }
-
+    
     const cardOnClick = (stimuliId) => {
         navigate(`/stimuli/${stimuliId}`);
     }
@@ -69,7 +71,7 @@ const StimuliPage = () => {
             </div>
             <div>
                 {stimuli.map(stim => (
-                    <StimuliCard key={stim.id} title={stim.name} onClick={() => cardOnClick(stim.id)} />
+                    <StimuliCard key={stim.id} title={stim.name} img={stim.image} onClick={() => cardOnClick(stim.id)} />
                 ))}
             </div>
             <div>
@@ -89,7 +91,13 @@ const StimuliPage = () => {
                                                     />
                                 </InputGroup>
                             </ListGroup>
-                        </Col>       
+                        </Col>     
+                        </Row>
+                        <Row>
+                            <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>Upload Image</Form.Label>
+                                <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
+                            </Form.Group>
                         </Row>
                     </Container>
                     <Modal.Footer>

@@ -1,5 +1,4 @@
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/appsettings.Development.json
-/Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/appsettings.json
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/StimuliApp.staticwebassets.runtime.json
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/StimuliApp
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/StimuliApp.deps.json
@@ -143,3 +142,6 @@
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/Microsoft.AspNetCore.SpaServices.Extensions.dll
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/AWSSDK.Core.dll
+/Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/AWSSDK.S3.dll
+/Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/appsettings.json

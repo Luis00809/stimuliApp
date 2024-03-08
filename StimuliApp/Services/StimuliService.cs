@@ -2,16 +2,23 @@ using StimuliApp.Models;
 using StimuliApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Microsoft.Extensions.Configuration;
+
 
 namespace StimuliApp.Services;
 
 public class StimuliService
 {
     private readonly StimuliAppContext _context;
-    public StimuliService (StimuliAppContext context)
+    private readonly IConfiguration _configuration;
+
+public StimuliService(StimuliAppContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
+
     }
 
     public IEnumerable<Stimuli> GetAll()
@@ -36,19 +43,32 @@ public class StimuliService
         return newStim;
     }
 
-    public void Update(Stimuli updatedStim)
+    public async Task UpdateAsync(Stimuli updatedStim, IFormFile? file = null)
     {
         var stimuliUpdating = _context.Stimuli.Find(updatedStim.Id);
         if(stimuliUpdating is null)
         {
             throw new InvalidOperationException("Stimuli doesn't exist");
-
         }
 
         stimuliUpdating.Name = updatedStim.Name ?? stimuliUpdating.Name;
+
+        // Check if a file has been provided and upload it to S3 if so
+        if (file != null)
+        {
+            // Assuming you have a method to upload the file to S3 and get the URL
+            string imageUrl = await UploadImageToS3Async(file);
+            stimuliUpdating.Image = imageUrl;
+        }
+        _context.Entry(stimuliUpdating).State = EntityState.Modified;
         _context.SaveChanges();
     }
 
+    public bool StimuliExists(int id)
+    {
+        return _context.Stimuli.Any(e => e.Id == id);
+    }
+    
     public void AddStimSet(int stimId, int setId)
     {
         var updatingStim = _context.Stimuli.Find(stimId);
@@ -78,5 +98,28 @@ public class StimuliService
         }
     }
 
+    public async Task<string> UploadImageToS3Async(IFormFile file)
+    {
+        var accessKey = _configuration.GetValue<string>("AWS:AccessKeyId");
+        var secretKey = _configuration.GetValue<string>("AWS:SecretAccessKey");
+        var region = _configuration.GetValue<string>("AWS:Region");
+        var bucketName = _configuration.GetValue<string>("AWS:BucketName");
+
+        // Create an AmazonS3Client using the retrieved credentials and region
+        var s3Client = new AmazonS3Client(accessKey, secretKey, Amazon.RegionEndpoint.GetBySystemName(region));
+        var transferUtility = new TransferUtility(s3Client);
+
+        var uploadRequest = new TransferUtilityUploadRequest
+        {
+            BucketName = bucketName, 
+            Key = file.FileName,
+            InputStream = file.OpenReadStream()
+        };
+
+        await transferUtility.UploadAsync(uploadRequest);
+
+        // Return the URL or key of the uploaded image
+        return $"https://{uploadRequest.BucketName}.s3.amazonaws.com/{uploadRequest.Key}";
+    }
 
 }

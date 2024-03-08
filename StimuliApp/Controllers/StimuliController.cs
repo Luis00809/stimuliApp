@@ -1,6 +1,7 @@
 using StimuliApp.Models;
 using StimuliApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace StimuliApp.Controllers;
 
@@ -37,27 +38,65 @@ public class StimuliController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Stimuli newStim)
+public async Task<IActionResult> Create([FromForm]Stimuli newStim, [FromForm]IFormFile? file = null)
     {
+        try{
+            if(file != null)
+            {
+                string imageUrl = await _service.UploadImageToS3Async(file);
+                newStim.Image = imageUrl; 
+
+            }
+
         var stim = _service.Create(newStim);
         return CreatedAtAction(nameof(GetById), new { id = stim?.Id}, stim);
+
+        } catch(Exception e) {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while trying to create stimuli: {e.Message}");
+        }
     }
 
     [HttpPut("{id}/update")]
-    public IActionResult Update(int id, Stimuli updatedStim)
+public async Task<IActionResult> Update(int id, [FromForm]Stimuli updatedStim, [FromForm]IFormFile? file = null)
+    
     {
-        var stim = _service.GetById(id);
-        if(stim is not null)
+        try
         {
-            updatedStim.Id = id;
-            _service.Update(updatedStim);
-            return NoContent();
-        } 
-        else 
+            var stim = _service.GetById(id);
+            if (stim is not null)
+            {
+                updatedStim.Id = id;
+                if (file != null)
+                {
+                    string imageUrl = await _service.UploadImageToS3Async(file);
+                    updatedStim.Image = imageUrl;
+                }
+                await _service.UpdateAsync(updatedStim);
+            return Ok(updatedStim);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        catch (DbUpdateConcurrencyException)
         {
-            return NotFound();
+            // Handle concurrency exceptions
+            if (!_service.StimuliExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                return StatusCode(409, "Conflict occurred, please try again.");
+            }
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "Internal server error");
         }
     }
+
 
     [HttpPut("{id}/addstimset/{StimSetId}")]
     public IActionResult AddStimSet(int id, int StimSetId)
