@@ -25,6 +25,7 @@ const OneStimPage = () => {
     const [show, setShow] = useState(false);
     const [stimTitle, setTitle] = useState('');
     const [refreshKey, setRefreshKey] = useState(0);
+    const [file, setFile] = useState(null);
 
 
     const handleClose = () => setShow(false);
@@ -37,7 +38,7 @@ const OneStimPage = () => {
     const handleUpdate = async (event, id) => {
         event.preventDefault();
         try {
-            const response = await updateStimuli(id, {name: stimTitle})
+            const response = await updateStimuli(id, {name: stimTitle}, file)
             if(response){
                 handleClose();
                 setRefreshKey(prevKey => prevKey + 1);
@@ -77,7 +78,7 @@ const OneStimPage = () => {
         <div>
             <Card style={{ width: '18rem' }}>
                 <Card.Body>
-                {stim && <StimuliCard title={stim.name} id={stim.id} onClick={() => console.log('works')} />}
+                {stim && <StimuliCard img={stim.image} title={stim.name} id={stim.id} onClick={() => console.log('works')} />}
                 </Card.Body>
                 <Card.Body>
                     <Button onClick={handleShow}>
@@ -108,6 +109,14 @@ const OneStimPage = () => {
                             </InputGroup>
                         </ListGroup>
                     </Col>       
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>Upload Image</Form.Label>
+                                <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
+                            </Form.Group>
+                        </Col>
                     </Row>
                 </Container>
                 <Modal.Footer>

@@ -43,16 +43,24 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
         return newStim;
     }
 
-    public void Update(Stimuli updatedStim)
+    public async Task UpdateAsync(Stimuli updatedStim, IFormFile? file = null)
     {
         var stimuliUpdating = _context.Stimuli.Find(updatedStim.Id);
         if(stimuliUpdating is null)
         {
             throw new InvalidOperationException("Stimuli doesn't exist");
-
         }
 
         stimuliUpdating.Name = updatedStim.Name ?? stimuliUpdating.Name;
+
+        // Check if a file has been provided and upload it to S3 if so
+        if (file != null)
+        {
+            // Assuming you have a method to upload the file to S3 and get the URL
+            string imageUrl = await UploadImageToS3Async(file);
+            stimuliUpdating.Image = imageUrl;
+        }
+        _context.Entry(stimuliUpdating).State = EntityState.Modified;
         _context.SaveChanges();
     }
 
@@ -104,8 +112,8 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
         var uploadRequest = new TransferUtilityUploadRequest
         {
             BucketName = bucketName, 
-            FilePath = file.FileName,
-            Key = file.FileName
+            Key = file.FileName,
+            InputStream = file.OpenReadStream()
         };
 
         await transferUtility.UploadAsync(uploadRequest);

@@ -38,7 +38,7 @@ public class StimuliController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Stimuli newStim, IFormFile file)
+public async Task<IActionResult> Create([FromForm]Stimuli newStim, [FromForm]IFormFile? file = null)
     {
         try{
             if(file != null)
@@ -57,7 +57,8 @@ public class StimuliController : ControllerBase
     }
 
     [HttpPut("{id}/update")]
-    public IActionResult Update(int id, Stimuli updatedStim)
+public async Task<IActionResult> Update(int id, [FromForm]Stimuli updatedStim, [FromForm]IFormFile? file = null)
+    
     {
         try
         {
@@ -65,8 +66,13 @@ public class StimuliController : ControllerBase
             if (stim is not null)
             {
                 updatedStim.Id = id;
-                _service.Update(updatedStim);
-                return NoContent();
+                if (file != null)
+                {
+                    string imageUrl = await _service.UploadImageToS3Async(file);
+                    updatedStim.Image = imageUrl;
+                }
+                await _service.UpdateAsync(updatedStim);
+            return Ok(updatedStim);
             }
             else
             {

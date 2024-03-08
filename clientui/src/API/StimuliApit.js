@@ -35,25 +35,31 @@ export const getAStimuli = (stimId) => {
     });
 }
 
-export const updateStimuli = async (id, updatedStim) => {
-   try {
-    const response = await fetch(`/api/stimuli/${id}/update`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedStim),
-    });
+export const updateStimuli = async (id, updatedStim, file) => {
+    try {
+        const formData = new FormData();
 
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
+        formData.append('Name', updatedStim.name);
+
+        if (file) {
+            formData.append('file', file);
+        }
+
+        const response = await fetch(`/api/stimuli/${id}/update`, {
+            method: 'PUT',
+            body: formData, 
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.log('error updating stimuli: ', error);
     }
-
-    return response.ok;
-   } catch (error) {
-    console.log('error updating stimuli: ', error);
-   }
 }
+
 
 export const deleteStimuli = async (id) => {
     try {
@@ -70,23 +76,32 @@ export const deleteStimuli = async (id) => {
     }
 }
 
-export const createStimuli = async (newStim) => {
+export const createStimuli = async (newStim, file) => {
     try {
-        const request = await fetch (`/api/stimuli/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newStim),
-        })
-        if (!request.ok) {
-            throw new Error(`HTTP error! status: ${request.status}`);
-        };
+        const formData = new FormData();
+        formData.append('Name', newStim.name);        
+        
+        if (file) {
+            formData.append('file', file);
+        }
 
-        return request.json();
 
+        const response = await fetch(`/api/stimuli/`, {
+            method: 'POST',
+            body: formData, 
+        });
+
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const responseBody = await response.json();
+        console.log("Response body:", responseBody);
+
+        return responseBody;
     } catch (error) {
-        console.log("error creating stimuli: ", error);
+        console.error('Error creating stimuli:', error);
     }
 }
 
