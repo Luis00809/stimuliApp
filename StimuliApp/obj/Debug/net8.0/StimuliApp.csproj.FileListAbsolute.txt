@@ -144,3 +144,4 @@
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/AWSSDK.Core.dll
 /Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/AWSSDK.S3.dll
+/Users/davinch/csharp/stimuliApp/StimuliApp/bin/Debug/net8.0/appsettings.json

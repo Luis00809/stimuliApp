@@ -2,16 +2,23 @@ using StimuliApp.Models;
 using StimuliApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Microsoft.Extensions.Configuration;
+
 
 namespace StimuliApp.Services;
 
 public class StimuliService
 {
     private readonly StimuliAppContext _context;
-    public StimuliService (StimuliAppContext context)
+    private readonly IConfiguration _configuration;
+
+public StimuliService(StimuliAppContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
+
     }
 
     public IEnumerable<Stimuli> GetAll()
@@ -49,6 +56,11 @@ public class StimuliService
         _context.SaveChanges();
     }
 
+    public bool StimuliExists(int id)
+    {
+        return _context.Stimuli.Any(e => e.Id == id);
+    }
+    
     public void AddStimSet(int stimId, int setId)
     {
         var updatingStim = _context.Stimuli.Find(stimId);
@@ -78,5 +90,28 @@ public class StimuliService
         }
     }
 
+    public async Task<string> UploadImageToS3Async(IFormFile file)
+    {
+        var accessKey = _configuration.GetValue<string>("AWS:AccessKeyId");
+        var secretKey = _configuration.GetValue<string>("AWS:SecretAccessKey");
+        var region = _configuration.GetValue<string>("AWS:Region");
+        var bucketName = _configuration.GetValue<string>("AWS:BucketName");
+
+        // Create an AmazonS3Client using the retrieved credentials and region
+        var s3Client = new AmazonS3Client(accessKey, secretKey, Amazon.RegionEndpoint.GetBySystemName(region));
+        var transferUtility = new TransferUtility(s3Client);
+
+        var uploadRequest = new TransferUtilityUploadRequest
+        {
+            BucketName = bucketName, 
+            FilePath = file.FileName,
+            Key = file.FileName
+        };
+
+        await transferUtility.UploadAsync(uploadRequest);
+
+        // Return the URL or key of the uploaded image
+        return $"https://{uploadRequest.BucketName}.s3.amazonaws.com/{uploadRequest.Key}";
+    }
 
 }
