@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "StimuliApp/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "3.7.305.30",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "8.0.2",
           "Microsoft.AspNetCore.SpaServices.Extensions": "8.0.2",
           "Microsoft.EntityFrameworkCore.Design": "8.0.2",
@@ -17,6 +18,25 @@
         },
         "runtime": {
           "StimuliApp.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.302.15": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.302.15"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.305.30": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.302.15"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.305.30"
+          }
         }
       },
       "Azure.Core/1.35.0": {
@@ -931,6 +951,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.302.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DgSlbR4JIthe+iYl4qVfz3Lkh59th/gNPYloxf9iU0pIx3hHYqJ0UJRg9mwBcmpeyBccRSwdNoo9yF9X3tb/rg==",
+      "path": "awssdk.core/3.7.302.15",
+      "hashPath": "awssdk.core.3.7.302.15.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.7.305.30": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y0iiT4Rl1pQrr58UXOZaig2D4l7BkFOXcUF5BSBeJIYxmsXodEfvvGemVj1ySg6Cxf+0qWmh5qqQTRN5jCyIwg==",
+      "path": "awssdk.s3/3.7.305.30",
+      "hashPath": "awssdk.s3.3.7.305.30.nupkg.sha512"
     },
     "Azure.Core/1.35.0": {
       "type": "package",
