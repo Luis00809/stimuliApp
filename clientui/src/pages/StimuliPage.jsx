@@ -63,18 +63,27 @@ const StimuliPage = () => {
     }, [refreshKey])
 
     return (
-        <div>
-            <div>
-                <Button onClick={handleShow} variant="primary">
-                    <PlusCircle />
-                </Button>
-            </div>
-            <div>
-                {stimuli.map(stim => (
-                    <StimuliCard key={stim.id} title={stim.name} img={stim.image} onClick={() => cardOnClick(stim.id)} />
-                ))}
-            </div>
-            <div>
+        <Container className="mt-3" >
+            <Row>
+                <Col xs={10}>
+                    <h1> All Stimuli:</h1>
+                </Col>
+                <Col>
+                    <Button onClick={handleShow} variant="primary">
+                        Create Stimuli
+                        {/* <PlusCircle /> */}
+                    </Button>
+                </Col>
+            </Row>
+            <Row>
+                    {stimuli.map(stim => (
+                        <Col key={stim.id} xs={6} md={6} lg={6} xl={4} >
+                            <StimuliCard key={stim.id} title={stim.name} img={stim.image} onClick={() => cardOnClick(stim.id)} />
+                        </Col>
+                    ))}
+            </Row>
+            <Row>
+                <Col>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                     <Modal.Title>Create Stimuli: </Modal.Title>
@@ -112,8 +121,9 @@ const StimuliPage = () => {
                     
                     </Modal.Footer>
                 </Modal> 
-            </div>
-        </div>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 
