@@ -57,7 +57,7 @@ const ClientPage = () => {
             </div>
             <div>
                 {sets.map(set => (
-                    <StimSetCard onRefresh={refreshData} id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
+                    <StimSetCard setOption={"client"} onRefresh={refreshData} id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
                 ))}
             </div>
             <div>

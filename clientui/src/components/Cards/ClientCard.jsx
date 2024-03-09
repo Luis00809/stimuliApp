@@ -12,10 +12,10 @@ export default function ClientCard({
 }) {
     return (
         <div>
-            <Card style={{ width: '18rem' }}>
+            <Card className='mb-2 border border-3 border-primary ' style={{ width: '18rem' }}>
                     <Container fluid>
                        <Row>
-                            <Col xs={9} >
+                            <Col xs={9} className='d-flex align-items-center' >
                                 <Card.Title>{name}</Card.Title>
                             </Col>
                             <Col xs={3} className='bg-primary '>

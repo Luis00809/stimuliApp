@@ -16,7 +16,8 @@ export default function StimSetCard({
     title,
     stimuli,
     id,
-    onRefresh
+    onRefresh,
+    setOption,
     
 }) {
     const [modal, setModal] = useState(false);
@@ -46,12 +47,9 @@ export default function StimSetCard({
         if (confirmDelete) {
             try {
                const deleted = await deleteStimSet(id);
-               alert("Set removed from Client.")
-                navigate(`/${clientId.id}/client`)
-               if (deleted) {
-                alert("Set removed from Client.")
-                navigate(`/${clientId.id}/client`)
-            }
+               alert("Set deleted.")
+               onRefresh();
+               
 
             } catch (error) {
                 console.log("error deleting stimset: ", error);
@@ -90,16 +88,20 @@ export default function StimSetCard({
                             <Col xs={4}>
                                 <Card.Title>{title}</Card.Title>
                             </Col>
-                            <Col>
-                                <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
-                                    Remove
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button onClick={() => handleSetDelete(id)}>
-                                    <Trash/>
-                                </Button>
-                            </Col>
+                            {setOption === "client" ? (
+                                <Col>
+                                    <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                        Remove
+                                    </Button>
+                                </Col>
+                            ) : (
+                                <Col>
+                                    <Button onClick={() => handleSetDelete(id)}>
+                                        <Trash/>
+                                    </Button>
+                                </Col>
+                            )}
+                            
                             <Col>
                                 <Button onClick={handleEditModal} variant="primary">
                                     <PencilFill />
