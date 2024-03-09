@@ -16,7 +16,8 @@ export default function StimSetCard({
     title,
     stimuli,
     id,
-    onRefresh
+    onRefresh,
+    setOption,
     
 }) {
     const [modal, setModal] = useState(false);
@@ -46,12 +47,9 @@ export default function StimSetCard({
         if (confirmDelete) {
             try {
                const deleted = await deleteStimSet(id);
-               alert("Set removed from Client.")
-                navigate(`/${clientId.id}/client`)
-               if (deleted) {
-                alert("Set removed from Client.")
-                navigate(`/${clientId.id}/client`)
-            }
+               alert("Set deleted.")
+               onRefresh();
+               
 
             } catch (error) {
                 console.log("error deleting stimset: ", error);
@@ -79,42 +77,44 @@ export default function StimSetCard({
         }
     }
 
-
-
-
     return (
         <div>
-            <Card style={{ width: '25rem' }}>
+            <Card className='mb-5 stimSetCard border border-3 border-dark rounded-4'>
                     <Container fluid>
-                       <Row>
-                            <Col xs={4}>
-                                <Card.Title>{title}</Card.Title>
+                       <Row className='border-bottom border-3 border-dark'>
+                            <Col xs={6}>
+                                <h2>{title}</h2>
                             </Col>
-                            <Col>
-                                <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
-                                    Remove
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button onClick={() => handleSetDelete(id)}>
-                                    <Trash/>
-                                </Button>
-                            </Col>
-                            <Col>
+                            {setOption === "client" ? (
+                                <Col xs={4} className='d-flex align-items-end'>
+                                    <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                        Remove
+                                    </Button>
+                                </Col>
+                            ) : (
+                                <Col xs={4} className='d-flex align-items-end'>
+                                    <Button onClick={() => handleSetDelete(id)}>
+                                        <Trash/>
+                                    </Button>
+                                </Col>
+                            )}
+                            
+                            <Col xs={2} className='d-flex align-items-end'>
                                 <Button onClick={handleEditModal} variant="primary">
                                     <PencilFill />
                                 </Button>{' '}
                             </Col>
-                            
                        </Row>
                        <Row>
+                        <Col className='border-bottom border-2 border-dark' xs={12}>
+                            <h4 >Stimuli in set:</h4>
+                        </Col>
                         <Col>
-                            <h4>Stimuli in set:</h4>
-                        {stimuli.map(stimuliItem => (
+                            {stimuli.map(stimuliItem => (
                                 <div key={stimuliItem.id}>{stimuliItem.name}</div>
                             ))}
                         </Col>
-                        <Col xs={3} className='bg-primary '>
+                        <Col xs={3} className='d-flex align-items-end justify-content-end'>
                                 <Button onClick={handleModal} variant="primary">
                                     <ArrowRight size={30} />
                                 </Button>{' '}

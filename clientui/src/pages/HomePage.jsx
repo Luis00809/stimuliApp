@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ClientCard from '../components/Cards/ClientCard';
 import { getUsersClients } from '../API/UserApi';
-import auth from "../API/auth"
+import auth from "../API/auth";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
+import "../css/Homepage.css"
 
 const Homepage = () => {
     const [clients, setClients] = useState([]);
@@ -23,16 +27,27 @@ const Homepage = () => {
         };
 
         fetchClients();
-    }, []); // Empty dependency array means this effect runs once on component mount
+    }, []); 
 
     return (
-        <div>
-            <h2> Welcome to stimuli App!</h2>
-            <h2>My clients:</h2>
-            {clients.map(client => (
-                <ClientCard key={client.id} name={client.name} clientId={client.id} />
-            ))}
-        </div>
+        <Container className="h-100 d-flex flex-column homeContainer">
+            <Row className='mb-5 justify-content-center'>
+                <Col className='text-center'>
+                    <h1>Welcome to stimuli app!</h1>
+                </Col>
+            </Row>
+            <Row className="justify-content-center">
+                <Col>
+                    <h2>My clients:</h2>
+                </Col>
+                <Col>
+                    {clients.map(client => (
+                        <ClientCard key={client.id} name={client.name} clientId={client.id} />
+                    ))}
+                </Col>
+            </Row>
+        </Container>
+        
     );
 }
 

@@ -77,6 +77,8 @@ export const deleteStimSet = async (id) => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         };
+
+    
         
     } catch (error) {
         console.log("error deleting stimset: ", error);

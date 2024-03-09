@@ -71,7 +71,7 @@ const TrialPage = () => {
                         <h2 style={{textAlign: 'center', marginBottom: '20px'}}>Target: {targetStimuli.name}</h2>
                     )}
                     {currentStimuli.map(stim => (
-                        <StimuliCard key={stim.id} title={stim.name} stimuli={stim} onClick={() => handleStimuliSelection(stim)} />
+                        <StimuliCard img={stim.image} key={stim.id} title={stim.name} stimuli={stim} onClick={() => handleStimuliSelection(stim)} />
                     ))}
                 </>
             )}
