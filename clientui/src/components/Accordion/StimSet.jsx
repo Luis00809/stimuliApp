@@ -60,7 +60,7 @@ export default function DisplayStimSetList({
     }, []);
 
     return (
-        <Accordion defaultActiveKey="0">
+        <Accordion >
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Stimuli Sets</Accordion.Header>
                 <Accordion.Body>

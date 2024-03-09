@@ -74,24 +74,38 @@ const OneStimPage = () => {
 
 
     return (
-        
-        <div>
-            <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                {stim && <StimuliCard img={stim.image} title={stim.name} id={stim.id} onClick={() => console.log('works')} />}
-                </Card.Body>
-                <Card.Body>
-                    <Button onClick={handleShow}>
-                        <PencilFill />
-                    </Button>
-                    <Button onClick={() => handleDelete(stimId.id)}>
-                        <Trash />
-                    </Button>
-                    <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
-                </Card.Body>
-            </Card>
-
-            <Modal show={show} onHide={handleClose}>
+        <Container className="mt-5">
+            <Row>
+                <Col className="d-flex justify-content-center">
+                    <Card style={{ width: '30rem' }}>
+                        <Row>
+                            <Col className="d-flex justify-content-start">
+                                <Button onClick={handleShow}>
+                                    <PencilFill />
+                                </Button>
+                            </Col>
+                            <Col className="d-flex justify-content-end">
+                                <Button onClick={() => handleDelete(stimId.id)}>
+                                    <Trash />
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="d-flex justify-content-center ">
+                                {stim && <StimuliCard img={stim.image} title={stim.name} id={stim.id} onClick={() => console.log('works')} />}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>{stimTitle}</Modal.Title>
                 </Modal.Header>
@@ -131,7 +145,11 @@ const OneStimPage = () => {
                 
                 </Modal.Footer>
             </Modal>
-        </div>
+                </Col>
+            </Row>
+        </Container>
+        
+    
     )
 }
 
