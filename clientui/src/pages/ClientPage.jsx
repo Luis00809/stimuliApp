@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import { PlusCircle } from 'react-bootstrap-icons';
 import DisplayStimSetList from "../components/Accordion/StimSet";
 
+import "../css/Clientpage.css"
+
 const ClientPage = () => {
     const [sets, setSets] = useState([]);
     const clientId  = useParams();
@@ -46,24 +48,27 @@ const ClientPage = () => {
     }
 
     return (
-        <div>
-            <div>
-                <p>Client: {clientName}</p>
-            </div>
-            <div>
-                <Button onClick={openAddToSetModal}>
-                    <PlusCircle/>
-                </Button>
-            </div>
-            <div>
-                {sets.map(set => (
-                    <StimSetCard setOption={"client"} onRefresh={refreshData} id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
-                ))}
-            </div>
-            <div>
-                <DisplayStimSetList onRefresh={refreshData} actionType={'AddSetToClient'} id={clientId.id} />
-            </div>
-        </div>
+        <Container>
+            <Row>
+                <Col className="text-center m-5">
+                    <h1>{clientName}</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={12}>
+                    <h2 className="mb-2">{clientName}'s Stimuli Sets:</h2>
+                </Col>
+                <Col lg={7}>
+                    {sets.map(set => (
+                        <StimSetCard setOption={"client"} onRefresh={refreshData} id={set.id} title={set.title} key={set.id} stimuli={set.stimuli}/>
+                    ))}
+                </Col>
+                <Col lg={5}>
+                    <DisplayStimSetList onRefresh={refreshData} actionType={'AddSetToClient'} id={clientId.id} />
+                </Col>
+            </Row>            
+        </Container>
+               
     )
 }
 

@@ -1,0 +1,10 @@
+.stimSetCard {
+    width: 100%;
+}
+
+
+@media (min-width: 992px) {
+    .stimSetCard{
+        width: 75%;
+    }
+}
