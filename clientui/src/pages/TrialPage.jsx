@@ -2,11 +2,20 @@ import StimuliCard from "../components/Cards/StimuliCard";
 import { useParams, useLocation } from "react-router-dom";
 import { getStimSetsStimuli } from "../API/StimSetApi";
 import { useState, useEffect } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ResultTable from "../components/ResultsTable";
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom'; 
+
 
 const TrialPage = () => {
     
     const setId = useParams();
     const location = useLocation();
+    const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const maxTrialsFromURL = queryParams.get("maxTrials");
     const numberOfCardsFromURL = queryParams.get("numberOfCards");
@@ -17,6 +26,12 @@ const TrialPage = () => {
     const [targetStimuli, setTargetStimuli] = useState(null);
     const [trialCount, setTrialCount] = useState(0);
     const [trialComplete, setTrialComplete] = useState(false);    
+
+    const [correct, setCorrect] = useState(0);
+    const [incorrect, setIncorrect] = useState(0);
+
+    const [trialResults, setTrialResults] = useState([]);
+
 
     useEffect(() => {
         const fetchStimuli = async () => {
@@ -48,31 +63,82 @@ const TrialPage = () => {
         setTrialCount(trialCount + 1); 
     };
 
+    const cancelTrial = () => {
+        const trialCancel = confirm("Are you sure you want to end the trial?")
+        if (trialCancel) {
+            navigate("/");
+        }
+    }
+
     const handleStimuliSelection = (selectedStimuli) => {
+        const trialResult = {
+            target: targetStimuli.name,
+            correct: selectedStimuli.id === targetStimuli.id
+        };
+        setTrialResults([...trialResults, trialResult]);
+    
         if (selectedStimuli.id === targetStimuli.id) {
-            console.log("correct");
-            if (trialCount >= maxTrialsFromURL) {
-                setTrialComplete(true); // Set trialComplete to true when maxTrials is reached
-            } else {
-                startTrial(stimuli, numberOfCardsFromURL); // Start next trial if not complete
-            }
+            setCorrect(correct + 1);
         } else {
-            console.log("Wrong!");
+            setIncorrect(incorrect + 1);
+        }
+    
+        if (trialCount >= maxTrialsFromURL) {
+            setTrialComplete(true); // Set trialComplete to true when maxTrials is reached
+        } else {
+            startTrial(stimuli, numberOfCardsFromURL); // Start next trial if not complete
         }
     };
 
     return (
         <div>
+            
             {trialComplete ? (
-                <h2>Trial Complete!</h2>
+                <Container>
+                    <Row className="mb-4 mt-4">
+                        <Col className="text-center">
+                            <h2>Trial Complete!</h2>
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ResultTable trials={trialResults} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="text-center">
+                            <Link to="/">
+                                <Button className="btn btn-primary">Back to Home</Button>
+                            </Link>
+                        </Col>
+                    </Row>
+                </Container>
             ) : (
                 <>
-                    {targetStimuli && (
-                        <h2 style={{textAlign: 'center', marginBottom: '20px'}}>Target: {targetStimuli.name}</h2>
-                    )}
-                    {currentStimuli.map(stim => (
-                        <StimuliCard img={stim.image} key={stim.id} title={stim.name} stimuli={stim} onClick={() => handleStimuliSelection(stim)} />
-                    ))}
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Button className="btn btn-danger" onClick={cancelTrial}>Cancel Trial</Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {targetStimuli && (
+                                    <h2 className="text-center mt-5 mb-5">Target: {targetStimuli.name}</h2>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row>
+                            {currentStimuli.map(stim => (
+                                <Col key={stim.id} xs={6} md={4} >
+                                    <StimuliCard img={stim.image} key={stim.id} title={stim.name} stimuli={stim} onClick={() => handleStimuliSelection(stim)} /> 
+                                </Col>
+                            ))}
+                        </Row>
+                    </Container>
+                    
+                    
                 </>
             )}
         </div>
