@@ -23,21 +23,15 @@ a:hover {
   max-height: 6rem;
 }
 
- /* .stimuliCard {
-  width: 5rem;
-  height: 5rem;
-}  */
+ 
 
 
-@media (min-width: 768px) {
-  /* .stimuliCard{
-    width: 18rem;
-    height: 20rem;
-  } */
+@media (min-width: 992px) {
 
   .stimuliImg {
     width: 18rem;
     max-width: 18rem;
     max-height: 18rem;
   }
+  
 }  
