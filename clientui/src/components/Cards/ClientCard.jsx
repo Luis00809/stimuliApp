@@ -18,10 +18,10 @@ export default function ClientCard({
                             <Col xs={9} className='d-flex align-items-center' >
                                 <Card.Title>{name}</Card.Title>
                             </Col>
-                            <Col xs={3} className='bg-primary '>
+                            <Col xs={3} className='d-flex align-items-center justify-content-end ' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
                                 <Link to={`/${clientId}/client`}>
-                                    <Button variant="primary">
-                                        <ArrowRight size={30} />
+                                    <Button  variant="primary">
+                                        <ArrowRight size={30} /> 
                                     </Button>{' '}
                                 </Link>
                             </Col>
