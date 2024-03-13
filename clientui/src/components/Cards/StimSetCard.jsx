@@ -83,25 +83,25 @@ export default function StimSetCard({
             <Card className='mb-5 stimSetCard border border-3 border-dark rounded-4'>
                     <Container fluid>
                        <Row className='border-bottom border-3 border-dark' >
-                            <Col xs={6}>
+                            <Col xs={4} className='text-center border-end border-3 border-dark'>
                                 <h2>{title}</h2>
                             </Col>
                             {setOption === "client" ? (
-                                <Col xs={4} className='d-flex align-items-end'>
-                                    <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                <Col xs={4} className='d-flex align-items-end justify-content-end'>
+                                    <Button className='h-100' onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
                                         Remove
                                     </Button>
                                 </Col>
                             ) : (
-                                <Col xs={4} className='d-flex align-items-end'>
-                                    <Button onClick={() => handleSetDelete(id)}>
+                                <Col xs={4} className='d-flex align-items-end justify-content-end'>
+                                    <Button className='h-100' onClick={() => handleSetDelete(id)}>
                                         <Trash/>
                                     </Button>
                                 </Col>
                             )}
                             
-                            <Col xs={2} className='d-flex align-items-end'>
-                                <Button onClick={handleEditModal} variant="primary">
+                            <Col xs={4} className='d-flex align-items-end justify-content-end' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
+                                <Button className='h-100' onClick={handleEditModal} variant="primary">
                                     <PencilFill />
                                 </Button>{' '}
                             </Col>

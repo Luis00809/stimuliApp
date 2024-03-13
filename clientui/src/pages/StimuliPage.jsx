@@ -64,11 +64,11 @@ const StimuliPage = () => {
 
     return (
         <Container className="mt-3" >
-            <Row>
-                <Col xs={10}>
+            <Row className="my-4">
+                <Col xs={9}>
                     <h1> All Stimuli:</h1>
                 </Col>
-                <Col>
+                <Col xs={3}>
                     <Button onClick={handleShow} variant="primary">
                         Create Stimuli
                         {/* <PlusCircle /> */}
