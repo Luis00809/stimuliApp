@@ -23,8 +23,65 @@ a:hover {
   max-height: 6rem;
 }
 
- 
+.backGroundColor {
+  background-color: rgb(3, 4, 94);
+}
 
+h1 {
+ color: rgb(2, 62, 138);
+}
+
+.cardBorder {
+  border: 3px solid rgb(0, 150, 199);
+  background-color: rgb(173, 232, 244);
+  transition: transform 0.4s ease-in-out; 
+
+}
+
+.cardBorder:hover {
+  background-color: rgb(72, 202, 228);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.7);
+  transform: scale(1.03);
+}
+
+.stimuliCard {
+  border: 3px solid rgb(0, 150, 199);
+  background-color: rgb(173, 232, 244);
+  transition: transform 0.4s ease-in-out; 
+}
+
+.stimuliCard:hover {
+  background-color: rgb(72, 202, 228);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.7);
+  transform: scale(1.03);
+}
+
+.btns{
+  background-color: rgb(0, 150, 199);
+  border-color: rgb(3, 4, 94);
+  border: 3px solid rgb(3, 4, 94);
+  transition: transform 0.4s ease-in-out; 
+}
+
+.btns:hover {
+  background-color: rgb(3, 4, 94);
+  border-color: rgb(0, 150, 199);
+  color: rgb(144, 224, 239);
+  transform: scale(1.03);
+}
+.cardBg{
+  border: 3px solid rgb(0, 150, 199);
+}
+
+.addBtns{
+  background-color: #6c757d;
+  border-color: rgb(3, 4, 94);
+
+}
+
+.addBtns:hover {
+  background-color: rgb(3, 4, 94);
+}
 
 @media (min-width: 992px) {
 

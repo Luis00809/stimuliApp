@@ -45,8 +45,6 @@ const StimSetsPage = () => {
         setRefreshKey(prevKey => prevKey + 1);
     };
 
-
-
     useEffect(() => {
         const getSets = async () => {
             try {
@@ -67,7 +65,7 @@ const StimSetsPage = () => {
                     <h1>Stimuli Sets</h1>
                 </Col>
                 <Col xs={1} className=" d-flex justify-content-end"  style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }}>
-                    <Button onClick={handleShow} variant="primary">
+                    <Button onClick={handleShow} className="addBtns">
                         <PlusCircle />
                     </Button>
                 </Col>

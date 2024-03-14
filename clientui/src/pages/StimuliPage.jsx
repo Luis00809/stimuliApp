@@ -69,7 +69,7 @@ const StimuliPage = () => {
                     <h1> All Stimuli:</h1>
                 </Col>
                 <Col xs={3}>
-                    <Button onClick={handleShow} variant="primary">
+                    <Button onClick={handleShow} className="addBtns">
                         Create Stimuli
                         {/* <PlusCircle /> */}
                     </Button>

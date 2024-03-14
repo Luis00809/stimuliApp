@@ -11,8 +11,8 @@ export default function StimuliCard({
     img
 }){
     return (
-        <Button onClick={onClick} variant="dark" >
-            <Card className='stimuliCard' >
+        <Button className='stimuliCard' onClick={onClick}  >
+            <Card >
                 <Container>
                     <Row>
                         <Col>
