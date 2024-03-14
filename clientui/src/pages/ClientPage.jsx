@@ -43,10 +43,6 @@ const ClientPage = () => {
     }, [clientId, refreshKey]);
 
 
-    const openAddToSetModal = () => {
-        
-    }
-
     return (
         <Container>
             <Row>

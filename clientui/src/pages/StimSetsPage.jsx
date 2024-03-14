@@ -45,8 +45,6 @@ const StimSetsPage = () => {
         setRefreshKey(prevKey => prevKey + 1);
     };
 
-
-
     useEffect(() => {
         const getSets = async () => {
             try {
@@ -61,51 +59,61 @@ const StimSetsPage = () => {
 
 
     return (
-        <div>
-            <div>
-                <Button onClick={handleShow} variant="primary">
-                    <PlusCircle />
-                </Button>
-            </div>
-            <div>
-                {stimSets.map(set => (
-                    <StimSetCard onRefresh={refreshData} key={set.id} id={set.id} title={set.title} stimuli={set.stimuli} />
-                ))}
-            </div>
-            <div>
-            <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Create Stimuli Set: </Modal.Title>
-                    </Modal.Header>
-                    <Container>
-                        <Row>
-                        <Col>
-                            <ListGroup className="list-group-flush">
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Text>Stimuli Set Title:</InputGroup.Text>
-                                        <Form.Control
-                                        type='text'
-                                        onChange={handleSettingTitle}
-                                                    />
-                                </InputGroup>
-                            </ListGroup>
-                        </Col>       
-                        </Row>
-                    </Container>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+        <Container>
+            <Row xs={11} className="my-4 border-bottom border-3 text-center">
+                <Col >
+                    <h1>Stimuli Sets</h1>
+                </Col>
+                <Col xs={1} className=" d-flex justify-content-end"  style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }}>
+                    <Button onClick={handleShow} className="addBtns">
+                        <PlusCircle />
                     </Button>
-                    <form onSubmit={(event) => handleCreatingStimSet(event, setTitle)}>
-                        <Button  variant="primary" type="submit">
-                            Create Stimuli Set
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    {stimSets.map(set => (
+                        <StimSetCard onRefresh={refreshData} key={set.id} id={set.id} title={set.title} stimuli={set.stimuli} />
+                    ))}
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Create Stimuli Set: </Modal.Title>
+                        </Modal.Header>
+                        <Container>
+                            <Row>
+                            <Col>
+                                <ListGroup className="list-group-flush">
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text>Stimuli Set Title:</InputGroup.Text>
+                                            <Form.Control
+                                            type='text'
+                                            onChange={handleSettingTitle}
+                                                        />
+                                    </InputGroup>
+                                </ListGroup>
+                            </Col>       
+                            </Row>
+                        </Container>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
                         </Button>
-                    </form>
-                    
-                    </Modal.Footer>
-                </Modal> 
-            </div>
-        </div>
+                        <form onSubmit={(event) => handleCreatingStimSet(event, setTitle)}>
+                            <Button  variant="primary" type="submit">
+                                Create Stimuli Set
+                            </Button>
+                        </form>
+                        
+                        </Modal.Footer>
+                    </Modal> 
+                </Col>
+            </Row>
+                
+        </Container>
     )
 }
 

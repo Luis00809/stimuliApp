@@ -36,7 +36,7 @@ const Homepage = () => {
                     <h1>Welcome to stimuli app!</h1>
                 </Col>
             </Row>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center cardBorder p-3 m-1 rounded-4 ">
                 <Col>
                     <h2>My clients:</h2>
                 </Col>

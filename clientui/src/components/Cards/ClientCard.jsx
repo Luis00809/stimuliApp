@@ -12,16 +12,16 @@ export default function ClientCard({
 }) {
     return (
         <div>
-            <Card className='mb-2 border border-3 border-primary ' style={{ width: '18rem' }}>
+            <Card className='mb-2 cardBg' style={{ width: '18rem' }}>
                     <Container fluid>
                        <Row>
                             <Col xs={9} className='d-flex align-items-center' >
                                 <Card.Title>{name}</Card.Title>
                             </Col>
-                            <Col xs={3} className='bg-primary '>
+                            <Col xs={3} className='d-flex align-items-center justify-content-end ' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
                                 <Link to={`/${clientId}/client`}>
-                                    <Button variant="primary">
-                                        <ArrowRight size={30} />
+                                    <Button className='btns rounded-2'>
+                                        <ArrowRight size={30} /> 
                                     </Button>{' '}
                                 </Link>
                             </Col>

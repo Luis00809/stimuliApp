@@ -11,6 +11,7 @@ import { removeSetFromClient } from '../../API/ClientApi';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'; 
 import EditStimSet from '../Modals/EditStimSet';
+import Accordion from 'react-bootstrap/Accordion';
 
 export default function StimSetCard({
     title,
@@ -79,43 +80,54 @@ export default function StimSetCard({
 
     return (
         <div>
-            <Card className='mb-5 stimSetCard border border-3 border-dark rounded-4'>
+            <Card className='mb-5 stimSetCard cardBorder rounded-4'>
                     <Container fluid>
-                       <Row className='border-bottom border-3 border-dark'>
-                            <Col xs={6}>
+                       <Row className='border-bottom border-3 border-dark' >
+                            <Col xs={6} md={4} className='text-center border-end border-3 border-dark'>
                                 <h2>{title}</h2>
                             </Col>
                             {setOption === "client" ? (
-                                <Col xs={4} className='d-flex align-items-end'>
-                                    <Button onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                <Col xs={4} className='d-flex align-items-end justify-content-end'>
+                                    <Button className='h-100 btns rounded-2' onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
                                         Remove
                                     </Button>
                                 </Col>
                             ) : (
-                                <Col xs={4} className='d-flex align-items-end'>
-                                    <Button onClick={() => handleSetDelete(id)}>
+                                <Col xs={4} md={4} className='d-flex align-items-end justify-content-end'>
+                                    <Button className='h-100 btns rounded-2' onClick={() => handleSetDelete(id)}>
                                         <Trash/>
                                     </Button>
                                 </Col>
                             )}
                             
-                            <Col xs={2} className='d-flex align-items-end'>
-                                <Button onClick={handleEditModal} variant="primary">
+                            <Col xs={2} md={4} className='d-flex align-items-end justify-content-end' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
+                                <Button className='h-100 btns rounded-2' onClick={handleEditModal} variant="primary">
                                     <PencilFill />
                                 </Button>{' '}
                             </Col>
                        </Row>
                        <Row>
-                        <Col className='border-bottom border-2 border-dark' xs={12}>
-                            <h4 >Stimuli in set:</h4>
-                        </Col>
-                        <Col>
-                            {stimuli.map(stimuliItem => (
-                                <div key={stimuliItem.id}>{stimuliItem.name}</div>
-                            ))}
-                        </Col>
-                        <Col xs={3} className='d-flex align-items-end justify-content-end'>
-                                <Button onClick={handleModal} variant="primary">
+                        <Col className='border-bottom  border-2 border-dark w-100' xs={12} style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
+                            <Accordion  >
+                                <Accordion.Item  eventKey="0">
+                                    <Accordion.Header>Stimuli</Accordion.Header>
+                                    <Accordion.Body>
+                                        <Container >
+                                            <Row >
+                                                {stimuli.map(stimuliItem => (
+                                                    <Col md={3} className=' w-25 border m-1 d-flex flex-column justify-content-center' key={stimuliItem.id}>
+                                                        <img alt={stimuliItem.name} src={stimuliItem.image} />
+                                                        <p className=' mt-3 text-center '>{stimuliItem.name}</p>
+                                                    </Col>
+                                                ))}
+                                            </Row>
+                                        </Container> 
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Col>                                                    
+                        <Col xs={12} className='d-flex align-items-end justify-content-end' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
+                                <Button onClick={handleModal} className='btns rounded-2'>
                                     <ArrowRight size={30} />
                                 </Button>{' '}
                                 
