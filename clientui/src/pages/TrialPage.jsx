@@ -97,7 +97,7 @@ const TrialPage = () => {
                 <Container>
                     <Row className="mb-4 mt-4">
                         <Col className="text-center">
-                            <h2>Trial Complete!</h2>
+                            <h1>Trial Complete!</h1>
                         </Col>
                         
                     </Row>
@@ -109,7 +109,7 @@ const TrialPage = () => {
                     <Row>
                         <Col className="text-center">
                             <Link to="/">
-                                <Button className="btn btn-primary">Back to Home</Button>
+                                <Button className="btns">Back to Home</Button>
                             </Link>
                         </Col>
                     </Row>

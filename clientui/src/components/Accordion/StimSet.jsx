@@ -73,7 +73,7 @@ export default function DisplayStimSetList({
                                         <Card.Title>{stimSet.title}</Card.Title>
                                     </Col>
                                     <Col>
-                                        <Button  onClick={() => {
+                                        <Button className="addBtns"  onClick={() => {
                                             if(actionType === 'addStimuli'){
                                                 handleAddingStimuli(id, stimSet.id);
                                             } else if (actionType === 'AddSetToClient') {
