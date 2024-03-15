@@ -49,7 +49,7 @@ export default function TrialModal({ show, closeModal, setId }) {
             </Modal.Body>
             <Modal.Footer>
                 <Link to={`/${setId}/trial?maxTrials=${maxTrials}&numberOfCards=${numberOfCards}`}>
-                    <Button variant="primary">Begin</Button>
+                    <Button className='btns'>Begin</Button>
                 </Link>
                 <Button variant="secondary" onClick={closeModal}>Exit</Button>
             </Modal.Footer>

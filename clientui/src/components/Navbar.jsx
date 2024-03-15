@@ -10,7 +10,6 @@ import AuthService from '../API/auth';
 import { useState, useEffect } from 'react';
 
 
-
 export default function NavBar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
