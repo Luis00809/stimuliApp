@@ -68,7 +68,7 @@ public class ClientService
         _context.SaveChanges();
     }
 
-    public void AddSet(int clientId, int stimSetId)
+    public bool AddSet(int clientId, int stimSetId)
     {
         var clientUpdating = _context.Clients.Find(clientId);
         var stimSetUpdating = _context.StimSets.Find(stimSetId);
@@ -86,6 +86,7 @@ public class ClientService
 
         clientUpdating.StimSets.Add(stimSetUpdating);
         _context.SaveChanges();
+        return true;
     }
 
     public void DeleteById(int id)

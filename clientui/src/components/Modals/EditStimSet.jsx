@@ -91,7 +91,7 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
                             {setStimuli.map((stimuli, index) => (
                                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-2">
                                     <Row>
-                                        <Col>{stimuli.name}</Col>
+                                        <Col>{stimuli.stimName}</Col>
                                         <Col xs="auto">
                                             <Button variant="danger" onClick={() => removeStim(stimuli.id, id)}>
                                                 <Trash />

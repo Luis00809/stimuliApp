@@ -82,11 +82,17 @@ public class ClientController : ControllerBase
         var clientUpdate = _service.GetById(id);
         if(clientUpdate is not null)
         {
-            _service.AddSet(id, StimSetId);
-            return NoContent();
+            var result = _service.AddSet(id, StimSetId);
+            if (result)
+            {
+                return NoContent();
+            } else
+            {
+              return Conflict("This Client already has this stim set.");
+            }
         } else 
         {
-            return NotFound();
+            return NotFound("The specified client or stim set doesn't exist");
         }
 
     }

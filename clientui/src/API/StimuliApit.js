@@ -39,7 +39,7 @@ export const updateStimuli = async (id, updatedStim, file) => {
     try {
         const formData = new FormData();
 
-        formData.append('Name', updatedStim.name);
+        formData.append('StimName', updatedStim.name);
 
         if (file) {
             formData.append('file', file);
@@ -79,7 +79,7 @@ export const deleteStimuli = async (id) => {
 export const createStimuli = async (newStim, file) => {
     try {
         const formData = new FormData();
-        formData.append('Name', newStim.name);        
+        formData.append('StimName', newStim.name);        
         
         if (file) {
             formData.append('file', file);
@@ -109,16 +109,17 @@ export const createStimuli = async (newStim, file) => {
 export const addStimuliToSet = async (stimId, stimSetId) => {
     try {
         
-        const request = await fetch(`/api/Stimuli/${stimId}/addstimset/${stimSetId}`,{
+        const response = await fetch(`/api/Stimuli/${stimId}/addstimset/${stimSetId}`,{
         method: 'PUT',
         });
 
-        if (!request.ok) {
-            throw new Error('Network response was not ok');
+        if (!response.ok) {
+            const errorMessage = await response.text(); 
+            throw new Error(errorMessage);
         }
     
-        return request.ok;
+        return true;
     } catch (error) {
-        console.log("error adding stimuli to set: ", error);
+        throw error;
     }
 }

@@ -30,7 +30,14 @@ export default function DisplayStimSetList({
                 alert('Added Stimuli to Set.');
             }
         } catch (error) {
-            console.log("error addign stimuli to stim set: ", error);
+            console.log("error adding stimuli to stim set: ", error);
+            if (error.message.includes("Cannot insert duplicate key in object")) {
+                alert("This stimuli already exists in this set.");
+            } else if (error.message.includes("The stimuli or stim set does not exist")) {
+                alert("The stimuli or stim set does not exist.");
+            } else {
+                alert("An unexpected error occurred.")
+            }
         }
     }
 
@@ -43,6 +50,11 @@ export default function DisplayStimSetList({
             }
         } catch (error) {
             console.log("error adding set to client: ", error);
+            if(error){
+                alert("This client already has this stim set")
+            } else {
+                alert('An unexpected error occurred.')
+            }
         }
     }
 

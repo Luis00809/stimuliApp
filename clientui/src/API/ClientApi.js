@@ -56,16 +56,17 @@ export const getClientsStimSets = async (clientId) => {
 
 export const addSetToClient = async (clientId, setId) => {
     try {
-        const request = await fetch(`/api/client/${clientId}/addset/${setId}`, {
+        const response = await fetch(`/api/client/${clientId}/addset/${setId}`, {
             method: "PUT"
         });
-        if (!request.ok) {
-            throw new Error(`HTTP error! status: ${request.status}`);
+        if (!response.ok) {
+            const errorMessage = await response.text(); 
+            throw new Error(errorMessage);        
         }
 
-        return request.ok;
+        return true;
     } catch (error) {
-        console.log("error adding set to client: ", error);
+        throw error;
     }
 }
 
