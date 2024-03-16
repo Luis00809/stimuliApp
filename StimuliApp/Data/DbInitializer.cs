@@ -38,8 +38,8 @@ namespace StimuliApp.Data
 
                 var stimuli = new List<Stimuli>
                 {
-                    new Stimuli { Name = "Stimuli  1", StimSets = stimSets.Take(2).ToList() },
-                    new Stimuli { Name = "Stimuli  2", StimSets = stimSets.Skip(2).Take(2).ToList() }
+                    new Stimuli { StimName = "Stimuli  1", StimSets = stimSets.Take(2).ToList() },
+                    new Stimuli { StimName = "Stimuli  2", StimSets = stimSets.Skip(2).Take(2).ToList() }
                 };
 
                 context.Clients.AddRange(clients);

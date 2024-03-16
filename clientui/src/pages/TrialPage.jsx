@@ -72,7 +72,7 @@ const TrialPage = () => {
 
     const handleStimuliSelection = (selectedStimuli) => {
         const trialResult = {
-            target: targetStimuli.name,
+            target: targetStimuli.stimName,
             correct: selectedStimuli.id === targetStimuli.id
         };
         setTrialResults([...trialResults, trialResult]);
@@ -125,14 +125,14 @@ const TrialPage = () => {
                         <Row>
                             <Col>
                                 {targetStimuli && (
-                                    <h2 className="text-center mt-5 mb-5">Target: {targetStimuli.name}</h2>
+                                    <h2 className="text-center mt-5 mb-5">Target: {targetStimuli.stimName}</h2>
                                 )}
                             </Col>
                         </Row>
                         <Row>
                             {currentStimuli.map(stim => (
                                 <Col key={stim.id} xs={6} md={4} >
-                                    <StimuliCard img={stim.image} key={stim.id} title={stim.name} stimuli={stim} onClick={() => handleStimuliSelection(stim)} /> 
+                                    <StimuliCard img={stim.image} key={stim.id}  stimuli={stim} onClick={() => handleStimuliSelection(stim)} /> 
                                 </Col>
                             ))}
                         </Row>

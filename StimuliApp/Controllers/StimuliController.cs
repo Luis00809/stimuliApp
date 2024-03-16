@@ -105,14 +105,20 @@ public async Task<IActionResult> Update(int id, [FromForm]Stimuli updatedStim, [
         var stimUpdate = _service.GetById(id);
         if(stimUpdate is not null)
         {
-            _service.AddStimSet(id, StimSetId);
-            return NoContent();
+            var result = _service.AddStimSet(id, StimSetId);
+            if (result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Conflict("This stimuli already exists in this stim set.");
+            }
         } 
         else 
         {
-            Console.WriteLine(id);
-            Console.WriteLine(StimSetId);
-            return NotFound();
+           
+            return NotFound("The specified stimuli or stim set does not exist.");
         }
     }
 

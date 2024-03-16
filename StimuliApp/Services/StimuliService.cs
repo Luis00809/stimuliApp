@@ -51,7 +51,7 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
             throw new InvalidOperationException("Stimuli doesn't exist");
         }
 
-        stimuliUpdating.Name = updatedStim.Name ?? stimuliUpdating.Name;
+        stimuliUpdating.StimName = updatedStim.StimName ?? stimuliUpdating.StimName;
 
         // Check if a file has been provided and upload it to S3 if so
         if (file != null)
@@ -69,7 +69,7 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
         return _context.Stimuli.Any(e => e.Id == id);
     }
     
-    public void AddStimSet(int stimId, int setId)
+    public bool AddStimSet(int stimId, int setId)
     {
         var updatingStim = _context.Stimuli.Find(stimId);
         var updatingSet = _context.StimSets.Find(setId);
@@ -86,6 +86,7 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
 
         updatingStim.StimSets.Add(updatingSet);
         _context.SaveChanges();
+        return true;
     }
 
     public void DeleteById(int id)

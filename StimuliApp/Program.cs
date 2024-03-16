@@ -18,7 +18,10 @@ builder.Services.AddControllersWithViews().AddJsonOptions(x =>
 
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.CustomSchemaIds(type => type.FullName);
+});
 
 builder.Services.AddDbContext<StimuliAppContext>(options => 
 {

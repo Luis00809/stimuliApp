@@ -78,7 +78,7 @@ const StimuliPage = () => {
             <Row>
                     {stimuli.map(stim => (
                         <Col key={stim.id} xs={6} md={6} lg={6} xl={4} >
-                            <StimuliCard key={stim.id} title={stim.name} img={stim.image} onClick={() => cardOnClick(stim.id)} />
+                            <StimuliCard key={stim.id} title={stim.stimName} img={stim.image} onClick={() => cardOnClick(stim.id)} />
                         </Col>
                     ))}
             </Row>

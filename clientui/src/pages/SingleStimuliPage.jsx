@@ -92,7 +92,7 @@ const OneStimPage = () => {
                         </Row>
                         <Row>
                             <Col className="d-flex justify-content-center ">
-                                {stim && <StimuliCard img={stim.image} title={stim.name} id={stim.id} onClick={() => console.log('works')} />}
+                                {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id} onClick={() => console.log('works')} />}
                             </Col>
                         </Row>
                         <Row>

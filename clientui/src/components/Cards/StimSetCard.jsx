@@ -116,8 +116,8 @@ export default function StimSetCard({
                                             <Row >
                                                 {stimuli.map(stimuliItem => (
                                                     <Col md={3} className=' w-25 border m-1 d-flex flex-column justify-content-center' key={stimuliItem.id}>
-                                                        <img alt={stimuliItem.name} src={stimuliItem.image} />
-                                                        <p className=' mt-3 text-center '>{stimuliItem.name}</p>
+                                                        <img alt={stimuliItem.stimName} src={stimuliItem.image} />
+                                                        <p className=' mt-3 text-center '>{stimuliItem.stimName}</p>
                                                     </Col>
                                                 ))}
                                             </Row>
