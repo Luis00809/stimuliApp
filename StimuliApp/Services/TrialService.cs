@@ -35,9 +35,9 @@ public class TrialService
         return newTrial;
     }
 
-    public void AddToClient(Trial trial, int clientId)
+   public void AddToClient(Trial trial, int clientId)
     {
-        var client = _context.Clients.Find(clientId);
+        var client = _context.Clients.Include(c => c.Trials).FirstOrDefault(c => c.Id == clientId);
 
         if (client == null)
         {
@@ -45,10 +45,17 @@ public class TrialService
         }
 
         trial.ClientId = clientId; 
+
+        // Ensure the Trials collection is instantiated
+        if (client.Trials == null)
+        {
+            client.Trials = new List<Trial>();
+        }
+
         client.Trials.Add(trial); 
 
-        _context.Trials.Add(trial); 
         _context.SaveChanges();
     }
+
 
 }

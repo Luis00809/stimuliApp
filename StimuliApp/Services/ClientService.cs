@@ -25,6 +25,7 @@ public class ClientService
         return _context.Clients
         .Include(p => p.Users)
         .Include(p => p.Trials)
+        .ThenInclude(t => t.Rounds)
         .Include(p => p.StimSets)
         .ThenInclude(ss => ss.Stimuli)
         .AsNoTracking()
