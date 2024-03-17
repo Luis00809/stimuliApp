@@ -12,4 +12,5 @@ public class Client
 
     public ICollection<StimSet>? StimSets { get; set; }
     public ICollection<User>? Users { get; set; }
+    public ICollection<Trial>? Trials { get; set; }
 }
