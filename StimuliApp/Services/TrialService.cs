@@ -20,18 +20,20 @@ public class TrialService
         .ToList();
     }
 
-    public Trial Create(List<Round> rounds)
-        {
-            var trial = new Trial
-            {
-                Rounds = rounds
-            };
+    public Trial? GetById(int id)
+    {
+        return _context.Trials
+        .Include(p => p.Rounds)
+        .AsNoTracking()
+        .SingleOrDefault(p => p.Id == id);
+    }
 
-            _context.Trials.Add(trial);
-            _context.SaveChanges();
-
-            return trial;
-        }
+    public Trial? Create(Trial newTrial)
+    {
+        _context.Trials.Add(newTrial);
+        _context.SaveChanges();
+        return newTrial;
+    }
 
     public void AddToClient(Trial trial, int clientId)
     {

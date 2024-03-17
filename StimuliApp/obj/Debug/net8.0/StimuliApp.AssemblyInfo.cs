@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StimuliApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+832a717ecc388334cd709e58ecf5e73dd4239e19")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c86981f391b89f6b27b5f1aece77469f0450996")]
 [assembly: System.Reflection.AssemblyProductAttribute("StimuliApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StimuliApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -20,6 +20,13 @@ public class RoundService
         .ToList();
     }
 
+    public Round? GetById(int id)
+    {
+        return _context.Rounds
+        .AsNoTracking()
+        .SingleOrDefault(p => p.Id == id);
+    }
+
     public Round? Create(Round newRound)
     {
         _context.Rounds.Add(newRound);
@@ -27,28 +34,34 @@ public class RoundService
         return newRound;
     }
 
-    public void addToTrial (List<int> roundIds, int TrialId)
+    public void addToTrial(List<int> roundIds, int TrialId)
+{
+    var trialToAddTo = _context.Trials.Include(t => t.Rounds).FirstOrDefault(t => t.Id == TrialId);
+
+    if (trialToAddTo == null)
     {
-        var trialToAddTo = _context.Trials.Find(TrialId);
-
-        if (trialToAddTo is null)
-        {
-            throw new InvalidOperationException("Trial doesn't exist");
-        }
-
-        foreach (var roundId in roundIds)
-        {
-            var roundToAdd = _context.Rounds.Find(roundId);
-
-            if (roundToAdd is null)
-            {
-                throw new InvalidOperationException("Round doesn't exist");
-            }
-
-            trialToAddTo.Rounds.Add(roundToAdd);
-        }
-
-        _context.SaveChanges();
-
+        throw new InvalidOperationException("Trial doesn't exist");
     }
+
+    // Ensure the Rounds collection is instantiated
+    if (trialToAddTo.Rounds == null)
+    {
+        trialToAddTo.Rounds = new List<Round>();
+    }
+
+    foreach (var roundId in roundIds)
+    {
+        var roundToAdd = _context.Rounds.Find(roundId);
+
+        if (roundToAdd == null)
+        {
+            throw new InvalidOperationException("Round doesn't exist");
+        }
+
+        trialToAddTo.Rounds.Add(roundToAdd);
+    }
+
+    _context.SaveChanges();
+}
+
 }

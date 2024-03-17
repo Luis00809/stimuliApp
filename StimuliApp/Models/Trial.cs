@@ -11,8 +11,8 @@ public class Trial
     public ICollection<Round>? Rounds { get; set; }
 
     // foreign key 
-    public int ClientId { get; set; }
+    public int? ClientId { get; set; }
 
     // Navigation property for the Client
-    public Client Client { get; set; }
+    public Client? Client { get; set; }
 }
