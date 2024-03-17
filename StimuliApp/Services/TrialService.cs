@@ -32,4 +32,21 @@ public class TrialService
 
             return trial;
         }
+
+    public void AddToClient(Trial trial, int clientId)
+    {
+        var client = _context.Clients.Find(clientId);
+
+        if (client == null)
+        {
+            throw new InvalidOperationException("Client does not exist");
+        }
+
+        trial.ClientId = clientId; 
+        client.Trials.Add(trial); 
+
+        _context.Trials.Add(trial); 
+        _context.SaveChanges();
+    }
+
 }
