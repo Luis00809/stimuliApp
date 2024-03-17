@@ -64,4 +64,14 @@ public class RoundService
     _context.SaveChanges();
 }
 
+    public void DeleteById(int id)
+    {
+        var round = _context.Rounds.Find(id);
+        if(round is not null)
+        {
+            _context.Rounds.Remove(round);
+            _context.SaveChanges();
+        }
+    }
+
 }

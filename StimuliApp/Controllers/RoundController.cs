@@ -55,4 +55,17 @@ public class RoundController: ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var round = _service.GetById(id);
+        if (round is not null)
+        {
+            _service.DeleteById(id);
+            return Ok();
+        } else
+        {
+            return NotFound();
+        }
+    }
 }

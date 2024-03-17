@@ -41,6 +41,20 @@ public class TrialController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = trial.Id }, trial);
     }
 
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var trial = _service.GetById(id);
+        if(trial is not null)
+        {
+            _service.DeleteById(id);
+            return Ok();
+        } else 
+        {
+            return NotFound();
+        }
+    }
+
      [HttpPut("{trialId}/addclient/{clientId}")]
         public IActionResult AddTrialToClient(int trialId, int clientId)
         {

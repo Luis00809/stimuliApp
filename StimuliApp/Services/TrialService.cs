@@ -35,6 +35,16 @@ public class TrialService
         return newTrial;
     }
 
+    public void DeleteById(int id)
+    {
+        var trial = _context.Trials.Find(id);
+        if (trial is not null)
+        {
+            _context.Trials.Remove(trial);
+            _context.SaveChanges();
+        }
+    }
+
    public void AddToClient(Trial trial, int clientId)
     {
         var client = _context.Clients.Include(c => c.Trials).FirstOrDefault(c => c.Id == clientId);
