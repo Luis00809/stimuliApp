@@ -9,6 +9,8 @@ import ResultTable from "../components/ResultsTable";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom'; 
+import { createRound, addRoundToTrial } from "../API/RoundApi";
+import { createTrial, addTrialToClient } from "../API/TrialApi";
 
 
 const TrialPage = () => {
@@ -31,6 +33,8 @@ const TrialPage = () => {
     const [incorrect, setIncorrect] = useState(0);
 
     const [trialResults, setTrialResults] = useState([]);
+
+    const [userDecision, setUserDecision] = useState(null);
 
 
     useEffect(() => {
@@ -90,6 +94,30 @@ const TrialPage = () => {
         }
     };
 
+    const saveTrial = async () => {
+        const roundData = trialResults.map((result, index) => ({
+            RoundNumber: index + 1,
+            Target: result.target,
+            Answer: result.correct ? "Correct" : "Incorrect"
+        }));
+        const roundPromises = roundData.map(data => createRound(data));
+
+        try {
+            await Promise.all(roundPromises);
+            navigate("/");
+            
+        } catch (error) {
+            console.log("Error saving trial: ", error);
+        }
+    }
+
+    const discardTrial = () => {
+        const discard = confirm("Are you sure you want to delete this data set?");
+        if (discard) {
+            navigate('/')
+        }
+    }
+
     return (
         <div>
             
@@ -108,9 +136,8 @@ const TrialPage = () => {
                     </Row>
                     <Row>
                         <Col className="text-center">
-                            <Link to="/">
-                                <Button className="btns">Back to Home</Button>
-                            </Link>
+                            <Button className="btns" onClick={saveTrial}>Save Trial</Button>
+                            <Button className="btns" onClick={discardTrial}>Discard Trial</Button>
                         </Col>
                     </Row>
                 </Container>
