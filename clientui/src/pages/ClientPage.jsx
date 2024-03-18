@@ -9,11 +9,13 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { PlusCircle } from 'react-bootstrap-icons';
 import DisplayStimSetList from "../components/Accordion/StimSet";
+import TrialTable from "../components/TrialTable";
 
 import "../css/Clientpage.css"
 
 const ClientPage = () => {
     const [sets, setSets] = useState([]);
+    const [trials, setTrials] = useState([]);
     const clientId  = useParams();
     const [clientName, setClientName] = useState('')
     const [refreshKey, setRefreshKey] = useState(0);
@@ -31,17 +33,17 @@ const ClientPage = () => {
                     const clientSets = await getClientsStimSets(clientId.id);
                     setSets(clientSets); 
                     setClientName(client.name)
+                    setTrials(client.trials)
                 } else {
-                    console.log("error getting clients stim sets");
+                    console.log("error getting clients stim sets and Trial data");
                 }
             } catch (error) {
-                console.log("error getting client's stim sets: ", error);
+                console.log("error getting client's stim sets or trial data: ", error);
             }
         };
 
         fetchStimSets();
     }, [clientId, refreshKey]);
-
 
     return (
         <Container>
@@ -62,6 +64,17 @@ const ClientPage = () => {
                 <Col lg={5}>
                     <DisplayStimSetList onRefresh={refreshData} actionType={'AddSetToClient'} id={clientId.id} />
                 </Col>
+                
+            </Row>
+            <Row>
+                
+                    {trials.map(trial => (
+                        <Col key={trial.id}>
+                            <TrialTable trial={trial}  /> 
+                        </Col>
+                    ))}
+                    
+                
             </Row>            
         </Container>
                
