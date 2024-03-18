@@ -34,7 +34,6 @@ const TrialPage = () => {
 
     const [trialResults, setTrialResults] = useState([]);
 
-    const [userDecision, setUserDecision] = useState(null);
 
 
     useEffect(() => {
@@ -100,10 +99,18 @@ const TrialPage = () => {
             Target: result.target,
             Answer: result.correct ? "Correct" : "Incorrect"
         }));
-        const roundPromises = roundData.map(data => createRound(data));
 
         try {
-            await Promise.all(roundPromises);
+            const createdRounds = await Promise.all(roundData.map(data => createRound(data)));
+            const newTrial = {
+                TotalCorrect: correct,
+                TotalTrials: parseInt(maxTrialsFromURL, 10), 
+                CardsOnScreen: parseInt(numberOfCardsFromURL, 10), 
+                Rounds: roundData
+            };
+    
+
+            await createTrial(newTrial);
             navigate("/");
             
         } catch (error) {

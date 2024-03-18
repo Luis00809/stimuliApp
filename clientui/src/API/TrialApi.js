@@ -1,7 +1,8 @@
 
 export const createTrial = async (newTrial) => {
+    console.log(newTrial);
     try {
-        const response = await fetch("/api/trial/", {
+        const response = await fetch("/api/Trial/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -10,7 +11,7 @@ export const createTrial = async (newTrial) => {
         })
 
         if(!response.ok){
-            throw new Error(`HTTP error! status: ${request.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         return response.json();

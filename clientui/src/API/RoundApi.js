@@ -12,6 +12,8 @@ export const createRound = async (newRound) => {
             throw new Error(`HTTP error! status: ${request.status}`);
         }
 
+        return await response.json();
+
     } catch (error) {
         console.log("error creating a round: ", error);
     }
