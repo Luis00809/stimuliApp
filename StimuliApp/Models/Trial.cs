@@ -12,7 +12,9 @@ public class Trial
 
     // foreign key 
     public int? ClientId { get; set; }
-
     // Navigation property for the Client
     public Client? Client { get; set; }
+
+    public int? SetId { get; set; }
+    public StimSet? StimSet { get; set; }
 }
