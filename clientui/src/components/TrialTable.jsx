@@ -2,8 +2,13 @@ import Table from 'react-bootstrap/Table';
 
 const TrialTable = ({trial}) => {
     return (
-        <Table striped bordered hover>
+        <Table striped="columns" bordered hover>
             <thead>
+                <tr>
+                    
+                    <th>Stimuli Set: </th>
+                    <th colSpan={3} className='text-center'>{trial.stimSet?.title}</th>
+                </tr>
                 <tr>
                     <th>Round #</th>
                     <th>Target</th>
@@ -22,7 +27,7 @@ const TrialTable = ({trial}) => {
             <tfoot>
                 <tr>
                     <td colSpan={2}>Total Correct: {trial.totalCorrect} out of {trial.totalTrials}</td>
-                    <td>Cards on screen: {trial.cardsOnScreen}</td>
+                    <td colSpan={2}>Cards on screen: {trial.cardsOnScreen}</td>
                 </tr>
             </tfoot>
         </Table>

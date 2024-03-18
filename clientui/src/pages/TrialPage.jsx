@@ -1,6 +1,6 @@
 import StimuliCard from "../components/Cards/StimuliCard";
 import { useParams, useLocation } from "react-router-dom";
-import { getStimSetsStimuli } from "../API/StimSetApi";
+import { getStimSetsStimuli, getOneStimSet } from "../API/StimSetApi";
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -34,15 +34,19 @@ const TrialPage = () => {
 
     const [trialResults, setTrialResults] = useState([]);
 
+    const [stimSet, setStimSet] = useState(null);
 
 
     useEffect(() => {
         const fetchStimuli = async () => {
             try {
                 if (setId) {
+                    const stimSetInUse = await getOneStimSet(setId.id);
+                    setStimSet(stimSetInUse);
                     const stimSetStim = await getStimSetsStimuli(setId.id);
                     setStimuli(stimSetStim); 
                     startTrial(stimSetStim, numberOfCardsFromURL);
+
                 } else {
                     console.log("error getting stim sets stimuli");
                 }
@@ -100,13 +104,18 @@ const TrialPage = () => {
             Answer: result.correct ? "Correct" : "Incorrect"
         }));
 
+        const StimSetData = {
+            Title: stimSet.title
+        }
+
         try {
             const createdRounds = await Promise.all(roundData.map(data => createRound(data)));
             const newTrial = {
                 TotalCorrect: correct,
                 TotalTrials: parseInt(maxTrialsFromURL, 10), 
                 CardsOnScreen: parseInt(numberOfCardsFromURL, 10), 
-                Rounds: roundData
+                Rounds: roundData,
+                StimSet: StimSetData,
             };
     
 
@@ -128,7 +137,6 @@ const TrialPage = () => {
             navigate('/')
         }
     }
-
     return (
         <div>
             

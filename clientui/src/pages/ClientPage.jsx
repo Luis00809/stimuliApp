@@ -67,9 +67,11 @@ const ClientPage = () => {
                 
             </Row>
             <Row>
-                
+                    <Col xs={12}>
+                        <h2>Client's trials: </h2>
+                    </Col>
                     {trials.map(trial => (
-                        <Col key={trial.id}>
+                        <Col xs={6} className="m-1" key={trial.id}>
                             <TrialTable trial={trial}  /> 
                         </Col>
                     ))}
