@@ -7,7 +7,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Link } from 'react-router-dom';
 
-export default function TrialModal({ show, closeModal, setId }) {
+export default function TrialModal({ show, closeModal, setId, clientId }) {
     const [maxTrials, setMaxTrials] = useState(0);
     const [numberOfCards, setNumberOfCards] = useState(0);
 
@@ -48,7 +48,7 @@ export default function TrialModal({ show, closeModal, setId }) {
                 </Card>
             </Modal.Body>
             <Modal.Footer>
-                <Link to={`/${setId}/trial?maxTrials=${maxTrials}&numberOfCards=${numberOfCards}`}>
+                <Link to={`/${setId}/trial?maxTrials=${maxTrials}&numberOfCards=${numberOfCards}&client=${clientId}`}>
                     <Button className='btns'>Begin</Button>
                 </Link>
                 <Button variant="secondary" onClick={closeModal}>Exit</Button>

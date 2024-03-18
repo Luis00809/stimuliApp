@@ -1,6 +1,5 @@
 
 export const createTrial = async (newTrial) => {
-    console.log(newTrial);
     try {
         const response = await fetch("/api/Trial/", {
             method: "POST",
@@ -14,7 +13,7 @@ export const createTrial = async (newTrial) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return response.json();
+        return await response.json();
     } catch (error) {
         console.log("error creating trial: ", error);
     }
@@ -24,7 +23,7 @@ export const createTrial = async (newTrial) => {
 export const addTrialToClient = async (trialId, clientId) => {
     try {
         const response = await fetch(`/api/trial/${trialId}/addClient/${clientId}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -32,7 +31,7 @@ export const addTrialToClient = async (trialId, clientId) => {
         })
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${request.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
     } catch (error) {
         console.log("error adding trial to client: ", error);

@@ -9,7 +9,7 @@ import ResultTable from "../components/ResultsTable";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom'; 
-import { createRound, addRoundToTrial } from "../API/RoundApi";
+import { createRound } from "../API/RoundApi";
 import { createTrial, addTrialToClient } from "../API/TrialApi";
 
 
@@ -21,7 +21,7 @@ const TrialPage = () => {
     const queryParams = new URLSearchParams(location.search);
     const maxTrialsFromURL = queryParams.get("maxTrials");
     const numberOfCardsFromURL = queryParams.get("numberOfCards");
-
+    const clientsId = queryParams.get("client");
 
     const [stimuli, setStimuli] = useState([]);
     const [currentStimuli, setCurrentStimuli] = useState([]);
@@ -110,9 +110,13 @@ const TrialPage = () => {
             };
     
 
-            await createTrial(newTrial);
-            navigate("/");
+            const trialCreated = await createTrial(newTrial);
             
+            if(trialCreated){
+                const addsToClient = await addTrialToClient(trialCreated.id, clientsId);
+                navigate("/");
+            }
+
         } catch (error) {
             console.log("Error saving trial: ", error);
         }

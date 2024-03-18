@@ -36,7 +36,6 @@ export const getOneUser = (setId) => {
 
 export const getUsersClients = async (userId) => {
     try {
-        console.log("fetch id:", userId)
         const response = await fetch(`/api/user/${userId}/clients`, {
             method: "GET",
             headers: {
