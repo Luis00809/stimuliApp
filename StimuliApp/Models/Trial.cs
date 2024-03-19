@@ -8,6 +8,7 @@ public class Trial
     public int TotalCorrect { get; set; }
     public int TotalTrials { get; set; }
     public int CardsOnScreen { get; set; }
+    public DateTime? Date { get; set; }
     public ICollection<Round>? Rounds { get; set; }
 
     // foreign key 

@@ -30,6 +30,7 @@ public class TrialService
 
     public Trial? Create(Trial newTrial)
     {
+        newTrial.Date = DateTime.Now;
         _context.Trials.Add(newTrial);
         _context.SaveChanges();
         return newTrial;

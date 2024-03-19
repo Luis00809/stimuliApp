@@ -1,13 +1,29 @@
 import Table from 'react-bootstrap/Table';
 
 const TrialTable = ({trial}) => {
+    const date = new Date(trial?.date);
+
+    const formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+
+    const formattedTime = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+
     return (
         <Table striped="columns" bordered hover>
             <thead>
                 <tr>
                     
                     <th>Stimuli Set: </th>
-                    <th colSpan={3} className='text-center'>{trial.stimSet?.title}</th>
+                    <th className='text-center'>{trial.stimSet?.title}</th>
+                    <th>{formattedDate} {formattedTime}</th>
                 </tr>
                 <tr>
                     <th>Round #</th>

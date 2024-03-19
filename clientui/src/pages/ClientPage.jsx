@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { PlusCircle } from 'react-bootstrap-icons';
 import DisplayStimSetList from "../components/Accordion/StimSet";
 import TrialTable from "../components/TrialTable";
+import { Link } from 'react-router-dom';
 
 import "../css/Clientpage.css"
 
@@ -50,6 +51,13 @@ const ClientPage = () => {
             <Row>
                 <Col className="text-center m-5">
                     <h1>{clientName}</h1>
+                </Col>
+                <Col>
+                    <Link to={`/client/trials/${clientId.id}`}>
+                        <Button className='btns rounded-2'>
+                            To Client's Data
+                        </Button>{' '}
+                    </Link>
                 </Col>
             </Row>
             <Row>
