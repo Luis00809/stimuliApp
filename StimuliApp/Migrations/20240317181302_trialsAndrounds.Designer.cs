@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StimuliApp.Data;
 
@@ -11,9 +12,11 @@ using StimuliApp.Data;
 namespace StimuliApp.Migrations
 {
     [DbContext(typeof(StimuliAppContext))]
-    partial class StimuliAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240317181302_trialsAndrounds")]
+    partial class trialsAndrounds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,16 +169,7 @@ namespace StimuliApp.Migrations
                     b.Property<int>("CardsOnScreen")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("SetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StimSetId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalCorrect")
@@ -187,8 +181,6 @@ namespace StimuliApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("StimSetId");
 
                     b.ToTable("Trials");
                 });
@@ -280,23 +272,14 @@ namespace StimuliApp.Migrations
                 {
                     b.HasOne("StimuliApp.Models.Client", "Client")
                         .WithMany("Trials")
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("StimuliApp.Models.StimSet", "StimSet")
-                        .WithMany("Trials")
-                        .HasForeignKey("StimSetId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
-
-                    b.Navigation("StimSet");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Client", b =>
-                {
-                    b.Navigation("Trials");
-                });
-
-            modelBuilder.Entity("StimuliApp.Models.StimSet", b =>
                 {
                     b.Navigation("Trials");
                 });

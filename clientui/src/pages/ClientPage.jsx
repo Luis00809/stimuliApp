@@ -9,11 +9,13 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { PlusCircle } from 'react-bootstrap-icons';
 import DisplayStimSetList from "../components/Accordion/StimSet";
+import { Link } from 'react-router-dom';
 
 import "../css/Clientpage.css"
 
 const ClientPage = () => {
     const [sets, setSets] = useState([]);
+    const [trials, setTrials] = useState([]);
     const clientId  = useParams();
     const [clientName, setClientName] = useState('')
     const [refreshKey, setRefreshKey] = useState(0);
@@ -31,23 +33,30 @@ const ClientPage = () => {
                     const clientSets = await getClientsStimSets(clientId.id);
                     setSets(clientSets); 
                     setClientName(client.name)
+                    setTrials(client.trials)
                 } else {
-                    console.log("error getting clients stim sets");
+                    console.log("error getting clients stim sets and Trial data");
                 }
             } catch (error) {
-                console.log("error getting client's stim sets: ", error);
+                console.log("error getting client's stim sets or trial data: ", error);
             }
         };
 
         fetchStimSets();
     }, [clientId, refreshKey]);
 
-
     return (
         <Container>
             <Row>
                 <Col className="text-center m-5">
                     <h1>{clientName}</h1>
+                </Col>
+                <Col>
+                    <Link to={`/client/trials/${clientId.id}`}>
+                        <Button className='btns rounded-2'>
+                            To Client's Data
+                        </Button>{' '}
+                    </Link>
                 </Col>
             </Row>
             <Row>
@@ -62,7 +71,9 @@ const ClientPage = () => {
                 <Col lg={5}>
                     <DisplayStimSetList onRefresh={refreshData} actionType={'AddSetToClient'} id={clientId.id} />
                 </Col>
-            </Row>            
+                
+            </Row>
+                  
         </Container>
                
     )

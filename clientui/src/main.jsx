@@ -12,6 +12,7 @@ import TrialPage from './pages/TrialPage.jsx';
 import StimuliPage from './pages/StimuliPage.jsx';
 import OneStimPage from './pages/SingleStimuliPage.jsx';
 import StimSetsPage from './pages/StimSetsPage.jsx';
+import DataPage from './pages/DataPage.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
  <BrowserRouter>
@@ -24,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/stimuli" element={<StimuliPage />} />
       <Route path="/stimuli/:id" element={<OneStimPage />} />
       <Route path="/stimsets" element={<StimSetsPage />} />
-
+      <Route path='/client/trials/:id' element={<DataPage />} />
     </Routes>
  </BrowserRouter>
 );

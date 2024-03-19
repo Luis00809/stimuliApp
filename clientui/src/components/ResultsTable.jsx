@@ -4,7 +4,6 @@ import Table from 'react-bootstrap/Table';
 const ResultTable = ({ trials }) => {
     const totalTrials = trials.length;
     const totalCorrect = trials.filter(trial => trial.correct).length;
-
     return (
         <Table striped="columns">
             <thead>

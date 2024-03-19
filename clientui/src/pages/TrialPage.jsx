@@ -1,6 +1,6 @@
 import StimuliCard from "../components/Cards/StimuliCard";
 import { useParams, useLocation } from "react-router-dom";
-import { getStimSetsStimuli } from "../API/StimSetApi";
+import { getStimSetsStimuli, getOneStimSet } from "../API/StimSetApi";
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,6 +9,8 @@ import ResultTable from "../components/ResultsTable";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom'; 
+import { createRound } from "../API/RoundApi";
+import { createTrial, addTrialToClient } from "../API/TrialApi";
 
 
 const TrialPage = () => {
@@ -19,7 +21,7 @@ const TrialPage = () => {
     const queryParams = new URLSearchParams(location.search);
     const maxTrialsFromURL = queryParams.get("maxTrials");
     const numberOfCardsFromURL = queryParams.get("numberOfCards");
-
+    const clientsId = queryParams.get("client");
 
     const [stimuli, setStimuli] = useState([]);
     const [currentStimuli, setCurrentStimuli] = useState([]);
@@ -32,14 +34,19 @@ const TrialPage = () => {
 
     const [trialResults, setTrialResults] = useState([]);
 
+    const [stimSet, setStimSet] = useState(null);
+
 
     useEffect(() => {
         const fetchStimuli = async () => {
             try {
                 if (setId) {
+                    const stimSetInUse = await getOneStimSet(setId.id);
+                    setStimSet(stimSetInUse);
                     const stimSetStim = await getStimSetsStimuli(setId.id);
                     setStimuli(stimSetStim); 
                     startTrial(stimSetStim, numberOfCardsFromURL);
+
                 } else {
                     console.log("error getting stim sets stimuli");
                 }
@@ -90,6 +97,46 @@ const TrialPage = () => {
         }
     };
 
+    const saveTrial = async () => {
+        const roundData = trialResults.map((result, index) => ({
+            RoundNumber: index + 1,
+            Target: result.target,
+            Answer: result.correct ? "Correct" : "Incorrect"
+        }));
+
+        const StimSetData = {
+            Title: stimSet.title
+        }
+
+        try {
+            const createdRounds = await Promise.all(roundData.map(data => createRound(data)));
+            const newTrial = {
+                TotalCorrect: correct,
+                TotalTrials: parseInt(maxTrialsFromURL, 10), 
+                CardsOnScreen: parseInt(numberOfCardsFromURL, 10), 
+                Rounds: roundData,
+                StimSet: StimSetData,
+            };
+    
+
+            const trialCreated = await createTrial(newTrial);
+            
+            if(trialCreated){
+                const addsToClient = await addTrialToClient(trialCreated.id, clientsId);
+                navigate(`/client/trials/${clientsId}`);
+            }
+
+        } catch (error) {
+            console.log("Error saving trial: ", error);
+        }
+    }
+
+    const discardTrial = () => {
+        const discard = confirm("Are you sure you want to delete this data set?");
+        if (discard) {
+            navigate('/')
+        }
+    }
     return (
         <div>
             
@@ -108,9 +155,8 @@ const TrialPage = () => {
                     </Row>
                     <Row>
                         <Col className="text-center">
-                            <Link to="/">
-                                <Button className="btns">Back to Home</Button>
-                            </Link>
+                            <Button className="btns" onClick={saveTrial}>Save Trial</Button>
+                            <Button className="btns" onClick={discardTrial}>Discard Trial</Button>
                         </Col>
                     </Row>
                 </Container>

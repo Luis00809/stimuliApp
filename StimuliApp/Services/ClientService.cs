@@ -24,6 +24,10 @@ public class ClientService
     {
         return _context.Clients
         .Include(p => p.Users)
+         .Include(p => p.Trials.OrderByDescending(t => t.Date ?? DateTime.MaxValue))
+            .ThenInclude(t => t.Rounds)
+        .Include(p => p.Trials)
+            .ThenInclude(t => t.StimSet)
         .Include(p => p.StimSets)
         .ThenInclude(ss => ss.Stimuli)
         .AsNoTracking()

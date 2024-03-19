@@ -18,8 +18,7 @@ export default function StimSetCard({
     stimuli,
     id,
     onRefresh,
-    setOption,
-    
+    setOption,    
 }) {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
@@ -134,7 +133,7 @@ export default function StimSetCard({
                             </Col>
                        </Row>
                        <Row>
-                        {modal && <TrialModal show={modal} setId={id} closeModal={closeModal}/>}
+                        {modal && <TrialModal show={modal} setId={id} closeModal={closeModal} clientId={clientId.id}/>}
                        </Row>
                        <Row>
                        {editModal && <EditStimSet id={id} show={editModal} closeModal={() => setEditModal(false)} onRefresh={onRefresh} />}

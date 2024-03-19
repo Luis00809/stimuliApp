@@ -11,4 +11,5 @@ public class StimSet
     public string? Title { get; set; }
     public ICollection<Stimuli>? Stimuli { get; set; }
     public ICollection<Client>? Clients { get; set; }
+    public ICollection<Trial>? Trials { get; set; }
 }

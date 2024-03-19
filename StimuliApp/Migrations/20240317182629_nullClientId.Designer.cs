@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StimuliApp.Data;
 
@@ -11,9 +12,11 @@ using StimuliApp.Data;
 namespace StimuliApp.Migrations
 {
     [DbContext(typeof(StimuliAppContext))]
-    partial class StimuliAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240317182629_nullClientId")]
+    partial class nullClientId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,15 +172,6 @@ namespace StimuliApp.Migrations
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("SetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StimSetId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalCorrect")
                         .HasColumnType("int");
 
@@ -187,8 +181,6 @@ namespace StimuliApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("StimSetId");
 
                     b.ToTable("Trials");
                 });
@@ -282,21 +274,10 @@ namespace StimuliApp.Migrations
                         .WithMany("Trials")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("StimuliApp.Models.StimSet", "StimSet")
-                        .WithMany("Trials")
-                        .HasForeignKey("StimSetId");
-
                     b.Navigation("Client");
-
-                    b.Navigation("StimSet");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Client", b =>
-                {
-                    b.Navigation("Trials");
-                });
-
-            modelBuilder.Entity("StimuliApp.Models.StimSet", b =>
                 {
                     b.Navigation("Trials");
                 });
