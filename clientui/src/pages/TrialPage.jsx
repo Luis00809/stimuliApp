@@ -123,7 +123,7 @@ const TrialPage = () => {
             
             if(trialCreated){
                 const addsToClient = await addTrialToClient(trialCreated.id, clientsId);
-                navigate("/");
+                navigate(`/client/trials/${clientsId}`);
             }
 
         } catch (error) {

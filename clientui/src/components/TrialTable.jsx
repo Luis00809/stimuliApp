@@ -21,9 +21,9 @@ const TrialTable = ({trial}) => {
             <thead>
                 <tr>
                     
-                    <th>Stimuli Set: </th>
-                    <th className='text-center'>{trial.stimSet?.title}</th>
-                    <th>{formattedDate} {formattedTime}</th>
+                    <th colSpan={2} className='text-center'>Stimuli Set: <span className='text-primary'>{trial.stimSet?.title}</span> </th>
+                    <th>Date: <span className='textColor'>{formattedDate}</span> </th>
+
                 </tr>
                 <tr>
                     <th>Round #</th>
@@ -42,8 +42,9 @@ const TrialTable = ({trial}) => {
             </tbody>
             <tfoot>
                 <tr>
-                    <td colSpan={2}>Total Correct: {trial.totalCorrect} out of {trial.totalTrials}</td>
-                    <td colSpan={2}>Cards on screen: {trial.cardsOnScreen}</td>
+                    <td >Total Correct: {trial.totalCorrect} out of {trial.totalTrials}</td>
+                    <td >Cards on screen: {trial.cardsOnScreen}</td>
+                    <td>Time: <span className='textColor'>{formattedTime}</span> </td>
                 </tr>
             </tfoot>
         </Table>

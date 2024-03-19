@@ -9,7 +9,6 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { PlusCircle } from 'react-bootstrap-icons';
 import DisplayStimSetList from "../components/Accordion/StimSet";
-import TrialTable from "../components/TrialTable";
 import { Link } from 'react-router-dom';
 
 import "../css/Clientpage.css"
@@ -74,18 +73,7 @@ const ClientPage = () => {
                 </Col>
                 
             </Row>
-            <Row>
-                    <Col xs={12}>
-                        <h2>Client's trials: </h2>
-                    </Col>
-                    {trials.map(trial => (
-                        <Col xs={6} className="m-1" key={trial.id}>
-                            <TrialTable trial={trial}  /> 
-                        </Col>
-                    ))}
-                    
-                
-            </Row>            
+                  
         </Container>
                
     )

@@ -38,9 +38,9 @@ const DataPage = () => {
 
     return (
         <Container>
-            <Row>
+            <Row className="my-4 border-bottom border-3 text-center">
                 <Col>
-                    <h1>Client's Trials: </h1>
+                    <h1>Client's Trials </h1>
                 </Col>
             </Row>
             <Row>
