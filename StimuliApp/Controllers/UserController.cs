@@ -32,12 +32,10 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         return Unauthorized();
     }
 
-    // Assuming you have a method in UserService to verify the password
     bool isPasswordCorrect = _service.VerifyPassword(user, password);
 
     if (isPasswordCorrect)
     {
-        // Password is correct, proceed with authentication
         string token = _jwtService.GenerateToken(user);
         
         var response = new AuthenticationResponse
@@ -80,10 +78,9 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         var user = _service.Create(newUser);
         if (user == null)
         {
-            return BadRequest(); // Adjust this based on your service's behavior
+            return BadRequest(); 
         }
 
-        // Generate JWT token for the newly created user
         string token = _jwtService.GenerateToken(user);
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, new { user, token });
     }

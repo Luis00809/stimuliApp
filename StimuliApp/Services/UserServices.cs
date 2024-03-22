@@ -26,14 +26,12 @@ public class UserService
 
     private string HashPassword(string password)
     {
-        // Generate a  128-bit salt
         var salt = new byte[128 /  8];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
 
-        // Hash the password with the salt
         var hashedPassword = KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
@@ -41,7 +39,6 @@ public class UserService
             iterationCount:  10000,
             numBytesRequested:  256 /  8);
 
-        // Combine the salt and the hash
         return Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hashedPassword);
     }
 
@@ -55,12 +52,10 @@ public class UserService
 
     public bool VerifyPassword(User user, string password)
     {
-        // Split the stored hash into the salt and the hashed password
         var parts = user.Password.Split('.');
         var salt = Convert.FromBase64String(parts[0]);
         var storedHash = Convert.FromBase64String(parts[1]);
 
-        // Hash the received password with the stored salt
         var hashedPassword = KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
@@ -68,7 +63,6 @@ public class UserService
             iterationCount:  10000,
             numBytesRequested: storedHash.Length);
 
-        // Compare the hashes
         return hashedPassword.SequenceEqual(storedHash);
     }
 
