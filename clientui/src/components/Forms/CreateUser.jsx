@@ -67,7 +67,7 @@ const CreateUser = () => {
     return (
         <>
         <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
+          Create User
         </Button>
   
         <Modal show={show} onHide={handleClose}>
