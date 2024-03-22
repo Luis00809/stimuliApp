@@ -73,3 +73,23 @@ export const createUser = async (newUser) => {
         console.log("error creating a user: ", error);
     }
 }
+
+export const editUser = async (updatedUser, id) => {
+    try {
+        const response = await fetch(`/api/user/${id}/update`,{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            }, 
+            body: JSON.stringify(updatedUser)
+        })
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.log("error updating user: ", error);
+    }
+}

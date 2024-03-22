@@ -85,7 +85,7 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, new { user, token });
     }
 
-    [HttpPut]
+    [HttpPut("{id}/update")]
     public IActionResult Update(int id, User updatedUser)
     {
         var user = _service.GetById(id);
@@ -93,7 +93,7 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         {
             updatedUser.Id = id;
             _service.Update(updatedUser);
-            return NoContent();
+            return Ok(updatedUser);
         } 
         else 
         {
