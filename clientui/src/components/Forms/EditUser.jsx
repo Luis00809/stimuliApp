@@ -44,8 +44,6 @@ const EditUser = ({id, firstName, lastName, email, password }) => {
             handleClose();
             navigate(`/dashboard`)
         }
-        
-        
         return response; 
     }
 

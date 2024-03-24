@@ -35,6 +35,26 @@ export const getClient = (clientId) => {
     });
 }
 
+export const editClient = async (clientId, updatedClient) => {
+    try {
+        const response = await fetch(`/api/Client/${clientId}/update`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedClient)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.log("error updating the client: ", error);
+    }
+} 
+
 export const createClient = async (newClient) => {
     try {
         const response = await fetch('/api/Client', {

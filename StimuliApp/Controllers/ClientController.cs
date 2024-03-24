@@ -45,7 +45,7 @@ public class ClientController : ControllerBase
     }
 
 
-    [HttpPut]
+    [HttpPut("{id}/update")]
     public IActionResult Update(int id, Client updatedClient)
     {
         var client = _service.GetById(id);
@@ -53,7 +53,7 @@ public class ClientController : ControllerBase
         {
             updatedClient.Id = id;
             _service.Update(updatedClient);
-            return NoContent();
+            return Ok(updatedClient);
         }
         else 
         {
