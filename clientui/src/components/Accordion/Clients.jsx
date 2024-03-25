@@ -8,9 +8,13 @@ import { getClients } from '../../API/ClientApi';
 import EditClient from '../Forms/EditClients';
 
 const DisplayClients = () => {
+    const [refreshKey, setRefreshKey] = useState(0);
 
     const [clients, setClients] = useState([]);
 
+    const refreshData = () => {
+        setRefreshKey(prevKey => prevKey + 1);
+    };
     useEffect(() => {
         const fetchClients = async () => {
             try {
@@ -21,7 +25,7 @@ const DisplayClients = () => {
             }
         }
         fetchClients();
-    }, [])
+    }, [refreshKey])
 
     return(
         <Accordion>
@@ -33,7 +37,7 @@ const DisplayClients = () => {
                         {clients.map(client => (
                             <Col xs={12} key={client.id}>
                                <p>{client.name}</p>
-                                <EditClient id={client.id} name={client.name} />
+                                <EditClient id={client.id} name={client.name} onRefresh={refreshData} />
                             </Col>
                         ))}
                         

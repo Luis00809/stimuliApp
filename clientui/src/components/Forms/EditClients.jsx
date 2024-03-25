@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { editClient } from "../../API/ClientApi";
 
-const EditClient = ({name, id}) => {
+const EditClient = ({name, id, onRefresh}) => {
     const [show, setShow] = useState(false);
     const [clientName, setName] = useState(name);
     const [errMsg, setErrMsg] = useState('');
@@ -26,6 +26,7 @@ const EditClient = ({name, id}) => {
         if (response.error) {
             console.log("error updating user");
         } else {
+            onRefresh();
             setErrMsg('');
             handleClose();
         }
