@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const EditUser = ({id, firstName, lastName, email, password }) => {
+const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
 
     const [show, setShow] = useState(false);
     const [first, setFirst] = useState(firstName);
@@ -40,6 +40,7 @@ const EditUser = ({id, firstName, lastName, email, password }) => {
         if (response.error) {
             console.log("error updating user");
         } else {
+            onRefresh();
             setErrMsg('');
             handleClose();
             navigate(`/dashboard`)

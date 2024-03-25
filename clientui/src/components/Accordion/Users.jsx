@@ -7,9 +7,14 @@ import { getUsers } from '../../API/UserApi';
 import { useEffect, useState } from 'react';
 import EditUser from '../Forms/EditUser';
 
-const DisplayUsers = ({id, firstName, lastName}) => {
+const DisplayUsers = () => {
 
     const [users, setUsers] = useState([]);
+    const [refreshKey, setRefreshKey] = useState(0);
+    
+    const refreshData = () => {
+        setRefreshKey(prevKey => prevKey + 1);
+    };
 
     useEffect(() => {
         const getsUsers = async () => {
@@ -23,7 +28,7 @@ const DisplayUsers = ({id, firstName, lastName}) => {
             }
         }
         getsUsers();
-    }, [])
+    }, [refreshKey])
 
     return (
         <Accordion>
@@ -35,7 +40,7 @@ const DisplayUsers = ({id, firstName, lastName}) => {
                             {users.map(user => (
                                 <Col xs={12} key={user.id}>
                                    <p>{user.firstName} {user.lastName} {user.email}</p> 
-                                    <EditUser id={user.id} firstName={user.firstName} lastName={user.lastName} email={user.email} password={user.password} />
+                                    <EditUser onRefresh={refreshData} id={user.id} firstName={user.firstName} lastName={user.lastName} email={user.email} password={user.password} />
                                 </Col>
                             ))}
                             
