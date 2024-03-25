@@ -70,6 +70,7 @@ public class UserService
     public IEnumerable<User> GetAll()
     {
         return _context.Users
+        .Include(p => p.Clients)
         .AsNoTracking()
         .ToList();
     }
@@ -109,7 +110,7 @@ public class UserService
         _context.SaveChanges();
     }
 
-    public void AddClient(int clientId, int userId)
+    public bool AddClient(int clientId, int userId)
     {
         var userUpdating = _context.Users.Find(userId);
         var clientUpdating = _context.Clients.Find(clientId);
@@ -123,8 +124,10 @@ public class UserService
         {
             userUpdating.Clients = new List<Client>();
         }
+
         userUpdating.Clients.Add(clientUpdating);
         _context.SaveChanges();
+        return true;
     }
 
     public void DeleteById(int id)
@@ -136,4 +139,24 @@ public class UserService
             _context.SaveChanges();
         }
     }
+
+    public void RemoveClientFromUser(int clientId, int userId)
+    {
+        var userUpdating = _context.Users.Include(c => c.Clients).SingleOrDefault(u => u.Id == userId);
+
+        if(userUpdating is null )
+        {
+            throw new InvalidOperationException("User doesn't exist");
+        }
+
+        var clientUpdating = userUpdating?.Clients?.SingleOrDefault(c => c.Id == clientId);
+
+        if(clientUpdating is null)
+        {
+            throw new InvalidOperationException("Client doesn't exist");
+        }
+        userUpdating?.Clients?.Remove(clientUpdating);
+         _context.SaveChanges();
+    }
+
 }

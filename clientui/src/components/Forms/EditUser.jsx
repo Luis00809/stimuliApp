@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-
+import UsersClients from "../Accordion/UserClients";
 import Button from 'react-bootstrap/Button';
 import { editUser } from "../../API/UserApi";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +17,14 @@ const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
     const [errMsg, setErrMsg] = useState('');
     const navigate = useNavigate();
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        onRefresh();
+        setShow(false);
+    } 
+    
+    const handleShow = () =>  setShow(true);
+    
+    
 
     const handleInputChange = (e) => {
         const { target } = e;
@@ -75,10 +81,12 @@ const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
                             <Form.Label>Last Name:</Form.Label>
                             <Form.Control type="text" name="lastName" defaultValue={lastName} onChange={handleInputChange} />
                         </Form.Group>
+                        
                         <p>{errMsg}</p>
                         <Button variant="primary" type="submit">
                             Save
                         </Button>
+                        <UsersClients userId={id} />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

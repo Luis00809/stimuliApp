@@ -93,3 +93,51 @@ export const editUser = async (updatedUser, id) => {
         console.log("error updating user: ", error);
     }
 }
+
+export const addClientToUser = async (clientId, userId) => {
+    try {
+        const response = await fetch(`/api/user/${userId}/addclient/${clientId}`,{
+            method: "PUT",
+        })
+
+        if(!response.ok){
+            const errorMessage = await response.text(); 
+            throw new Error(errorMessage);
+        }
+
+    } catch (error) {
+        console.log("error adding client: ", error);
+    }
+}
+
+export const removeClientFromUser = async (clientId, userId) => {
+    try {
+        const response = await fetch(`/api/user/${userId}/removeclient/${clientId}`,{
+            method: "DELETE",
+            
+        })
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        
+    } catch (error) {
+        console.log("error removing client: ", error);
+    }
+}
+
+export const deleteUser = async (id) => {
+    try {
+        const response = await fetch(`/api/user/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.log("error deleting user: ", error);
+    }
+}

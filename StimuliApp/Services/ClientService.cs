@@ -16,6 +16,7 @@ public class ClientService
     public IEnumerable<Client> GetAll()
     {
         return _context.Clients
+        .Include(p => p.Users)
         .AsNoTracking()
         .ToList();
     }

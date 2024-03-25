@@ -39,8 +39,15 @@ const DisplayUsers = () => {
                         <Row>
                             {users.map(user => (
                                 <Col xs={12} key={user.id}>
-                                   <p>{user.firstName} {user.lastName} {user.email}</p> 
+                                   <p>{user.firstName} {user.lastName} {user.email} </p>
+                                   <h4>Clients:</h4>
+                                    <ul>
+                                        {user.clients.map(client => (
+                                            <li key={client.id}>{client.name} </li>
+                                        ))}
+                                    </ul>                                 
                                     <EditUser onRefresh={refreshData} id={user.id} firstName={user.firstName} lastName={user.lastName} email={user.email} password={user.password} />
+                                    
                                 </Col>
                             ))}
                             

@@ -101,19 +101,41 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         }
     }
 
-    [HttpPut("{id}/addclient")]
-    public IActionResult AddClient(int id, int clientId)
+    [HttpPut("{id}/addclient/{clientId}")]
+    public IActionResult AddClient(int clientId, int id)
     {
         var userUpdate = _service.GetById(id);
         if(userUpdate is not null) 
         {
-            _service.AddClient(id, clientId);
-            return NoContent();
+            var result =  _service.AddClient(clientId, id);
+            if (result)
+            {
+                return NoContent();
+            } else 
+            {
+                return Conflict("This Client is already added to this User.");
+
+            }
 
         } 
         else 
         {
-            return NotFound();
+            return NotFound("The specified client or User doesn't exist");
+        }
+    }
+
+    [HttpDelete("{id}/removeclient/{clientId}")]
+    public IActionResult RemoveClient(int id, int clientId)
+    {
+        try
+        {
+            _service.RemoveClientFromUser(clientId, id);
+            return NoContent();
+        }
+        catch (InvalidOperationException e)
+        {
+            
+            return BadRequest(e.Message);
         }
     }
 
