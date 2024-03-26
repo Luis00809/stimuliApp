@@ -17,7 +17,7 @@ const Homepage = () => {
                 const userId = await auth.getUserId();
                 if (userId) {
                     const usersClients = await getUsersClients(userId);
-                    setClients(usersClients); // Set the state with fetched clients
+                    setClients(usersClients); 
                 } else {
                     console.log("error getting user id");
                 }

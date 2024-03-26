@@ -26,14 +26,12 @@ public class UserService
 
     private string HashPassword(string password)
     {
-        // Generate a  128-bit salt
         var salt = new byte[128 /  8];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
 
-        // Hash the password with the salt
         var hashedPassword = KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
@@ -41,7 +39,6 @@ public class UserService
             iterationCount:  10000,
             numBytesRequested:  256 /  8);
 
-        // Combine the salt and the hash
         return Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hashedPassword);
     }
 
@@ -55,12 +52,10 @@ public class UserService
 
     public bool VerifyPassword(User user, string password)
     {
-        // Split the stored hash into the salt and the hashed password
         var parts = user.Password.Split('.');
         var salt = Convert.FromBase64String(parts[0]);
         var storedHash = Convert.FromBase64String(parts[1]);
 
-        // Hash the received password with the stored salt
         var hashedPassword = KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
@@ -68,7 +63,6 @@ public class UserService
             iterationCount:  10000,
             numBytesRequested: storedHash.Length);
 
-        // Compare the hashes
         return hashedPassword.SequenceEqual(storedHash);
     }
 
@@ -76,6 +70,7 @@ public class UserService
     public IEnumerable<User> GetAll()
     {
         return _context.Users
+        .Include(p => p.Clients)
         .AsNoTracking()
         .ToList();
     }
@@ -115,7 +110,7 @@ public class UserService
         _context.SaveChanges();
     }
 
-    public void AddClient(int clientId, int userId)
+    public bool AddClient(int clientId, int userId)
     {
         var userUpdating = _context.Users.Find(userId);
         var clientUpdating = _context.Clients.Find(clientId);
@@ -129,8 +124,10 @@ public class UserService
         {
             userUpdating.Clients = new List<Client>();
         }
+
         userUpdating.Clients.Add(clientUpdating);
         _context.SaveChanges();
+        return true;
     }
 
     public void DeleteById(int id)
@@ -142,4 +139,24 @@ public class UserService
             _context.SaveChanges();
         }
     }
+
+    public void RemoveClientFromUser(int clientId, int userId)
+    {
+        var userUpdating = _context.Users.Include(c => c.Clients).SingleOrDefault(u => u.Id == userId);
+
+        if(userUpdating is null )
+        {
+            throw new InvalidOperationException("User doesn't exist");
+        }
+
+        var clientUpdating = userUpdating?.Clients?.SingleOrDefault(c => c.Id == clientId);
+
+        if(clientUpdating is null)
+        {
+            throw new InvalidOperationException("Client doesn't exist");
+        }
+        userUpdating?.Clients?.Remove(clientUpdating);
+         _context.SaveChanges();
+    }
+
 }

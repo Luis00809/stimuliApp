@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StimuliApp.Models;
 
@@ -17,5 +18,7 @@ public class Trial
     public Client? Client { get; set; }
 
     public int? SetId { get; set; }
+    
+    [ForeignKey("SetId")]
     public StimSet? StimSet { get; set; }
 }

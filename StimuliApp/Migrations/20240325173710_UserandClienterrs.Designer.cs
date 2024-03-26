@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StimuliApp.Data;
 
@@ -11,9 +12,11 @@ using StimuliApp.Data;
 namespace StimuliApp.Migrations
 {
     [DbContext(typeof(StimuliAppContext))]
-    partial class StimuliAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240325173710_UserandClienterrs")]
+    partial class UserandClienterrs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,12 +97,14 @@ namespace StimuliApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Answer")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoundNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Target")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TrialId")
@@ -173,6 +178,9 @@ namespace StimuliApp.Migrations
                     b.Property<int?>("SetId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StimSetId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalCorrect")
                         .HasColumnType("int");
 
@@ -183,7 +191,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("SetId");
+                    b.HasIndex("StimSetId");
 
                     b.ToTable("Trials");
                 });
@@ -279,7 +287,7 @@ namespace StimuliApp.Migrations
 
                     b.HasOne("StimuliApp.Models.StimSet", "StimSet")
                         .WithMany("Trials")
-                        .HasForeignKey("SetId");
+                        .HasForeignKey("StimSetId");
 
                     b.Navigation("Client");
 

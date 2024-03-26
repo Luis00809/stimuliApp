@@ -32,12 +32,10 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         return Unauthorized();
     }
 
-    // Assuming you have a method in UserService to verify the password
     bool isPasswordCorrect = _service.VerifyPassword(user, password);
 
     if (isPasswordCorrect)
     {
-        // Password is correct, proceed with authentication
         string token = _jwtService.GenerateToken(user);
         
         var response = new AuthenticationResponse
@@ -80,15 +78,14 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         var user = _service.Create(newUser);
         if (user == null)
         {
-            return BadRequest(); // Adjust this based on your service's behavior
+            return BadRequest(); 
         }
 
-        // Generate JWT token for the newly created user
         string token = _jwtService.GenerateToken(user);
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, new { user, token });
     }
 
-    [HttpPut]
+    [HttpPut("{id}/update")]
     public IActionResult Update(int id, User updatedUser)
     {
         var user = _service.GetById(id);
@@ -96,7 +93,7 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         {
             updatedUser.Id = id;
             _service.Update(updatedUser);
-            return NoContent();
+            return Ok(updatedUser);
         } 
         else 
         {
@@ -104,19 +101,41 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
         }
     }
 
-    [HttpPut("{id}/addclient")]
-    public IActionResult AddClient(int id, int clientId)
+    [HttpPut("{id}/addclient/{clientId}")]
+    public IActionResult AddClient(int clientId, int id)
     {
         var userUpdate = _service.GetById(id);
         if(userUpdate is not null) 
         {
-            _service.AddClient(id, clientId);
-            return NoContent();
+            var result =  _service.AddClient(clientId, id);
+            if (result)
+            {
+                return NoContent();
+            } else 
+            {
+                return Conflict("This Client is already added to this User.");
+
+            }
 
         } 
         else 
         {
-            return NotFound();
+            return NotFound("The specified client or User doesn't exist");
+        }
+    }
+
+    [HttpDelete("{id}/removeclient/{clientId}")]
+    public IActionResult RemoveClient(int id, int clientId)
+    {
+        try
+        {
+            _service.RemoveClientFromUser(clientId, id);
+            return NoContent();
+        }
+        catch (InvalidOperationException e)
+        {
+            
+            return BadRequest(e.Message);
         }
     }
 

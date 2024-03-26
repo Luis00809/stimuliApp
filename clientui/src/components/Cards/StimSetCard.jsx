@@ -24,6 +24,7 @@ export default function StimSetCard({
     const [editModal, setEditModal] = useState(false);
     const clientId = useParams();
     const navigate = useNavigate();
+    
     const handleModal = () => {
         setModal(true);
     }
