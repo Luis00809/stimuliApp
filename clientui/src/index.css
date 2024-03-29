@@ -63,7 +63,7 @@ h1 {
 .btns{
   background-color: rgb(0, 150, 199);
   border-color: rgb(3, 4, 94);
-  border: 3px solid rgb(3, 4, 94);
+  border: 1px solid rgb(3, 4, 94);
   transition: transform 0.4s ease-in-out; 
 }
 
@@ -79,12 +79,20 @@ h1 {
 
 .addBtns{
   background-color: #6c757d;
-  border-color: rgb(3, 4, 94);
-
 }
 
 .addBtns:hover {
-  background-color: rgb(3, 4, 94);
+  background-color: rgb(0, 119, 182);
+  color: rgb(202, 240, 248)
+}
+
+.rmvBtn {
+  background-color: rgba(228, 13, 13, 0.893);
+}
+
+.rmvBtn:hover {
+  background-color: rgb(174, 7, 7);
+  color: black
 }
 
 @media (min-width: 992px) {

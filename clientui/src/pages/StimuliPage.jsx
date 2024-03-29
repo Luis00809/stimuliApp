@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { getAllStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom';
 import { createStimuli } from "../API/StimuliApit";
-import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { PlusCircle } from 'react-bootstrap-icons';
 
 
 

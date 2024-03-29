@@ -6,6 +6,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { addClientToUser, removeClientFromUser, getUsersClients } from "../../API/UserApi";
 import { getClients } from "../../API/ClientApi";
+import { PersonFillAdd } from 'react-bootstrap-icons';
+import { X } from "react-bootstrap-icons"; 
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const UsersClients = ({userId}) => {
 
@@ -61,22 +65,33 @@ const UsersClients = ({userId}) => {
     }
 
     return (
-        <Accordion>
+        <Accordion >
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Clients</Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
                     <Container>
-                        <Row>
+                        <Row >
+                            
                             {clients.map(client => (
-                                <Col xs={12} key={client.id}>
-                                    <p>{client.name}</p>
-                                    {userClientIds.includes(client.id) ? (
-                                        <Button variant="primary" onClick={() => removeClient(client.id, userId)}>Remove</Button>
-                                    ) : (
-                                        <Button variant="primary" onClick={() => addClient(client.id, userId)}>Add</Button>
-                                    )}
+                              <Col xs={6}>
+                                    <Card className="mb-3 " key={client.id}>
+                                        <Card.Body className="d-flex justify-content-evenly">
+                                            <Card.Text>{client.name} name</Card.Text>
+                                            {userClientIds.includes(client.id) ? (
+                                                <Button className="rmvBtn" onClick={() => removeClient(client.id, userId)}>
+                                                    <X />
+                                                </Button>
+                                            ) : (
+                                                <Button className="addBtns" onClick={() => addClient(client.id, userId)}>
+                                                    <PersonFillAdd />
+                                                </Button>
+                                            )}
+                                        </Card.Body>
+                                    </Card>
                                 </Col>
                             ))}
+                            
+                            
                             
                         </Row>
                     </Container>

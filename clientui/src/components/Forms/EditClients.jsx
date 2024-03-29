@@ -3,11 +3,18 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { editClient } from "../../API/ClientApi";
+import { Collection, PencilSquare } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { ArrowRight } from "react-bootstrap-icons";
 
 const EditClient = ({name, id, onRefresh}) => {
     const [show, setShow] = useState(false);
     const [clientName, setName] = useState(name);
     const [errMsg, setErrMsg] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const {target} = e;
@@ -33,14 +40,18 @@ const EditClient = ({name, id, onRefresh}) => {
         return response;
     }
 
+    const toDataPage = (id) => {
+        console.log(id);
+        navigate(`/client/trials/${id}`);
+    }
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Edit Client
+            <Button className="btns" onClick={handleShow}>
+                <PencilSquare />
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -55,9 +66,18 @@ const EditClient = ({name, id, onRefresh}) => {
                             <Form.Control type="text" name="name" defaultValue={name} onChange={handleInputChange} />
                         </Form.Group>
                         <p>{errMsg}</p>
-                        <Button variant="primary" type="submit">
-                            Save
-                        </Button>
+                        <Container >
+                            <Row>
+                                <Col xs={6}>
+                                    <Button className="btns" type="submit">
+                                        Save
+                                    </Button>
+                                </Col>
+                                <Col xs={6}>
+                                    <Button variant="secondary" onClick={() => toDataPage(id)}>Edit Data <ArrowRight /></Button>
+                                </Col>
+                            </Row>
+                        </Container>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

@@ -46,12 +46,12 @@ const ClientPage = () => {
     }, [clientId, refreshKey]);
 
     return (
-        <Container>
-            <Row>
-                <Col className="text-center m-5">
-                    <h1>{clientName}</h1>
+        <Container className="mt-3">
+            <Row className="my-4 border-bottom border-3 text-center">
+                <Col xs={6} md={6}>
+                    <h1><span className="text-black">Client:</span> {clientName}</h1>
                 </Col>
-                <Col>
+                <Col xs={5} md={4} className=" d-flex justify-content-end"  style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }}>
                     <Link to={`/client/trials/${clientId.id}`}>
                         <Button className='btns rounded-2'>
                             To Client's Data

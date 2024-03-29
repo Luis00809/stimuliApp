@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { getClients } from '../../API/ClientApi';
 import EditClient from '../Forms/EditClients';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const DisplayClients = () => {
     const [refreshKey, setRefreshKey] = useState(0);
@@ -34,14 +36,19 @@ const DisplayClients = () => {
             <Accordion.Body>
                 <Container>
                     <Row>
-                        {clients.map(client => (
-                            <Col xs={12} key={client.id}>
-                               <p>{client.name}</p>
-                                <EditClient id={client.id} name={client.name} onRefresh={refreshData} />
-                            </Col>
-                        ))}
-                        
+                            {clients.map(client => (
+                                 <Col key={client.id} xs={6}>
+                                    <Card  className="mb-2" >
+                                        <Card.Body className='d-flex justify-content-between'>
+                                            <Card.Text>{client.name}</Card.Text>
+                                            <EditClient id={client.id} name={client.name} onRefresh={refreshData} />
+
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}                        
                     </Row>
+                                                
                 </Container>
             </Accordion.Body>
         </Accordion.Item>
