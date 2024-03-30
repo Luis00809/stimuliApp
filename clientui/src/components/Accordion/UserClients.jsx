@@ -76,7 +76,7 @@ const UsersClients = ({userId}) => {
                               <Col xs={6}>
                                     <Card className="mb-3 " key={client.id}>
                                         <Card.Body className="d-flex justify-content-evenly">
-                                            <Card.Text>{client.name} name</Card.Text>
+                                            <Card.Text>{client.name} </Card.Text>
                                             {userClientIds.includes(client.id) ? (
                                                 <Button className="rmvBtn" onClick={() => removeClient(client.id, userId)}>
                                                     <X />

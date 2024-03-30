@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import App from './App.jsx';
 import './index.css';
@@ -14,6 +14,7 @@ import OneStimPage from './pages/SingleStimuliPage.jsx';
 import StimSetsPage from './pages/StimSetsPage.jsx';
 import DataPage from './pages/DataPage.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import AuthService from './API/auth.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
  <BrowserRouter>
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/stimuli/:id" element={<OneStimPage />} />
       <Route path="/stimsets" element={<StimSetsPage />} />
       <Route path='/client/trials/:id' element={<DataPage />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={AuthService.isAdmin() ? <Dashboard /> : <Navigate to="/" replace />} />
     </Routes>
  </BrowserRouter>
 );

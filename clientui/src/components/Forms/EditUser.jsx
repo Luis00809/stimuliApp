@@ -59,6 +59,7 @@ const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
             <Button className="btns" onClick={handleShow}>
                 Edit User
             </Button>
+            
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

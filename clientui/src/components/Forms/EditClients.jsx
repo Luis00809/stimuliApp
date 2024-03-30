@@ -40,10 +40,6 @@ const EditClient = ({name, id, onRefresh}) => {
         return response;
     }
 
-    const toDataPage = (id) => {
-        console.log(id);
-        navigate(`/client/trials/${id}`);
-    }
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -73,9 +69,7 @@ const EditClient = ({name, id, onRefresh}) => {
                                         Save
                                     </Button>
                                 </Col>
-                                <Col xs={6}>
-                                    <Button variant="secondary" onClick={() => toDataPage(id)}>Edit Data <ArrowRight /></Button>
-                                </Col>
+                                
                             </Row>
                         </Container>
                     </Form>

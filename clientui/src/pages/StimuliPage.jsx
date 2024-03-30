@@ -63,11 +63,11 @@ const StimuliPage = () => {
     return (
         <Container className="mt-3" >
             <Row className="my-4 border-bottom border-3 text-center">
-                <Col xs={10}>
+                <Col xs={6}>
                     <h1> All Stimuli</h1>
                 </Col>
-                <Col xs={1} className=" d-flex justify-content-end"  style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }}>
-                    <Button onClick={handleShow} className="addBtns">
+                <Col xs={5} md={4} className=" d-flex justify-content-end" style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }} >
+                    <Button onClick={handleShow} className="btns rounded-2">
                         Create Stimuli
                         {/* <PlusCircle /> */}
                     </Button>
