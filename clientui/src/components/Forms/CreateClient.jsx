@@ -44,7 +44,7 @@ const CreateClient = () => {
 
     return (
     <>
-        <Button variant="primary" onClick={handleShow}>
+        <Button className="addBtns" onClick={handleShow}>
           Create Client
         </Button>
 
@@ -58,7 +58,7 @@ const CreateClient = () => {
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" placeholder="Enter Name" name="name" value={name} onChange={handleInputChange}/>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className="btns" type="submit">
                         Submit
                     </Button>
                 </Form>

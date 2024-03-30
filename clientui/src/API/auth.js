@@ -2,6 +2,16 @@ import { jwtDecode } from 'jwt-decode';
 
 class AuthService {
 
+    isAdmin() {
+      try {
+        const profile = this.getProfile();
+        return profile && profile.unique_name && profile.unique_name.endsWith('@admin.com');
+      } catch (error) {
+          console.error('Error checking if user is admin:', error);
+          return false; // Return false if an error occurs
+      }
+    }
+
     getUserId() {
       const token = this.getToken();
       if (!token) {
@@ -12,8 +22,12 @@ class AuthService {
     }
 
     getProfile() {
-        return decode(this.getToken());
-    }
+      const token = this.getToken();
+      if (!token) {
+          return null; // or throw an error
+      }
+      return jwtDecode(token);
+  }
 
     loggedIn() {
         const token = this.getToken();

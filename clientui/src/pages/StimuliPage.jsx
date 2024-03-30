@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { getAllStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom';
 import { createStimuli } from "../API/StimuliApit";
-import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { PlusCircle } from 'react-bootstrap-icons';
 
 
 
@@ -65,11 +63,11 @@ const StimuliPage = () => {
     return (
         <Container className="mt-3" >
             <Row className="my-4 border-bottom border-3 text-center">
-                <Col xs={10}>
+                <Col xs={6}>
                     <h1> All Stimuli</h1>
                 </Col>
-                <Col xs={1} className=" d-flex justify-content-end"  style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }}>
-                    <Button onClick={handleShow} className="addBtns">
+                <Col xs={5} md={4} className=" d-flex justify-content-end" style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }} >
+                    <Button onClick={handleShow} className="btns rounded-2">
                         Create Stimuli
                         {/* <PlusCircle /> */}
                     </Button>

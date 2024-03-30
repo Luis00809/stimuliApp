@@ -12,12 +12,16 @@ import { useState, useEffect } from 'react';
 
 export default function NavBar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
-        // Check if the user is logged in on component mount
         const checkLoginStatus = () => {
             const token = AuthService.getToken();
             setIsLoggedIn(token ? true : false);
+            if(AuthService.isAdmin()){
+                setIsAdmin(true);
+            } else{
+                setIsAdmin(false);
+            }
         };
         checkLoginStatus();
     }, []);
@@ -40,9 +44,11 @@ export default function NavBar() {
                         ) : (
                             <Nav.Link as={Link} to='/login'>Sign In</Nav.Link>
                         )}
-                        <Nav.Link as={Link} to='/dashboard'>
-                            Dashboard
-                        </Nav.Link>
+                        {isAdmin && (
+                            <Nav.Link as={Link} to='/dashboard'>
+                                Dashboard
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </Container>
             </Navbar>

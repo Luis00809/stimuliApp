@@ -56,9 +56,10 @@ const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button className="btns" onClick={handleShow}>
                 Edit User
             </Button>
+            
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -83,14 +84,14 @@ const EditUser = ({id, firstName, lastName, email, password, onRefresh }) => {
                         </Form.Group>
                         
                         <p>{errMsg}</p>
-                        <Button variant="primary" type="submit">
+                        <Button className='btns mb-3' type="submit">
                             Save
                         </Button>
                         <UsersClients userId={id} />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button  variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                 </Modal.Footer>
