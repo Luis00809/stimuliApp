@@ -96,7 +96,13 @@ export const getClientsStimSets = async (clientId) => {
 
 export const addSetToClient = async (clientId, setId) => {
     try {
-        const response = await fetch(`/api/client/${clientId}/addset/${setId}`, {
+
+        const createDuplicate = await fetch(`/api/stimset/${setId}/duplicate`,{
+            method: "POST"
+        })
+
+       const duplicateSetId = await createDuplicate.json();
+        const response = await fetch(`/api/client/${clientId}/addset/${duplicateSetId.id}`, {
             method: "PUT"
         });
         if (!response.ok) {

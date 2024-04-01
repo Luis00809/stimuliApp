@@ -141,7 +141,7 @@ public class StimSetController : ControllerBase
         try
         {
             var newSet = _service.DuplicateStimSet(id);
-            return CreatedAtAction(nameof(GetById), new { id = newSet.Id }, newSet);  
+            return Ok(new { id = newSet.Id });
         }
         catch (InvalidOperationException e)
         {

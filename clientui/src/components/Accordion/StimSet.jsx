@@ -52,6 +52,7 @@ export default function DisplayStimSetList({
             console.log("error adding set to client: ", error);
             if(error){
                 alert("This client already has this stim set")
+                console.log(error);
             } else {
                 alert('An unexpected error occurred.')
             }
