@@ -135,4 +135,18 @@ public class StimSetController : ControllerBase
         }
     }
 
+    [HttpPost("{id}/duplicate")]
+    public IActionResult DuplicateStimSet(int id)
+    {
+        try
+        {
+            var newSet = _service.DuplicateStimSet(id);
+            return CreatedAtAction(nameof(GetById), new { id = newSet.Id }, newSet);  
+        }
+        catch (InvalidOperationException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
 }
