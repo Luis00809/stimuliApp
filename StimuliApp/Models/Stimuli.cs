@@ -12,5 +12,6 @@ public class Stimuli
 
     public string? Image {get; set;}
     public string? Group { get; set; }
+    public bool? Viewable { get; set; }
 
 }

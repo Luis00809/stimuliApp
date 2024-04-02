@@ -47,6 +47,7 @@ public class StimSetService
         }
 
         setUpdating.Title = updatedSet.Title ?? setUpdating.Title;
+        setUpdating.Public = updatedSet.Public ?? setUpdating.Public;
         _context.SaveChanges();
     }
 
@@ -129,6 +130,7 @@ public class StimSetService
 
         var newStimSet = new StimSet {
             Title = existingStimSet.Title + " (copy)",
+            Public = false,
         };
 
         newStimSet.Stimuli = existingStimSet.Stimuli;

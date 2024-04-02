@@ -96,6 +96,7 @@ export const updateStimSet = async (id, updatedSet) => {
         body: JSON.stringify(updatedSet),
     });
 
+
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

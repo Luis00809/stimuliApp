@@ -18,7 +18,7 @@ public class StimSetController : ControllerBase
     [HttpGet]
     public IEnumerable<StimSet> GetAll()
     {
-        return _service.GetAll();
+        return _service.GetAll().Where(s => s.Public.GetValueOrDefault());
     }
 
     [HttpGet("{id}")]

@@ -154,8 +154,10 @@ const TrialPage = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col className="text-center">
+                        <Col xs={6} >
                             <Button className="btns" onClick={saveTrial}>Save Trial</Button>
+                        </Col>
+                        <Col xs={6}>
                             <Button className="btns" onClick={discardTrial}>Discard Trial</Button>
                         </Col>
                     </Row>
