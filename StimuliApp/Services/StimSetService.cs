@@ -47,6 +47,7 @@ public class StimSetService
         }
 
         setUpdating.Title = updatedSet.Title ?? setUpdating.Title;
+        setUpdating.Public = updatedSet.Public ?? setUpdating.Public;
         _context.SaveChanges();
     }
 
@@ -101,21 +102,44 @@ public class StimSetService
     }
 
     public void RemoveStimuli(int stimId, int setId)
-{
-    var stimSetUpdating = _context.StimSets.Include(s => s.Stimuli).SingleOrDefault(s => s.Id == setId);
-    if (stimSetUpdating is null)
     {
-        throw new InvalidOperationException("StimSet doesn't exist");
+        var stimSetUpdating = _context.StimSets.Include(s => s.Stimuli).SingleOrDefault(s => s.Id == setId);
+        if (stimSetUpdating is null)
+        {
+            throw new InvalidOperationException("StimSet doesn't exist");
+        }
+
+        var stimuliUpdating = stimSetUpdating?.Stimuli?.SingleOrDefault(s => s.Id == stimId);
+        if (stimuliUpdating is null)
+        {
+            throw new InvalidOperationException("Stimuli doesn't exist in this StimSet");
+        }
+
+        stimSetUpdating?.Stimuli?.Remove(stimuliUpdating);
+        _context.SaveChanges();
     }
 
-    var stimuliUpdating = stimSetUpdating?.Stimuli?.SingleOrDefault(s => s.Id == stimId);
-    if (stimuliUpdating is null)
-    {
-        throw new InvalidOperationException("Stimuli doesn't exist in this StimSet");
+    public StimSet DuplicateStimSet(int id) {
+        var existingStimSet = _context.StimSets
+        .Include(s => s.Stimuli)
+        .SingleOrDefault(s => s.Id == id);
+
+        if (existingStimSet is null) {
+            throw new InvalidOperationException("StimSet doesn't exist");
+        }
+
+        var newStimSet = new StimSet {
+            Title = existingStimSet.Title + " (copy)",
+            Public = false,
+        };
+
+        newStimSet.Stimuli = existingStimSet.Stimuli;
+
+        _context.StimSets.Add(newStimSet);
+        _context.SaveChanges();
+ 
+        return newStimSet;
     }
 
-    stimSetUpdating?.Stimuli?.Remove(stimuliUpdating);
-    _context.SaveChanges();
-}
 
 }

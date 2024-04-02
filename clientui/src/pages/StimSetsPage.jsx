@@ -20,7 +20,7 @@ const StimSetsPage = () => {
     const [setTitle, setSetTitile] = useState('');
     const [show, setShow] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
-
+    const [publicSet, setPublicSet] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -28,12 +28,13 @@ const StimSetsPage = () => {
         setSetTitile(event.target.value)
     };
 
-    const handleCreatingStimSet = async (event, setTitle) => {
+    const handleCreatingStimSet = async (event, setTitle, publicSet) => {
         event.preventDefault();
         try {
-            const creatingStimSet = await createStimSet({title: setTitle});
+            const creatingStimSet = await createStimSet({title: setTitle, public: publicSet});
             if (creatingStimSet) {
                 handleClose();
+                setPublicSet(false)
                 setRefreshKey(prevKey => prevKey + 1);
             }
         } catch (error) {
@@ -94,6 +95,16 @@ const StimSetsPage = () => {
                                             onChange={handleSettingTitle}
                                                         />
                                     </InputGroup>
+                                    <Form>
+                                        <Form.Check // prettier-ignore
+                                            type="switch"
+                                            id="custom-switch"
+                                            label="Public"
+                                            checked={publicSet}
+                                            onChange={(e) => setPublicSet(e.target.checked)}
+                                        />
+                                        
+                                    </Form>
                                 </ListGroup>
                             </Col>       
                             </Row>
@@ -102,7 +113,7 @@ const StimSetsPage = () => {
                         <Button variant="secondary" onClick={handleClose}>
                             Close
                         </Button>
-                        <form onSubmit={(event) => handleCreatingStimSet(event, setTitle)}>
+                        <form onSubmit={(event) => handleCreatingStimSet(event, setTitle, publicSet)}>
                             <Button  variant="primary" type="submit">
                                 Create Stimuli Set
                             </Button>

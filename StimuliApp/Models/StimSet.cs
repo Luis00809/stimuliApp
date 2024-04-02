@@ -5,6 +5,7 @@ namespace StimuliApp.Models;
 public class StimSet
 {
     public int Id { get; set; }
+    public bool? Public { get; set; }
 
     [Required]
     [MaxLength(100)]

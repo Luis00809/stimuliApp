@@ -18,20 +18,23 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
     const [stimSetTitle, setTitle] = useState('');
     const [setStimuli, setSetStimuli] = useState([]);
     const navigate = useNavigate();
+    const [publicSet, setPublicSet] = useState(false)
 
     useEffect(() => {
         const fetchOneSet = async () => {
             try {
                 const set = await getOneStimSet(id);
                 setSet(set);
-                setTitle(set.title);
+                setTitle(set.title || "");
                 setSetStimuli(set.stimuli);
+                setPublicSet(set.public)
             } catch (error) {
                 console.log("error getting stimuli set: ", error);
             }
         };
         fetchOneSet();
     }, [id]);
+    
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -52,7 +55,7 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await updateStimSet(id, { title: stimSetTitle });
+            await updateStimSet(id, { title: stimSetTitle, public: publicSet });
             onRefresh();
             closeModal();
         } catch (error) {
@@ -74,7 +77,7 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col xs={12}>
                                 <ListGroup className="list-group-flush">
                                     <InputGroup className="mb-3">
                                         <InputGroup.Text>Stimuli Set Title:</InputGroup.Text>
@@ -85,6 +88,18 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
                                         />
                                     </InputGroup>
                                 </ListGroup>
+                            </Col>
+                            <Col className='mb-4'>
+                                <Form>
+                                    <Form.Check // prettier-ignore
+                                        type="switch"
+                                        id="custom-switch"
+                                        label="Public"
+                                        checked={publicSet}
+                                        onChange={(e) => setPublicSet(e.target.checked)}
+
+                                    />
+                                </Form>
                             </Col>
                         </Row>
                         <Row>
@@ -105,7 +120,7 @@ export default function EditStimSet({ id, show, closeModal, onRefresh }) {
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="success" onClick={handleSubmit}>Update Title</Button>
+                <Button variant="success" onClick={handleSubmit}>Update Set</Button>
                 <Button variant="secondary" onClick={closeModal}>Close</Button>
             </Modal.Footer>
         </Modal>

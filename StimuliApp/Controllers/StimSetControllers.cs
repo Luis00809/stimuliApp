@@ -18,7 +18,7 @@ public class StimSetController : ControllerBase
     [HttpGet]
     public IEnumerable<StimSet> GetAll()
     {
-        return _service.GetAll();
+        return _service.GetAll().Where(s => s.Public.GetValueOrDefault());
     }
 
     [HttpGet("{id}")]
@@ -132,6 +132,20 @@ public class StimSetController : ControllerBase
         catch (InvalidOperationException e)
         {
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPost("{id}/duplicate")]
+    public IActionResult DuplicateStimSet(int id)
+    {
+        try
+        {
+            var newSet = _service.DuplicateStimSet(id);
+            return Ok(new { id = newSet.Id });
+        }
+        catch (InvalidOperationException e)
+        {
+            return NotFound(e.Message);
         }
     }
 

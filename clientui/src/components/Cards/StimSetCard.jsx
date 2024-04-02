@@ -80,28 +80,28 @@ export default function StimSetCard({
 
     return (
         <div>
-            <Card className='mb-5 stimSetCard cardBorder rounded-4'>
+            <Card className='mb-5 stimSetCard cardBorder rounded-4 '>
                     <Container fluid>
                        <Row className='border-bottom border-3 border-dark' >
                             <Col xs={6} md={4} className='text-center border-end border-3 border-dark'>
-                                <h2>{title}</h2>
+                                <h2 className='fs-3'>{title}</h2>
                             </Col>
                             {setOption === "client" ? (
                                 <Col xs={4} className='d-flex align-items-end justify-content-end'>
-                                    <Button className='h-100 btns rounded-2' onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
+                                    <Button className=' btns rounded-2' onClick={() => handleRemoveSetFromClient(clientId.id, id)}>
                                         Remove
                                     </Button>
                                 </Col>
                             ) : (
                                 <Col xs={4} md={4} className='d-flex align-items-end justify-content-end'>
-                                    <Button className='h-100 btns rounded-2' onClick={() => handleSetDelete(id)}>
+                                    <Button className=' btns rounded-2' onClick={() => handleSetDelete(id)}>
                                         <Trash/>
                                     </Button>
                                 </Col>
                             )}
                             
                             <Col xs={2} md={4} className='d-flex align-items-end justify-content-end' style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
-                                <Button className='h-100 btns rounded-2' onClick={handleEditModal} variant="primary">
+                                <Button className=' btns rounded-2' onClick={handleEditModal} variant="primary">
                                     <PencilFill />
                                 </Button>{' '}
                             </Col>
