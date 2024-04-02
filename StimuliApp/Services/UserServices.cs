@@ -77,7 +77,8 @@ public class UserService
     public User? GetById(int id)
     {
         return _context.Users
-         .Include(p => p.Clients)
+        .Include(p => p.Clients)
+            .ThenInclude(t => t.StimSets)
         .AsNoTracking()
         .SingleOrDefault(p => p.Id == id);
     }

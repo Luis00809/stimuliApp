@@ -15,8 +15,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { updateStimuli, deleteStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom'; 
 import DisplayStimSetList from "../components/Accordion/StimSet";
-
-// import editStimuliModal from "../components/Modals/StimuliEditModal";
+import DisplayUsersClientsSets from "../components/Accordion/ClientSets";
 
 const OneStimPage = () => {
     const navigate = useNavigate();
@@ -96,8 +95,11 @@ const OneStimPage = () => {
                             </Col>
                         </Row>
                         <Row>
+                            <Col xs={12}>
+                             <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                            </Col>
                             <Col>
-                            <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                                <DisplayUsersClientsSets stimuliId={stimId.id} />
                             </Col>
                         </Row>
                     </Card>
@@ -114,12 +116,13 @@ const OneStimPage = () => {
                     <Col>
                         <ListGroup className="list-group-flush">
                             <InputGroup className="mb-3">
-                                <InputGroup.Text>Stimuli Title:</InputGroup.Text>
+                                <InputGroup.Text>Stimuli Title: </InputGroup.Text>
                                     <Form.Control
                                     type='text'
                                     value={stimTitle}
+                                    defaultValue={stimTitle}
                                     onChange={handleTitleChange}
-                                                />
+                                />
                             </InputGroup>
                         </ListGroup>
                     </Col>       
