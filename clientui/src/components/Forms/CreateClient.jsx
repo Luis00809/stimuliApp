@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 import { createClient } from "../../API/ClientApi";
 
-const CreateClient = () => {
+const CreateClient = (props) => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState("");
     const [errMsg, setErrMsg] = useState('');
@@ -28,6 +28,7 @@ const CreateClient = () => {
         e.preventDefault();
         try {
             const createdClient = await createClient({Name: name})
+            props.onClientCreated();
             if (!createdClient) {
                 console.log("error creting a cleint");
             } else {

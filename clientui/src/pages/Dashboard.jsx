@@ -20,7 +20,7 @@ const Dashboard = () => {
                     <CreateUser onUserCreated={() => setRefreshKey(prevKey => prevKey + 1)} />
                 </Col>
                 <Col>
-                    <CreateClient />
+                    <CreateClient onClientCreated={() => setRefreshKey(prevKey => prevKey + 1)}  />
                 </Col>
             </Row>
             <Row>
@@ -31,7 +31,7 @@ const Dashboard = () => {
                     <DisplayUsers refreshKey={refreshKey} />
                 </Col>
                 <Col>
-                    <DisplayClients />
+                    <DisplayClients refreshKey={refreshKey} />
                 </Col>
             </Row>
         </Container>

@@ -9,7 +9,7 @@ import EditClient from '../Forms/EditClients';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const DisplayClients = () => {
+const DisplayClients = (props) => {
     const [refreshKey, setRefreshKey] = useState(0);
 
     const [clients, setClients] = useState([]);
@@ -27,7 +27,7 @@ const DisplayClients = () => {
             }
         }
         fetchClients();
-    }, [refreshKey])
+    }, [props.refreshKey, refreshKey])
 
     return(
         <Accordion>
