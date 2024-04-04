@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { validateEmail, checkPassword } from '../../utils/helpers';
 
 
-const CreateUser = () => {
+const CreateUser = (props) => {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -51,6 +51,7 @@ const CreateUser = () => {
         try {
 
             const newUser = await createUser({FirstName: firstName, LastName: lastName, Email: email, Password: password})
+            props.onUserCreated();
             if(!newUser){
                console.log("error creating a user");
             } else {
@@ -96,7 +97,7 @@ const CreateUser = () => {
                 <Form.Control type='password' name="password" value={password} onChange={handleInputChange} />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button className="btns" type="submit">
                 Submit
               </Button>
             </Form>
