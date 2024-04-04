@@ -15,8 +15,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { updateStimuli, deleteStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom'; 
 import DisplayStimSetList from "../components/Accordion/StimSet";
-
-// import editStimuliModal from "../components/Modals/StimuliEditModal";
+import DisplayUsersClientsSets from "../components/Accordion/ClientSets";
 
 const OneStimPage = () => {
     const navigate = useNavigate();
@@ -77,28 +76,32 @@ const OneStimPage = () => {
         <Container className="mt-5">
             <Row>
                 <Col className="d-flex justify-content-center">
-                    <Card style={{ width: '30rem' }}>
-                        <Row>
-                            <Col className="d-flex justify-content-start">
-                                <Button onClick={handleShow}>
+                    <Card className="border-3 border-black" style={{ width: '30rem' }}>
+                        <Row >
+                            <Col className="d-flex justify-content-start ">
+                                <Button className="btns" onClick={handleShow}>
                                     <PencilFill />
                                 </Button>
                             </Col>
                             <Col className="d-flex justify-content-end">
-                                <Button onClick={() => handleDelete(stimId.id)}>
+                                <Button className="rmvBtn" onClick={() => handleDelete(stimId.id)}>
                                     <Trash />
                                 </Button>
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="d-flex justify-content-center ">
-                                {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id} onClick={() => console.log('works')} />}
+                            <Col className="d-flex justify-content-center mb-1 ">
+                                {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id}  />}
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
-                            <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                            <Col className="mb-2" xs={12}>
+                                <DisplayUsersClientsSets stimuliId={stimId.id} />
                             </Col>
+                            <Col xs={12}>
+                             <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                            </Col>
+                            
                         </Row>
                     </Card>
                 </Col>
@@ -114,12 +117,13 @@ const OneStimPage = () => {
                     <Col>
                         <ListGroup className="list-group-flush">
                             <InputGroup className="mb-3">
-                                <InputGroup.Text>Stimuli Title:</InputGroup.Text>
+                                <InputGroup.Text>Stimuli Title: </InputGroup.Text>
                                     <Form.Control
                                     type='text'
                                     value={stimTitle}
+                                    defaultValue={stimTitle}
                                     onChange={handleTitleChange}
-                                                />
+                                />
                             </InputGroup>
                         </ListGroup>
                     </Col>       

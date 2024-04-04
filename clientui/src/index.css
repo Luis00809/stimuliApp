@@ -8,6 +8,8 @@
   
 }
 
+
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -88,6 +90,7 @@ h1 {
 
 .rmvBtn {
   background-color: rgba(228, 13, 13, 0.893);
+  border: none;
 }
 
 .rmvBtn:hover {

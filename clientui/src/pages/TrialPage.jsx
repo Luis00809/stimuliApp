@@ -158,7 +158,7 @@ const TrialPage = () => {
                             <Button className="btns" onClick={saveTrial}>Save Trial</Button>
                         </Col>
                         <Col xs={6}>
-                            <Button className="btns" onClick={discardTrial}>Discard Trial</Button>
+                            <Button className="rmvBtn" onClick={discardTrial}>Discard Trial</Button>
                         </Col>
                     </Row>
                 </Container>
