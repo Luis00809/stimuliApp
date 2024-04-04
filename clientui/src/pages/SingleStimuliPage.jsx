@@ -63,7 +63,7 @@ const OneStimPage = () => {
             try {
                 const stimuli = await getAStimuli(stimId.id);
                 setStim(stimuli)
-                setTitle(stimuli.name)
+                setTitle(stimuli.stimName)
             } catch (error) {
                 console.log("Error fetching stimuli: ", error);
             }
@@ -120,7 +120,6 @@ const OneStimPage = () => {
                                 <InputGroup.Text>Stimuli Title: </InputGroup.Text>
                                     <Form.Control
                                     type='text'
-                                    value={stimTitle}
                                     defaultValue={stimTitle}
                                     onChange={handleTitleChange}
                                 />
@@ -142,7 +141,7 @@ const OneStimPage = () => {
                     Close
                 </Button>
                 <form onSubmit={(event) => handleUpdate(event, stimId.id)}>
-                    <Button variant="primary" type="submit">
+                    <Button className="btns" type="submit">
                         Save Changes
                     </Button>
                 </form>

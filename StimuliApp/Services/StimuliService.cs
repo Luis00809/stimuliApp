@@ -52,6 +52,7 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
         }
 
         stimuliUpdating.StimName = updatedStim.StimName ?? stimuliUpdating.StimName;
+        stimuliUpdating.Image = updatedStim.Image ?? stimuliUpdating.Image;
 
         // Check if a file has been provided and upload it to S3 if so
         if (file != null)
