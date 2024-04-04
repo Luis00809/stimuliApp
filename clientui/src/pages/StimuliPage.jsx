@@ -112,7 +112,7 @@ const StimuliPage = () => {
                         Close
                     </Button>
                     <form onSubmit={(event) => handleCreatingStimuli(event, createStimTitle)}>
-                        <Button  variant="primary" type="submit">
+                        <Button className="btns" type="submit">
                             Create Stimuli
                         </Button>
                     </form>

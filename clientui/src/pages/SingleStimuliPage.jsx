@@ -76,31 +76,32 @@ const OneStimPage = () => {
         <Container className="mt-5">
             <Row>
                 <Col className="d-flex justify-content-center">
-                    <Card style={{ width: '30rem' }}>
-                        <Row>
-                            <Col className="d-flex justify-content-start">
-                                <Button onClick={handleShow}>
+                    <Card className="border-3 border-black" style={{ width: '30rem' }}>
+                        <Row >
+                            <Col className="d-flex justify-content-start ">
+                                <Button className="btns" onClick={handleShow}>
                                     <PencilFill />
                                 </Button>
                             </Col>
                             <Col className="d-flex justify-content-end">
-                                <Button onClick={() => handleDelete(stimId.id)}>
+                                <Button className="rmvBtn" onClick={() => handleDelete(stimId.id)}>
                                     <Trash />
                                 </Button>
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="d-flex justify-content-center ">
-                                {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id} onClick={() => console.log('works')} />}
+                            <Col className="d-flex justify-content-center mb-1 ">
+                                {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id}  />}
                             </Col>
                         </Row>
                         <Row>
+                            <Col className="mb-2" xs={12}>
+                                <DisplayUsersClientsSets stimuliId={stimId.id} />
+                            </Col>
                             <Col xs={12}>
                              <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
                             </Col>
-                            <Col>
-                                <DisplayUsersClientsSets stimuliId={stimId.id} />
-                            </Col>
+                            
                         </Row>
                     </Card>
                 </Col>

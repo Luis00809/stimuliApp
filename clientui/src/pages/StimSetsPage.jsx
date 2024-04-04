@@ -114,7 +114,7 @@ const StimSetsPage = () => {
                             Close
                         </Button>
                         <form onSubmit={(event) => handleCreatingStimSet(event, setTitle, publicSet)}>
-                            <Button  variant="primary" type="submit">
+                            <Button className="btns" type="submit">
                                 Create Stimuli Set
                             </Button>
                         </form>

@@ -8,38 +8,65 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { addStimuliToSet } from "../../API/StimuliApit";
+import { getStimSetsStimuli, removeStimuliFromSet } from "../../API/StimSetApi";
+import { X } from "react-bootstrap-icons";
+import { Plus } from "react-bootstrap-icons";
 
 const DisplayUsersClientsSets = ({stimuliId}) => {
 
     const [clients, setClients] = useState([]);
-    const handleAddingStimuliToSet = async ( stimId, setId) => {
+    const [stimuliInSets, setStimuliInSets] = useState({});
+
+
+    const fetchSets = async () => {
         try {
-            const addingToSet = await addStimuliToSet(stimId, setId)
+            const userId = await auth.getUserId();
+            if (userId) {
+                const usersClients = await getUsersClients(userId);
+                setClients(usersClients);
+                // Fetch stimuli for each stimset and update the state
+                const stimuliInSets = {};
+                for (const client of usersClients) {
+                    for (const set of client.stimSets) {
+                        const stimuli = await getStimSetsStimuli(set.id);
+                        stimuliInSets[set.id] = stimuli.map(s => s.id);
+                    }
+                }
+                setStimuliInSets(stimuliInSets);
+            }
+        } catch (error) {
+            console.log("error getting Users clients");
+        }
+    }
+
+    const handleAddingStimuliToSet = async (stimId, setId) => {
+        try {
+            const addingToSet = await addStimuliToSet(stimId, setId);
             if(addingToSet) {
-                alert('added to set.')
+                alert('added to set.');
+                fetchSets();
             } else {
-                alert('error adding to set.')
+                alert('error adding to set.');
             }
         } catch (error) {
             console.log("error adding stimuli to set: ", error);
         }
     }
-    
-    useEffect(() => {
-        const fetchSets = async () => {
-            try {
-                const userId = await auth.getUserId();
-                if (userId) {
-                    const usersClients = await getUsersClients(userId);
-                    setClients(usersClients)
-                }
-            } catch (error) {
-                console.log("error getting Users clients");
-            }
+
+    const handleRemovingStimuliFromSet = async (stimId, setId) => {
+        try {
+            await removeStimuliFromSet(stimId, setId);
+            alert('removed from set.');
+            fetchSets();
+        } catch (error) {
+            console.log("error removing stimuli from stim set: ", error);
         }
+    }
+
+    useEffect(() => {
         fetchSets();
     }, [])
-
+    
     return (
         <Accordion>
             <Accordion.Item eventKey="0">
@@ -50,16 +77,24 @@ const DisplayUsersClientsSets = ({stimuliId}) => {
                     <Accordion.Item eventKey="0">
                         <Accordion.Header>{client.name}</Accordion.Header>
                         <Accordion.Body>
-                            <Container>
+                            <Container style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 0 }}>
                                 <Row>
                                     {client.stimSets.map(set =>( 
                                         <Container key={set.id}>
-                                            <Row>
-                                                <Col>
+                                            <Row className="border-bottom" >
+                                                <Col xs={6}>
                                                     {set.title}
                                                 </Col>
-                                                <Col>
-                                                    <Button onClick={() => handleAddingStimuliToSet(stimuliId, set.id)}>add</Button>
+                                                <Col xs={6} className="my-2 ">
+                                                            {stimuliInSets[set.id]?.includes(Number(stimuliId)) ? (
+                                                                <Button className="rmvBtn" onClick={() => handleRemovingStimuliFromSet(stimuliId, set.id)}>
+                                                                    <X />
+                                                                </Button>
+                                                            ) : (
+                                                                <Button className="addBtns" onClick={() => handleAddingStimuliToSet(stimuliId, set.id)}>
+                                                                    <Plus/>
+                                                                </Button>
+                                                            )}
                                                 </Col>
                                             </Row>
                                         </Container>
