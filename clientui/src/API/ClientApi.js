@@ -132,3 +132,21 @@ export const removeSetFromClient = async (clientId, setId) => {
         console.log("error removing set from client: ", error);
     }
 }
+
+export const deleteClient = async (clientId) => {
+
+    try {
+        const request = await fetch(`/api/Client/${clientId}`, {
+            method: "DELETE",
+        });
+
+        if (!request.ok) {
+            throw new Error(`HTTP error! status: ${request.status}`);
+        }
+
+        return request.ok;
+
+    } catch (error) {
+        console.log("error deleting client: ", error);
+    }
+}

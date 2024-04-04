@@ -8,7 +8,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const Dashboard = () => {
-    
+    const [refreshKey, setRefreshKey] = useState(0);
+
     return (
         <Container>
             <Row className="my-5">
@@ -16,10 +17,10 @@ const Dashboard = () => {
                     <h2>Create:</h2>
                 </Col>
                 <Col>
-                    <CreateUser />
+                    <CreateUser onUserCreated={() => setRefreshKey(prevKey => prevKey + 1)} />
                 </Col>
                 <Col>
-                    <CreateClient />
+                    <CreateClient onClientCreated={() => setRefreshKey(prevKey => prevKey + 1)}  />
                 </Col>
             </Row>
             <Row>
@@ -27,10 +28,10 @@ const Dashboard = () => {
                     <h2>Edit:</h2>
                 </Col>
                 <Col>
-                    <DisplayUsers />
+                    <DisplayUsers refreshKey={refreshKey} />
                 </Col>
                 <Col>
-                    <DisplayClients />
+                    <DisplayClients refreshKey={refreshKey} />
                 </Col>
             </Row>
         </Container>

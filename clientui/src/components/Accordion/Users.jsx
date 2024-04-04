@@ -10,7 +10,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { Trash } from 'react-bootstrap-icons';
 
-const DisplayUsers = () => {
+const DisplayUsers = (props) => {
 
     const [users, setUsers] = useState([]);
     const [refreshKey, setRefreshKey] = useState(0);
@@ -31,7 +31,7 @@ const DisplayUsers = () => {
             }
         }
         getsUsers();
-    }, [refreshKey])
+    }, [props.refreshKey, refreshKey])
 
 
     const handleDelete = async (id) => {
@@ -63,7 +63,7 @@ const DisplayUsers = () => {
                                                         <Card.Title>{user.firstName} {user.lastName}</Card.Title>
                                                     </Col>
                                                     <Col  xs={4} sm={2}>
-                                                        <Button variant='danger' onClick={() => handleDelete(user.id)}>
+                                                        <Button className='rmvBtn' onClick={() => handleDelete(user.id)}>
                                                             <Trash/>
                                                         </Button>
                                                     </Col>

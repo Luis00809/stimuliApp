@@ -73,8 +73,8 @@ const UsersClients = ({userId}) => {
                         <Row >
                             
                             {clients.map(client => (
-                              <Col xs={6}>
-                                    <Card className="mb-3 " key={client.id}>
+                              <Col xs={6} key={client.id}>
+                                    <Card className="mb-3 " >
                                         <Card.Body className="d-flex justify-content-evenly">
                                             <Card.Text>{client.name} </Card.Text>
                                             {userClientIds.includes(client.id) ? (
