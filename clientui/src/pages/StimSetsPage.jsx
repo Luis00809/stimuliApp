@@ -1,6 +1,5 @@
 import { getStimSet } from "../API/StimSetApi";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 import StimSetCard from "../components/Cards/StimSetCard";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
@@ -12,6 +11,9 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { PlusCircle } from 'react-bootstrap-icons';
 import { createStimSet } from "../API/StimSetApi";
+import { getUsersClients } from "../API/UserApi";
+import { addSetToClient } from "../API/ClientApi";
+import auth from "../API/auth";
 
 
 const StimSetsPage = () => {
@@ -20,9 +22,17 @@ const StimSetsPage = () => {
     const [setTitle, setSetTitile] = useState('');
     const [show, setShow] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
-    const [publicSet, setPublicSet] = useState(false);
-    const handleClose = () => setShow(false);
+    const [publicSet, setPublicSet] = useState(true);
+
+    const handleClose = () => {
+        setShow(false);
+        setClientAdding([]); 
+    };
+
     const handleShow = () => setShow(true);
+    const [usersClients, setUsersClients] = useState([]);
+    const [clientAdding, setClientAdding] = useState([]);
+
 
     const handleSettingTitle = (event) => {
         setSetTitile(event.target.value)
@@ -31,14 +41,35 @@ const StimSetsPage = () => {
     const handleCreatingStimSet = async (event, setTitle, publicSet) => {
         event.preventDefault();
         try {
-            const creatingStimSet = await createStimSet({title: setTitle, public: publicSet});
-            if (creatingStimSet) {
+
+            if (!publicSet) {
+                const createSet = await createStimSet({title: setTitle, public: publicSet});
+                
+                // get the created stimulis id to add to each selected client
+                for (const clientId of clientAdding) {
+                    await addSetToClient(clientId, createSet.id);
+                }
+
+                handleClose();
+                setPublicSet(false)
+                setRefreshKey(prevKey => prevKey + 1);
+            } else if(publicSet) {
+                const creatingStimSet = await createStimSet({title: setTitle, public: publicSet});
                 handleClose();
                 setPublicSet(false)
                 setRefreshKey(prevKey => prevKey + 1);
             }
+            
         } catch (error) {
             console.log("error creating stimset: ", error);
+        }
+    }
+
+    const handleAddingSetToClient = async (clientId, isChecked) => {
+        if (isChecked) {
+            setClientAdding(prev => [...prev, clientId]);
+        } else {
+            setClientAdding(prev => prev.filter(id => id !== clientId));
         }
     }
 
@@ -51,12 +82,23 @@ const StimSetsPage = () => {
             try {
                 const sets = await getStimSet();
                 setStimSets(sets);
+                const userId = await auth.getUserId();
+
+               if (userId) {
+                   const clients = await getUsersClients(userId);
+                   setUsersClients(clients)
+                } else {
+                    console.log("no user selected");
+                }
+               
             } catch (error) {
                 console.log("error getting stim sets: ", error);
             }
         }
         getSets();
     }, [refreshKey])
+
+    console.log(clientAdding);
 
 
     return (
@@ -80,7 +122,7 @@ const StimSetsPage = () => {
             </Row>
             <Row>
                 <Col>
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show} backdrop="static" onHide={handleClose}>
                         <Modal.Header closeButton>
                         <Modal.Title>Create Stimuli Set: </Modal.Title>
                         </Modal.Header>
@@ -108,6 +150,30 @@ const StimSetsPage = () => {
                                 </ListGroup>
                             </Col>       
                             </Row>
+                            {!publicSet && (
+                                <Container>
+                                     <Row>
+                                        <Col className="mt-4">
+                                            <p>If the stim set is private then you must need to assign it to a client</p>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        {usersClients.map(usersClient => (
+                                                <Col key={usersClient.id} xs={12}>
+                                                    <Form>
+                                                        <Form.Check // prettier-ignore
+                                                            type={"checkbox"}
+                                                            id={usersClient.id}
+                                                            label={usersClient.name}
+                                                            onChange={(e) => handleAddingSetToClient(usersClient.id, e.target.checked)}
+                                                        />   
+                                                    </Form>
+                                                </Col>
+                                                
+                                        ))}
+                                    </Row>
+                                </Container>
+                            )}
                         </Container>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
