@@ -43,6 +43,10 @@ const StimSetsPage = () => {
         try {
 
             if (!publicSet) {
+                if (clientAdding.length === 0) {
+                    alert("Please select at least one client");
+                    return;
+                }
                 const createSet = await createStimSet({title: setTitle, public: publicSet});
                 
                 // get the created stimulis id to add to each selected client
@@ -98,7 +102,6 @@ const StimSetsPage = () => {
         getSets();
     }, [refreshKey])
 
-    console.log(clientAdding);
 
 
     return (
