@@ -16,6 +16,7 @@ public class StimuliAppContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Trial> Trials => Set<Trial>();
     public DbSet<Round> Rounds => Set<Round>();
+    public DbSet<Item> Items => Set<Item>();
 
 
 }
