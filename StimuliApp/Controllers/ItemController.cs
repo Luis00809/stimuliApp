@@ -59,7 +59,7 @@ public class ItemController : ControllerBase
         }
     }
 
-    [HttpPut("{id}/addStimuli")]
+    [HttpPut("{id}/addStimuli/${stimuliId}")]
     public IActionResult AddStimuli(int id, int stimuliId)
     {
         var itemUpdating = _service.GetById(id);

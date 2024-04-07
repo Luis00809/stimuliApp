@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-
+import { getItems, groupStimuli } from "../API/Item";
 
 
 const StimuliPage = () => {
@@ -20,7 +20,8 @@ const StimuliPage = () => {
     const [show, setShow] = useState(false);
     const [createStimTitle, setStimTitle] = useState('');
     const [file, setFile] = useState(null);
-
+    const [items, setItems] = useState([]);
+    const [itemChoice, setItemChoice] = useState(null);
     const [refreshKey, setRefreshKey] = useState(0);
 
     const handleClose = () => setShow(false);
@@ -34,7 +35,7 @@ const StimuliPage = () => {
         event.preventDefault();
     
         try {
-            const creatingStimuli = await createStimuli({name: createStimTitle}, file)
+            const creatingStimuli = await createStimuli({name: createStimTitle, itemId: itemChoice  }, file)
             if(creatingStimuli) {
                 handleClose();
                 setRefreshKey(prevKey => prevKey + 1);
@@ -48,11 +49,17 @@ const StimuliPage = () => {
         navigate(`/stimuli/${stimuliId}`);
     }
 
+    const handleAddingItem = (event) => {
+        setItemChoice(event.target.value);
+    }
+
     useEffect(() =>  {
         const getStim = async () => {
             try {
                 const stim = await getAllStimuli();
                 setStimuli(stim);
+                const item = await getItems();
+                setItems(item);
             } catch (error) {
                 console.log("Error fetching stimuli: ", error);
             }
@@ -105,6 +112,17 @@ const StimuliPage = () => {
                                 <Form.Label>Upload Image</Form.Label>
                                 <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
                             </Form.Group>
+                        </Row>
+                        <Row className="mb-3">
+                            <Col>
+                                <Form.Select aria-label="Default select example" onChange={handleAddingItem}>
+                                    <option>Assign to a Category</option>
+                                    {items.map(item => (
+                                        <option key={item.id} value={item.id}>{item.category} {item.id}</option>
+                                    ))}
+                                    
+                                </Form.Select>
+                            </Col>
                         </Row>
                     </Container>
                     <Modal.Footer>
