@@ -35,6 +35,7 @@ builder.Services.AddScoped<StimuliService >();
 builder.Services.AddScoped<JwtService >();
 builder.Services.AddScoped<TrialService >();
 builder.Services.AddScoped<RoundService >();
+builder.Services.AddScoped<ItemService >();
 
 
 builder.Services.AddSpaStaticFiles(configuration =>

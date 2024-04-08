@@ -79,7 +79,8 @@ export const deleteStimuli = async (id) => {
 export const createStimuli = async (newStim, file) => {
     try {
         const formData = new FormData();
-        formData.append('StimName', newStim.name);        
+        formData.append('StimName', newStim.name);
+        formData.append('ItemId', newStim.itemId);        
         
         if (file) {
             formData.append('file', file);

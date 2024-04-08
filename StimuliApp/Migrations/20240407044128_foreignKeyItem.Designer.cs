@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StimuliApp.Data;
 
@@ -11,9 +12,11 @@ using StimuliApp.Data;
 namespace StimuliApp.Migrations
 {
     [DbContext(typeof(StimuliAppContext))]
-    partial class StimuliAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240407044128_foreignKeyItem")]
+    partial class foreignKeyItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("StimSetsId");
 
-                    b.ToTable("ClientStimSet", (string)null);
+                    b.ToTable("ClientStimSet");
                 });
 
             modelBuilder.Entity("ClientUser", b =>
@@ -49,7 +52,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ClientUser", (string)null);
+                    b.ToTable("ClientUser");
                 });
 
             modelBuilder.Entity("StimSetStimuli", b =>
@@ -64,7 +67,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("StimuliId");
 
-                    b.ToTable("StimSetStimuli", (string)null);
+                    b.ToTable("StimSetStimuli");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Client", b =>
@@ -82,7 +85,7 @@ namespace StimuliApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Item", b =>
@@ -98,7 +101,7 @@ namespace StimuliApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Round", b =>
@@ -125,7 +128,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("TrialId");
 
-                    b.ToTable("Rounds", (string)null);
+                    b.ToTable("Rounds");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.StimSet", b =>
@@ -146,7 +149,7 @@ namespace StimuliApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StimSets", (string)null);
+                    b.ToTable("StimSets");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Stimuli", b =>
@@ -177,7 +180,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Stimuli", (string)null);
+                    b.ToTable("Stimuli");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.Trial", b =>
@@ -212,7 +215,7 @@ namespace StimuliApp.Migrations
 
                     b.HasIndex("SetId");
 
-                    b.ToTable("Trials", (string)null);
+                    b.ToTable("Trials");
                 });
 
             modelBuilder.Entity("StimuliApp.Models.User", b =>
@@ -243,7 +246,7 @@ namespace StimuliApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ClientStimSet", b =>
