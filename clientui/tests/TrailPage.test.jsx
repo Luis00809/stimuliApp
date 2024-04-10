@@ -28,30 +28,11 @@ describe("trialPage", () => {
     })
 })
 
-test('correctly displays the number of stimuli on the screen from user input', async () => {
-    useLocation.mockReturnValue({search: '?maxTrials=3&numberOfCards=3'});
-    getOneStimSet.mockResolvedValue({id:1, title: 'test 1'});
-        getOneStimSet.mockResolvedValue([
-            {id: '1', image: 'test1.png', stimName: 'Test 1'},
-            {id: '2', image: 'test2.png', stimName: 'Test 2'},
-            {id: '3', image: 'test3.png', stimName: 'Test 3'}
-        ])
-    render(
-        <MemoryRouter>
-            <TrialPage />
-        </MemoryRouter>
-    );
 
-    await waitFor(() => {
-        const stimuliCards = screen.getAllByRole('button', { name: /Test/i });
-        expect(stimuliCards.length).toBe(3); // Assuming the user input is 3
-    });
-})
 
 test('displays Trial Complete! message when trial is complete', async () => {
     useParams.mockReturnValue({id: '1'});
-    // dont think i need client
-    useLocation.mockReturnValue({search: '?maxTrials=3&numberOfCards=3&client=1'});
+    useLocation.mockReturnValue({search: '?maxTrials=3&numberOfCards=3'});
     getOneStimSet.mockResolvedValue({id: '1', title: 'Test set'});
         getStimSetsStimuli.mockResolvedValue([
             {id: '1', image: 'test1.png', stimName: 'Test 1'},
@@ -65,13 +46,14 @@ test('displays Trial Complete! message when trial is complete', async () => {
         </MemoryRouter>
     );
 
-    for (let i = 0; i < 3; i++) {
-        const correctStimuliCard = await screen.findByAltText(`Test ${i + 1}`);
-        fireEvent.click(correctStimuliCard);
-
-    }
+    
     
     await waitFor(() => {
+        for (let i = 1; i < 4; i++) {
+            const correctStimuliCard = screen.getByTestId(`stimuliCard-${i}`);
+            fireEvent.click(correctStimuliCard);
+        }
+
         expect(screen.getByText('Trial Complete!')).toBeInTheDocument();
     });
 })

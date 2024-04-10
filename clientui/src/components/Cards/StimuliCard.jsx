@@ -10,16 +10,16 @@ export default function StimuliCard({
     id,
     onClick,
     img,
-    altText
+    dataTestId
 }){
     return (
-        <Button className='stimuliCard' onClick={onClick}  >
+        <Button className='stimuliCard' onClick={onClick} data-testid={dataTestId} >
             <Card >
                 <Container>
                     <Row>
                         <Col>
                             {img && 
-                                <Card.Img className='stimuliImg' src={img} alt={altText}>
+                                <Card.Img className='stimuliImg' src={img} >
                                 </Card.Img>
                             }
                         </Col>
