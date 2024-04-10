@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom'; 
 import { createRound } from "../API/RoundApi";
 import { createTrial, addTrialToClient } from "../API/TrialApi";
-
+import React from "react";
 
 const TrialPage = () => {
     
@@ -180,7 +180,7 @@ const TrialPage = () => {
                         <Row>
                             {currentStimuli.map(stim => (
                                 <Col key={stim.id} xs={6} md={4} >
-                                    <StimuliCard img={stim.image} key={stim.id}  stimuli={stim} onClick={() => handleStimuliSelection(stim)} /> 
+                                    <StimuliCard img={stim.image} altText={stim.stimName} key={stim.id}  stimuli={stim} onClick={() => handleStimuliSelection(stim)} /> 
                                 </Col>
                             ))}
                         </Row>
