@@ -3,21 +3,23 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import React from 'react';
 
 export default function StimuliCard({
     title,
     id,
     onClick,
-    img
+    img,
+    dataTestId
 }){
     return (
-        <Button className='stimuliCard' onClick={onClick}  >
+        <Button className='stimuliCard' onClick={onClick} data-testid={dataTestId} >
             <Card >
                 <Container>
                     <Row>
                         <Col>
                             {img && 
-                                <Card.Img className='stimuliImg' src={img} alt={title}>
+                                <Card.Img className='stimuliImg' src={img} >
                                 </Card.Img>
                             }
                         </Col>

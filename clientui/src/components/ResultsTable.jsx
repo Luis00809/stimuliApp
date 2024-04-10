@@ -1,5 +1,5 @@
 import Table from 'react-bootstrap/Table';
-
+import React from 'react';
 
 const ResultTable = ({ trials }) => {
     const totalTrials = trials.length;
