@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { getItems, groupStimuli } from "../API/Item";
 import { CreateCategory } from "../components/Forms/CreateItem";
+import FilterStimuliModal from "../components/Cards/FilterStimuli";
 
 const StimuliPage = () => {
     const [stimuli, setStimuli] = useState([]);
@@ -87,14 +88,10 @@ const StimuliPage = () => {
                     <CreateCategory onItemCreated={handleItemCreated} />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <Form.Select aria-label="Default select example">
-                        {items.map(item => (
-                            <option key={item.id} value={item.id}>{item.category}</option>
-                        ))}
-                        
-                    </Form.Select>
+            <Row className="my-3">
+                
+                <Col xs={6}>
+                    <FilterStimuliModal />
                 </Col>
             </Row>
             <Row>
