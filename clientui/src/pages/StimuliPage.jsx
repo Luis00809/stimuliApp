@@ -88,12 +88,23 @@ const StimuliPage = () => {
                 </Col>
             </Row>
             <Row>
+                <Col>
+                    <Form.Select aria-label="Default select example">
+                        {items.map(item => (
+                            <option key={item.id} value={item.id}>{item.category}</option>
+                        ))}
+                        
+                    </Form.Select>
+                </Col>
+            </Row>
+            <Row>
                     {stimuli.map(stim => (
                         <Col key={stim.id} xs={6} md={6} lg={6} xl={4} >
                             <StimuliCard key={stim.id} title={stim.stimName} img={stim.image} onClick={() => cardOnClick(stim.id)} />
                         </Col>
                     ))}
             </Row>
+            
             <Row>
                 <Col>
                 <Modal show={show} onHide={handleClose}>
