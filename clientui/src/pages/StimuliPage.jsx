@@ -12,7 +12,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { getItems, groupStimuli } from "../API/Item";
-
+import { CreateCategory } from "../components/Forms/CreateItem";
+import FilterStimuliModal from "../components/Cards/FilterStimuli";
 
 const StimuliPage = () => {
     const [stimuli, setStimuli] = useState([]);
@@ -67,17 +68,30 @@ const StimuliPage = () => {
         getStim();
     }, [refreshKey])
 
+    const handleItemCreated = () => {
+        setRefreshKey(prevKey => prevKey + 1);
+    };
+
     return (
         <Container className="mt-3" >
             <Row className="my-4 border-bottom border-3 text-center">
-                <Col xs={6}>
+                <Col xs={12} sm={4}>
                     <h1> All Stimuli</h1>
                 </Col>
-                <Col xs={5} md={4} className=" d-flex justify-content-end" style={{ paddingLeft: 0, paddingRight: 0, marginLeft: 0, marginRight: 2 }} >
+                <Col xs={5} sm={4}   >
                     <Button onClick={handleShow} className="btns rounded-2">
                         Create Stimuli
                         {/* <PlusCircle /> */}
                     </Button>
+                </Col>
+                <Col xs={5} sm={4} >
+                    <CreateCategory onItemCreated={handleItemCreated} />
+                </Col>
+            </Row>
+            <Row className="my-3">
+                
+                <Col xs={6}>
+                    <FilterStimuliModal />
                 </Col>
             </Row>
             <Row>
@@ -87,6 +101,7 @@ const StimuliPage = () => {
                         </Col>
                     ))}
             </Row>
+            
             <Row>
                 <Col>
                 <Modal show={show} onHide={handleClose}>
@@ -118,7 +133,7 @@ const StimuliPage = () => {
                                 <Form.Select aria-label="Default select example" onChange={handleAddingItem}>
                                     <option>Assign to a Category</option>
                                     {items.map(item => (
-                                        <option key={item.id} value={item.id}>{item.category} {item.id}</option>
+                                        <option key={item.id} value={item.id}>{item.category}</option>
                                     ))}
                                     
                                 </Form.Select>
