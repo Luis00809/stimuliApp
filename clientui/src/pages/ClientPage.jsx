@@ -61,7 +61,7 @@ const ClientPage = () => {
             </Row>
             <Row>
                 <Col xs={12}>
-                    <h2 className="mb-2">{clientName}'s Stimuli Sets:</h2>
+                    {clientName ? <h2 className="mb-2">{clientName}'s Stimuli Sets:</h2> : null}
                 </Col>
                 <Col lg={7}>
                     {sets.map(set => (
