@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
-import { getTrialsByDate } from '../../API/TrialApi';
+import { getTrialsByDate, getTrialsRange } from '../../API/TrialApi';
 import { useState, useEffect, useRef } from 'react';
 
 
-const GraphTrials = ({date, clientId, setId}) => {
+const GraphTrials = ({startDate, endDate, clientId, setId}) => {
     const graphRef = useRef(null);
     const [trials, setTrials] = useState([]);
 
@@ -13,7 +13,7 @@ const GraphTrials = ({date, clientId, setId}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getTrialsByDate(date, clientId, setId);
+                const data = await getTrialsRange(startDate, endDate, clientId, setId);
                 setTrials(data);
                 
             } catch (error) {
@@ -21,7 +21,7 @@ const GraphTrials = ({date, clientId, setId}) => {
             }
         }
         fetchData();
-    },[date, clientId, setId])
+    },[startDate, endDate, clientId, setId])
 
 
     useEffect(() => {

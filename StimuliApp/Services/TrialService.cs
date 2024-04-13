@@ -83,5 +83,34 @@ public class TrialService
         .Where(p => p.Date.HasValue && p.Date.Value >= startDate && p.Date.Value <= endDate
                 && p.ClientId == clientId && p.SetId == stimSetId)
         .ToList();
-    }   
+    }
+
+    public IEnumerable<Trial> GetTrialsWithDateRange(DateTime startDate, DateTime endDate, int clientId, int stimSetId)
+    {
+        if (startDate > endDate)
+        {
+            throw new ArgumentException("Start date must be earlier than or equal to end date.");
+        }
+
+        var start = startDate.Date;
+        var end = endDate.Date.AddDays(1).AddTicks(-1); 
+
+        try
+        {
+            return _context.Trials
+                .Include(p => p.Rounds)
+                .Include(p => p.Client)
+                .Include(p => p.StimSet)
+                .AsNoTracking()
+                .Where(p => p.Date.HasValue && p.Date.Value >= start && p.Date.Value <= end
+                        && p.ClientId == clientId && p.SetId == stimSetId)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while fetching trials.", ex);
+        }
+
+    }
+    
 }

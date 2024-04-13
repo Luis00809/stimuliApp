@@ -1,6 +1,7 @@
 using StimuliApp.Services;
 using StimuliApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using StimuliApp.Migrations;
 
 namespace StimuliApp.Controllers;
 [ApiController]
@@ -86,6 +87,20 @@ public class TrialController : ControllerBase
         }
         else
         {
+            return NotFound();
+        }
+    }
+
+    [HttpGet("trials/date-range")]
+    public ActionResult<IEnumerable<Trial>> GetTrialsByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, int clientId, int stimSetId)
+    {
+        var trials = _service.GetTrialsWithDateRange(startDate, endDate, clientId, stimSetId);
+        if (trials.Any())
+        {
+            return Ok(trials);  
+        }
+        else 
+        { 
             return NotFound();
         }
     }

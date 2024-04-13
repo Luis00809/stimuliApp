@@ -65,7 +65,7 @@ const DataPage = () => {
             </Row>
             <Row>
                 <Col>
-                    <GraphTrials date={'2024-04-12'} clientId={1005} setId={4042} />
+                    <GraphTrials startDate={'2024-04-12'} endDate={'2024-04-13'} clientId={1005} setId={4042} />
                 </Col>
             </Row>
         </Container>
