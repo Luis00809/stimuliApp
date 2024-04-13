@@ -85,7 +85,3 @@ public class TrialService
         .ToList();
     }   
 }
-
-// date: 2024-04-12
-// client: 1005
-// stimset: 4042

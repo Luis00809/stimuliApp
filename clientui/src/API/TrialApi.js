@@ -37,3 +37,20 @@ export const addTrialToClient = async (trialId, clientId) => {
         console.log("error adding trial to client: ", error);
     }
 }
+
+export const getTrialsByDate = async (date, clientId, setId) => {
+    
+    try {
+        const response = await fetch(`/api/trial/trials?date=${date}&clientId=${clientId}&stimSetId=${setId}`, {
+            method: 'GET',
+            
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.log("error getting trials: ", error);
+    }
+}

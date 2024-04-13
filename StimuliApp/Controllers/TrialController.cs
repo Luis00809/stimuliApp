@@ -76,7 +76,7 @@ public class TrialController : ControllerBase
             }
         }
 
-    [HttpGet("/trials")]
+    [HttpGet("trials")]
     public ActionResult<IEnumerable<Trial>> GetTrialsByDateAndClientAndStimSet([FromQuery] DateTime date, [FromQuery] int clientId, [FromQuery] int stimSetId)
     {
         var trials = _service.GetByDateAndClientAndStimSet(date, clientId, stimSetId);
