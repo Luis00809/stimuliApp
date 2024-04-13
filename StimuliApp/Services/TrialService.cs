@@ -68,5 +68,24 @@ public class TrialService
         _context.SaveChanges();
     }
 
+    public IEnumerable<Trial> GetByDateAndClientAndStimSet(DateTime date, int clientId, int stimSetId)
+    {
+        // Start of the day
+        var startDate = date.Date;
+        // End of the day
+        var endDate = startDate.AddDays(1).AddTicks(-1);
 
+        return _context.Trials
+        .Include(p => p.Rounds)
+        .Include(p => p.Client)
+        .Include(p => p.StimSet)
+        .AsNoTracking()
+        .Where(p => p.Date.HasValue && p.Date.Value >= startDate && p.Date.Value <= endDate
+                && p.ClientId == clientId && p.SetId == stimSetId)
+        .ToList();
+    }   
 }
+
+// date: 2024-04-12
+// client: 1005
+// stimset: 4042

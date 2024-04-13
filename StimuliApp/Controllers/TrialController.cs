@@ -75,4 +75,18 @@ public class TrialController : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+
+    [HttpGet("/trials")]
+    public ActionResult<IEnumerable<Trial>> GetTrialsByDateAndClientAndStimSet([FromQuery] DateTime date, [FromQuery] int clientId, [FromQuery] int stimSetId)
+    {
+        var trials = _service.GetByDateAndClientAndStimSet(date, clientId, stimSetId);
+        if (trials.Any())
+        {
+            return Ok(trials);
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
 }

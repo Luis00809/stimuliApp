@@ -104,10 +104,6 @@ const TrialPage = () => {
             Answer: result.correct ? "Correct" : "Incorrect"
         }));
 
-        const StimSetData = {
-            Title: stimSet.title
-        }
-
         try {
             const createdRounds = await Promise.all(roundData.map(data => createRound(data)));
             const newTrial = {
@@ -115,7 +111,7 @@ const TrialPage = () => {
                 TotalTrials: parseInt(maxTrialsFromURL, 10), 
                 CardsOnScreen: parseInt(numberOfCardsFromURL, 10), 
                 Rounds: roundData,
-                StimSet: StimSetData,
+                SetId: stimSet.id
             };
     
 
