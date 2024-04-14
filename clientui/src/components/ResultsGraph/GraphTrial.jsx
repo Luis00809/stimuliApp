@@ -17,7 +17,7 @@ const GraphTrials = ({startDate, endDate, clientId, setId}) => {
                 setTrials(data);
                 
             } catch (error) {
-                throw new error("error getting trials: ", error)
+                console.log('error making graph: ', error);
             }
         }
         fetchData();
