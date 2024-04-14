@@ -6,10 +6,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Accordion from 'react-bootstrap/Accordion';
 
 import GraphTrials from "../components/ResultsGraph/GraphTrial";
-import DateSelector from "../components/DateSelector";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -76,69 +78,93 @@ const DataPage = () => {
                 </Col>
             </Row>
             <Row>
-                <Col>
-                    <h2>See Graph Data: </h2> 
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={5}> 
-                    <p>Select from client's stimuli sets: </p>
-                </Col>
-                <Col>
-                    <Form.Select aria-label="Select a Set" onChange={(e) => setSelectedSetId(e.target.value)}>
-                        <option value={null}>Select</option>
-                        { clientSets.map(set => (
-                            <option key={set.id} value={set.id}>{set.title}</option>
-                        ))}
-                    </Form.Select>
-                </Col>
-            </Row>
-            <Row> 
-                <Col> 
-                    <p>provide data ranges: </p>
-                </Col>
-                <Col>
-                    <p>Start Date: </p>
-                </Col>
-                <Col>
-                    <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={end}
-                    dateFormat='MM/dd/yyyy'
-                    />
-                </Col>
-                <Col>
-                    <p>Select end date: </p>
-                    <DatePicker
-                    selected={end}
-                    onChange={(date) => setEnd(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={end}
-                    minDate={startDate}
-                    dateFormat='MM/dd/yyyy'
+                <Accordion>
+                    <Accordion.Item eventKey="0">
+                    <Accordion.Header>Graph</Accordion.Header>
+                    <Accordion.Body>
+                     <Card>
+                        <Card.Header>See Graph Data:</Card.Header>
+                        <Card.Body>
+                            <Container>
+                                <Row>
+                                    <Col xs={5}> 
+                                        <p>Select from client's stimuli sets: </p>
+                                    </Col>
+                                    <Col>
+                                        <Form.Select aria-label="Select a Set" onChange={(e) => setSelectedSetId(e.target.value)}>
+                                            <option value={null}>Select</option>
+                                            { clientSets.map(set => (
+                                                <option key={set.id} value={set.id}>{set.title}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <p>Start Date: </p>
+                                    </Col>
+                                    <Col>
+                                        <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={end}
+                                        dateFormat='MM/dd/yyyy'
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <p>Select end date: </p>
+                                    </Col>
+                                    <Col>
+                                        <DatePicker
+                                        selected={end}
+                                        onChange={(date) => setEnd(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={end}
+                                        minDate={startDate}
+                                        dateFormat='MM/dd/yyyy'
 
-                    />
-                </Col>
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={12}>
+                                        <Button variant="primary" onClick={() => setViewData(true)}>View Graph</Button>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </Card.Body>
+                                </Card>
+                    </Accordion.Body>
+                </Accordion.Item>
+                
+                </Accordion>
             </Row>
             <Row> 
-                <Col xs={12}>
-                    <Button variant="primary" onClick={() => setViewData(true)}>View Graph</Button>
-                </Col>
                 { viewData && 
-                    <Col>
-                        <GraphTrials 
-                        startDate={formattedStartDate} 
-                        endDate={formattedEndDate} 
-                        clientId={clientId.id} 
-                        setId={intSelctedSetId}  />
-                    </Col>
+                    <Container>
+                        <Row> 
+                            <Col>
+                                <GraphTrials 
+                                startDate={formattedStartDate} 
+                                endDate={formattedEndDate} 
+                                clientId={clientId.id} 
+                                setId={intSelctedSetId}  />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button className="addBtns" onClick={() => setViewData(false)}>Close Graph</Button>
+                            </Col>
+                        </Row>
+                    </Container>
                 }
             </Row>
-            <Row>
+            <Row className="mt-4">
                 {trials.map(trial => (
                         <Col xs={6} className="m-1" key={trial.id}>
                             <TrialTable trial={trial}  /> 
@@ -146,11 +172,7 @@ const DataPage = () => {
                 ))}
             </Row>
             
-            <Row>
-                <Col>
-                    <DateSelector  />
-                </Col>
-            </Row>
+           
             {/* <Row>
                 <Col>
                     <GraphTrials startDate={'2024-04-12'} endDate={'2024-04-14'} clientId={1005} setId={4042} />
