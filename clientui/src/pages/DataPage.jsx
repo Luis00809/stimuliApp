@@ -21,12 +21,11 @@ const DataPage = () => {
     const [viewData, setViewData] = useState(false);
     const [clientSets, setClientSets] = useState([]);
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [end, setEnd] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [end, setEnd] = useState(new Date());
 
     const [selectedSetId, setSelectedSetId] = useState(null);
     const intSelctedSetId = parseInt(selectedSetId);
-    console.log(intSelctedSetId);
 
     const formatDate = (date) => {
         if (!date) {
@@ -69,6 +68,10 @@ const DataPage = () => {
         }
         fetchClient();
     }, [clientId])
+
+    useEffect(() => {
+        setViewData(false);
+    }, [selectedSetId, startDate, end])
     
     return (
         <Container>
@@ -86,7 +89,7 @@ const DataPage = () => {
                         <Card.Header>See Graph Data:</Card.Header>
                         <Card.Body>
                             <Container>
-                                <Row>
+                                <Row className="mb-3">
                                     <Col xs={5}> 
                                         <p>Select from client's stimuli sets: </p>
                                     </Col>
@@ -99,8 +102,8 @@ const DataPage = () => {
                                         </Form.Select>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col>
+                                <Row className="mb-3">
+                                    <Col xs={5}>
                                         <p>Start Date: </p>
                                     </Col>
                                     <Col>
@@ -114,8 +117,8 @@ const DataPage = () => {
                                         />
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col>
+                                <Row className="mb-3">
+                                    <Col  xs={5}>
                                         <p>Select end date: </p>
                                     </Col>
                                     <Col>
@@ -147,7 +150,7 @@ const DataPage = () => {
             <Row> 
                 { viewData && 
                     <Container>
-                        <Row> 
+                        <Row className="mb-3"> 
                             <Col>
                                 <GraphTrials 
                                 startDate={formattedStartDate} 
