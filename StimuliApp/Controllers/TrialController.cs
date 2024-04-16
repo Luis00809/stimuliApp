@@ -38,7 +38,12 @@ public class TrialController : ControllerBase
     [HttpPost]
     public IActionResult Create(Trial newTrial)
     {
-        var trial = _service.Create(newTrial);
+       var trial = _service.Create(newTrial);
+        if (trial == null)
+        {
+            
+            return BadRequest("The trial could not be created.");
+        }
         return CreatedAtAction(nameof(GetById), new { id = trial.Id }, trial);
     }
 

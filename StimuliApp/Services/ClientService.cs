@@ -23,14 +23,14 @@ public class ClientService
 
     public Client? GetById(int id)
     {
-        return _context.Clients
+         return _context.Clients
         .Include(p => p.Users)
-         .Include(p => p.Trials.OrderByDescending(t => t.Date ?? DateTime.MaxValue))
+        .Include(p => p.Trials!)
             .ThenInclude(t => t.Rounds)
-        .Include(p => p.Trials)
+        .Include(p => p.Trials!)
             .ThenInclude(t => t.StimSet)
-        .Include(p => p.StimSets)
-        .ThenInclude(ss => ss.Stimuli)
+        .Include(p => p.StimSets!)
+            .ThenInclude(ss => ss.Stimuli)
         .AsNoTracking()
         .SingleOrDefault(p => p.Id == id);
     }

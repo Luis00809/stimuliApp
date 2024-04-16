@@ -113,7 +113,7 @@ public class StimSetController : ControllerBase
             {
                 return NotFound();
             }
-            return new ActionResult<IEnumerable<Stimuli>>(set.Stimuli);
+             return set.Stimuli?.ToList() ?? new List<Stimuli>();
         }
         catch (Exception e)
         {

@@ -27,10 +27,13 @@ public class ClientController : ControllerBase
     public ActionResult<Client> GetById(int id)
     {
         var client = _service.GetById(id);
-        if(client is not null)
+        if (client is not null)
         {
+            // Order the trials by date, using DateTime.MaxValue as a fallback for null dates
+            client.Trials = client.Trials?.OrderByDescending(t => t.Date ?? DateTime.MaxValue).ToList();
             return client;
-        } else 
+        }
+        else
         {
             return NotFound();
         }
@@ -122,7 +125,8 @@ public class ClientController : ControllerBase
             {
                 return NotFound();
             }
-            return new ActionResult<IEnumerable<StimSet>>(client.StimSets);
+            
+            return client.StimSets?.ToList() ?? new List<StimSet>();
         }
         catch (Exception e)
         {
