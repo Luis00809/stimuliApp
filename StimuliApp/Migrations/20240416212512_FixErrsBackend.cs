@@ -5,7 +5,7 @@
 namespace StimuliApp.Migrations
 {
     /// <inheritdoc />
-    public partial class authentication : Migration
+    public partial class FixErrsBackend : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

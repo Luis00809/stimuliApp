@@ -12,7 +12,7 @@ namespace StimuliApp.Migrations
 {
     [DbContext(typeof(StimuliAppContext))]
     [Migration("20240315230957_change")]
-    partial class change
+    partial class ChangeGroup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
