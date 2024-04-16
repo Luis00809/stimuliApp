@@ -32,6 +32,7 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
     {
         return _context.Stimuli
         .Include(p => p.StimSets)
+        .Include(p => p.Item)
         .AsNoTracking()
         .SingleOrDefault(p => p.Id == id);
     }
@@ -53,11 +54,11 @@ public StimuliService(StimuliAppContext context, IConfiguration configuration)
 
         stimuliUpdating.StimName = updatedStim.StimName ?? stimuliUpdating.StimName;
         stimuliUpdating.Image = updatedStim.Image ?? stimuliUpdating.Image;
+        stimuliUpdating.ItemId = updatedStim.ItemId ?? stimuliUpdating.ItemId;
 
         // Check if a file has been provided and upload it to S3 if so
         if (file != null)
         {
-            // Assuming you have a method to upload the file to S3 and get the URL
             string imageUrl = await UploadImageToS3Async(file);
             stimuliUpdating.Image = imageUrl;
         }

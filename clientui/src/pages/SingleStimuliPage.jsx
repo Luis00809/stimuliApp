@@ -16,6 +16,7 @@ import { updateStimuli, deleteStimuli } from "../API/StimuliApit";
 import { useNavigate } from 'react-router-dom'; 
 import DisplayStimSetList from "../components/Accordion/StimSet";
 import DisplayUsersClientsSets from "../components/Accordion/ClientSets";
+import { groupStimuli, getItems } from "../API/Item";
 
 const OneStimPage = () => {
     const navigate = useNavigate();
@@ -25,6 +26,9 @@ const OneStimPage = () => {
     const [stimTitle, setTitle] = useState('');
     const [refreshKey, setRefreshKey] = useState(0);
     const [file, setFile] = useState(null);
+
+    const [items, setItems] = useState([]);
+    const [itemChoice, setItemChoice] = useState(null);
 
 
     const handleClose = () => setShow(false);
@@ -37,7 +41,7 @@ const OneStimPage = () => {
     const handleUpdate = async (event, id) => {
         event.preventDefault();
         try {
-            const response = await updateStimuli(id, {name: stimTitle}, file)
+            const response = await updateStimuli(id, {name: stimTitle, itemId: itemChoice}, file)
             if(response){
                 handleClose();
                 setRefreshKey(prevKey => prevKey + 1);
@@ -56,7 +60,9 @@ const OneStimPage = () => {
         }
     }
 
-    
+    const handleItemSelection = (event) => {
+        setItemChoice(event.target.value);
+    }
 
     useEffect(() => {
         const getOneStim = async () => {
@@ -64,13 +70,15 @@ const OneStimPage = () => {
                 const stimuli = await getAStimuli(stimId.id);
                 setStim(stimuli)
                 setTitle(stimuli.stimName)
+                const allItems = await getItems();
+                setItems(allItems);
+
             } catch (error) {
                 console.log("Error fetching stimuli: ", error);
             }
         }
         getOneStim();
     }, [stimId, refreshKey]);
-
 
     return (
         <Container className="mt-5">
@@ -94,14 +102,21 @@ const OneStimPage = () => {
                                 {stim && <StimuliCard img={stim.image} title={stim.stimName} id={stim.id}  />}
                             </Col>
                         </Row>
+                        <Row className="mt-3">
+                            <Col xs={6}>
+                                Stimuli Cateogry: 
+                            </Col>
+                            <Col xs={6}>
+                                {stim && <p>{stim.item.category}</p>}
+                            </Col>
+                        </Row>
                         <Row>
                             <Col className="mb-2" xs={12}>
                                 <DisplayUsersClientsSets stimuliId={stimId.id} />
                             </Col>
                             <Col xs={12}>
-                             <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
+                                <DisplayStimSetList actionType={'addStimuli'} id={stimId.id} />
                             </Col>
-                            
                         </Row>
                     </Card>
                 </Col>
@@ -133,6 +148,20 @@ const OneStimPage = () => {
                                 <Form.Label>Upload Image</Form.Label>
                                 <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
                             </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={4}>
+                            <InputGroup.Text>Assign Category: </InputGroup.Text>
+                        </Col>
+                        <Col>
+                            <Form.Select aria-label="Default select example" onChange={handleItemSelection}>
+                                    <option value={null}>Select</option>
+                                    <option value={null}>None</option>
+                                    {items.map(item => (
+                                        <option key={item.id} value={item.id}>{item.category}</option>
+                                ))}
+                            </Form.Select> 
                         </Col>
                     </Row>
                 </Container>

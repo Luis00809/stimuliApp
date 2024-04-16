@@ -25,6 +25,7 @@ export default function StimuliCard({
                         </Col>
                     </Row>
                     <Row>
+                        
                         <Col>
                          <Card.Title>{title}</Card.Title>
                         </Col>
