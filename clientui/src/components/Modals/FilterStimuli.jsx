@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { getItems } from "../../API/Item"
 import Modal from 'react-bootstrap/Modal';
-
+import { ArrowRight } from 'react-bootstrap-icons';
 
 
 const FilterStimuliModal = () => {
@@ -33,21 +33,21 @@ const FilterStimuliModal = () => {
 
     return (
         <Container>
-           <Button variant="primary" onClick={handleShow}>
+           <Button variant="success" onClick={handleShow}>
                 Filter by Category
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Categories: </Modal.Title>
+                <Modal.Title className="text-center  w-100">Categories</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {items.map((item) => (
-                        <Row key={item.id}>
-                            <Col>{item.category}</Col>
-                            <Col>
-                                <Button variant="primary" onClick={() => navigate(`/${item.id}/filteredStimuli`)}>
-                                    GO
+                        <Row key={item.id} className="m-3 border-2 border-bottom ">
+                            <Col  xs={7}>{item.category}</Col>
+                            <Col xs={4}>
+                                <Button className="btns" onClick={() => navigate(`/${item.id}/filteredStimuli`)}>
+                                  Go {""} <ArrowRight />
                                 </Button>
                             </Col>
                         </Row>

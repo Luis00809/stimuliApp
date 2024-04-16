@@ -40,6 +40,7 @@ export const updateStimuli = async (id, updatedStim, file) => {
         const formData = new FormData();
 
         formData.append('StimName', updatedStim.name);
+        formData.append('ItemId', updatedStim.itemId)
 
         if (file) {
             formData.append('file', file);
