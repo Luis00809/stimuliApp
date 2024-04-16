@@ -13,7 +13,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { getItems, groupStimuli } from "../API/Item";
 import { CreateCategory } from "../components/Forms/CreateItem";
-import FilterStimuliModal from "../components/Cards/FilterStimuli";
+import FilterStimuliModal from "../components/Modals/FilterStimuli";
 
 const StimuliPage = () => {
     const [stimuli, setStimuli] = useState([]);
