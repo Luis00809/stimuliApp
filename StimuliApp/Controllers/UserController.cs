@@ -164,7 +164,7 @@ public IActionResult Authenticate([FromBody] AuthenticationRequest request)
             {
                 return NotFound();
             }
-            return new ActionResult<IEnumerable<Client>>(user.Clients);
+            return user.Clients?.ToList() ?? new List<Client>();
         }
         catch (Exception e)
         {
