@@ -1,0 +1,19 @@
+{
+ 
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": ""
+  },
+  "JwtToken": {
+    "SecretKey": "",
+    "Issuer": "StimApp",
+    "Audience": "BxTechs",
+    "TokenExpiry": "60" 
+  },
+  "AWS": {
+    "AccessKeyId": "",
+    "SecretAccessKey": "",
+    "Region": "us-west-1",
+    "BucketName": "my-stim-app"
+  }
+}

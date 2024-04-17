@@ -73,9 +73,7 @@ export const LoginPage = () => {
                     </div>
                 )}
             </div>
-            <div>
-                <h5>Don't have an account? sign up here</h5>
-            </div>
+            
         </div>
     )
 }
