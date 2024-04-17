@@ -54,18 +54,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
     
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSpaStaticFiles(); // Serve static files from the React app
+app.UseSpaStaticFiles(); 
 app.UseAuthorization();
 app.UseRouting();
 
@@ -73,5 +71,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html", "ClientApp/build"); // Serve the React app
+app.MapFallbackToFile("index.html", "ClientApp/build"); 
 app.Run();
